@@ -32,7 +32,7 @@ public class NumProtocolSupport {
     public static final String HTTP_PROTOCOL = "http://";
     public static final Pattern NUM_DOMAIN_REGEX = Pattern.compile("^(([^.\\s\f\t\r\b]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?))\\.??$");
     public static final Pattern NUM_PATH_REGEX = Pattern.compile("^(/[^;,/?:@&=+$.\\s]+?)*?/??$");
-    public static final Pattern NUM_EMAIL_REGEX = Pattern.compile("^[^@\\s\f\t\r\b\\\\]{1}[^@\n\f\t\r\b\\\\]+?[^@\\s\f\t\r\b\\\\]{1}@(([^.\\s\f\t\r\b\\\\]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?))\\.??$");
+    public static final Pattern NUM_EMAIL_REGEX = Pattern.compile("^(?!\\s)[^@\f\t\r\b\n]+?(?<!\\s)@(([^.\\s\f\t\r\b\n]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?))\\.??$");
 
     /*
      * Add a NumStreamHandlerFactory for the `num` protocol

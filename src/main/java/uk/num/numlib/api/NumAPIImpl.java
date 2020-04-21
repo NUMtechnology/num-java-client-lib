@@ -664,7 +664,7 @@ public class NumAPIImpl implements NumAPI {
     }
 
     /**
-     * Interpret the supplied NUM record from DNS using the RCF value from the ModuleConfig object.
+     * Interpret the supplied NUM record from DNS.
      *
      * @param moduleNumber The module number
      * @param context      The NumAPIContext
@@ -678,7 +678,7 @@ public class NumAPIImpl implements NumAPI {
                                                                                                                                  NumBadRecordException,
                                                                                                                                  NumQueryRedirect,
                                                                                                                                  NumLookupRedirect {
-        log.info("getInterpretedNumRecordAsJson({}, moduleConfig, {})", moduleNumber, numRecord);
+        log.info("getInterpretedNumRecordAsJson({}, {})", moduleNumber, numRecord);
         final StringBuilder numRecordBuffer = new StringBuilder();
 
         final UserVariable[] ruv = context.getRequiredUserVariables();

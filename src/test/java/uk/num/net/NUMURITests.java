@@ -47,6 +47,8 @@ public class NUMURITests {
             "num://test with spaces@test.test:1/test",
             "num://test with spaces@test.test",
             "test=test@gmail.com",
+            "e226c478-c284-4c57-8187-95bfe204dbe7.com",
+            "me@test.com",
     };
 
     private final String[] invalidUriStrings = {

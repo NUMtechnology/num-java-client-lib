@@ -65,7 +65,6 @@ public class CatchallTXTRecordTest {
                                                      NumDNSQueryException,
                                                      NumInvalidDNSQueryException,
                                                      NumBadModuleIdException,
-                                                     NumBadModuleConfigDataException,
                                                      NumBadRecordException,
                                                      MalformedURLException,
                                                      RrSetHeaderFormatException,

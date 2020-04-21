@@ -57,7 +57,6 @@ public class MultipartRecordTest {
                                                      NumDNSQueryException,
                                                      NumInvalidDNSQueryException,
                                                      NumBadModuleIdException,
-                                                     NumBadModuleConfigDataException,
                                                      NumBadRecordException,
                                                      MalformedURLException,
                                                      RrSetHeaderFormatException,

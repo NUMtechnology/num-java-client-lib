@@ -44,13 +44,6 @@ public final class StringConstants {
     private String populatorTopLevelZone = "populator.num.net";
 
     /**
-     * The top level zone to use for module config files. Can be overridden.
-     */
-    @Getter
-    @Setter
-    private String moduleConfigTopLevelZone = "num.uk";
-
-    /**
      * Used to indicate a requirement for distributing email records across DNS zone files.
      *
      * @return a String
@@ -103,15 +96,6 @@ public final class StringConstants {
      */
     public String POPULATOR_SERVICE_SUFFIX() {
         return StringConstants.DOMAIN_SEPARATOR + populatorTopLevelZone;
-    }
-
-    /**
-     * Accessor
-     *
-     * @return the CONFIG_FILE_SUFFIX value.
-     */
-    public String CONFIG_FILE_SUFFIX() {
-        return ".modules." + moduleConfigTopLevelZone;
     }
 
     public void setTopLevelZone(final String topLevelZone) {

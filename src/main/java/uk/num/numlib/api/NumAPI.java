@@ -48,7 +48,6 @@ public interface NumAPI {
      * @param timeoutMillis the timeout in milliseconds to wait for responses from DNS.
      * @return a new NumAPIContextBase object.
      * @throws NumBadModuleIdException         on error
-     * @throws NumBadModuleConfigDataException on error
      * @throws MalformedURLException           on error
      * @throws NumInvalidParameterException    on error
      * @throws NumBadRecordException           on error
@@ -60,7 +59,6 @@ public interface NumAPI {
      */
     NumAPIContext begin(@NonNull final String numAddress, int timeoutMillis) throws
                                                                              NumBadModuleIdException,
-                                                                             NumBadModuleConfigDataException,
                                                                              NumInvalidParameterException,
                                                                              NumBadRecordException,
                                                                              NumDNSQueryException,

@@ -690,7 +690,6 @@ public class NumAPITest {
                                                      NumDNSQueryException,
                                                      NumInvalidDNSQueryException,
                                                      NumBadModuleIdException,
-                                                     NumBadModuleConfigDataException,
                                                      NumBadRecordException,
                                                      MalformedURLException,
                                                      RrSetHeaderFormatException,

@@ -34,7 +34,7 @@ import java.util.ArrayList;
 @Log4j2
 public class ModlServices {
     /**
-     * A Jackson object mapper to create the ModuleConfig object from JSON.
+     * A Jackson object mapper to create the PopulatorResponse object from JSON.
      */
     private final ObjectMapper objectMapper;
 
