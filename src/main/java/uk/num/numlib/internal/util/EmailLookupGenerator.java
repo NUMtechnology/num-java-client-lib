@@ -19,7 +19,7 @@ package uk.num.numlib.internal.util;
 import lombok.NonNull;
 import uk.num.numlib.internal.ctx.AppContext;
 
-public class EmailLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
+public final class EmailLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
 
     public final String localPart;
 

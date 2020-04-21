@@ -30,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PopulatorResponseRecord {
+public final class PopulatorResponseRecord {
     /**
      * The response code.
      */

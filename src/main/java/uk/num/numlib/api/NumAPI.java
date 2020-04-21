@@ -32,14 +32,6 @@ public interface NumAPI {
     void setTCPOnly(boolean flag);
 
     /**
-     * Override the top-level zone from 'num.net' to 'myzone.com' for example.
-     *
-     * @param zone The top level zone to use for DNS lookups. Replaces the default of 'num.net'
-     * @throws NumInvalidParameterException if the zone is null or empty
-     */
-    void setTopLevelZone(String zone) throws NumInvalidParameterException;
-
-    /**
      * Initialise a new NumAPIContextBase object for a specific module/NUM ID combination.
      * The returned context object can be used to obtain the list of required user variables that must be set
      * before moving on to retrieveNumRecord().

@@ -28,7 +28,7 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
-public class PopulatorResponse {
+public final class PopulatorResponse {
     public static final int VALID_TXT_RECORD_CODE = 999;
     /**
      * Error object

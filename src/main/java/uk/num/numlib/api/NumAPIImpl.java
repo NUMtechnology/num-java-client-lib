@@ -61,9 +61,9 @@ import static uk.num.numlib.api.NumAPICallbacks.Location.*;
  * @author tonywalmsley
  */
 @Log4j2
-public class NumAPIImpl implements NumAPI {
+public final class NumAPIImpl implements NumAPI {
 
-    public static final String MATCH_NUM_RECORDS = "(_n=[0-9]+;.*)|(^\\d+\\|.*)|(\\d+\\/\\d+\\|_n=\\d+;.*)";
+    public static final String MATCH_NUM_RECORDS = "(_n=[0-9]+;.*)|(^\\d+\\|.*)|(\\d+/\\d+\\|_n=\\d+;.*)";
     /**
      * The ApplicationContext to use for this NUM API Session
      */
@@ -198,8 +198,7 @@ public class NumAPIImpl implements NumAPI {
      * @param zone The top level zone to use for DNS lookups. Replaces the default of 'num.net'
      * @throws NumInvalidParameterException if the zone is null or empty
      */
-    @Override
-    public void setTopLevelZone(final String zone) throws NumInvalidParameterException {
+    void setTopLevelZone(final String zone) throws NumInvalidParameterException {
         log.info("setTopLevelZone({})", zone);
         if (StringUtils.isEmpty(zone)) {
             throw new NumInvalidParameterException("zone cannot be null or empty");

@@ -26,7 +26,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class UserVariable {
+public final class UserVariable {
     /**
      * The name of the variable
      */

@@ -588,7 +588,7 @@ public class NumAPITest {
 
     @Test
     public void test_82_set_top_level_zone() throws Throwable {
-        final NumAPI api = new NumAPIImpl("1.1.1.1", 53);
+        final NumAPIImpl api = new NumAPIImpl("1.1.1.1", 53);
         api.setTopLevelZone("example.com");
 
         // Set it back again so it doesn't mess up the other tests.
@@ -597,7 +597,7 @@ public class NumAPITest {
 
     @Test(expected = NumInvalidParameterException.class)
     public void test_83_set_top_level_zone_invalid() throws Throwable {
-        final NumAPI api = new NumAPIImpl("1.1.1.1", 53);
+        final NumAPIImpl api = new NumAPIImpl("1.1.1.1", 53);
         api.setTopLevelZone("");
         Assert.fail("Expected a NumInvalidParameterException.");
     }

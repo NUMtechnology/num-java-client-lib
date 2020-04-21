@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * @author tonywalmsley
  */
 @Log4j2
-public class ModlServices {
+public final class ModlServices {
     /**
      * A Jackson object mapper to create the PopulatorResponse object from JSON.
      */

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * Add NUM Protocol Support
  * <p>
  */
-public class NumProtocolSupport {
+public final class NumProtocolSupport {
 
     public static final String NUM_PROTOCOL = "num://";
     public static final String HTTPS_PROTOCOL = "https://";

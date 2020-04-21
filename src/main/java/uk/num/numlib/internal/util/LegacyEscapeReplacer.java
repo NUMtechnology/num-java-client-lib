@@ -22,7 +22,7 @@ import java.util.function.Function;
  * Replace Legacy DNS Escape sequences
  * see https://app.clubhouse.io/num/story/2639/handling-escaped-characters-in-dns-responses
  */
-public class LegacyEscapeReplacer implements Function<String, String> {
+public final class LegacyEscapeReplacer implements Function<String, String> {
     /**
      * Applies this function to the given argument.
      *

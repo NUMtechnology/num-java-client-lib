@@ -26,7 +26,7 @@ import java.util.Map;
  * @param <V> The class that the values will be instances of.
  * @author tonywalmsley
  */
-public class SimpleCache<K, V> {
+public final class SimpleCache<K, V> {
 
     /**
      * The default cache timeout.

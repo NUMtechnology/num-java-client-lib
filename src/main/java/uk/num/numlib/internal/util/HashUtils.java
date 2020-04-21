@@ -25,7 +25,7 @@ import java.math.BigInteger;
  *
  * @author tonywalmsley
  */
-public class HashUtils {
+public final class HashUtils {
     /**
      * Generate a SHA1 hash and base36 encode it, then return the first 3 chars separated by '.' and prefixed by '.'
      * The parameter is not checked and the caller must supply a correct value.

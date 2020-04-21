@@ -14,16 +14,15 @@
  *    limitations under the License.
  */
 
-package uk.num.net;
+package uk.num.numlib.api;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.num.numlib.api.NumAPI;
-import uk.num.numlib.api.NumAPIImpl;
-import uk.num.numlib.api.TestCallbackHandlerExpectingSuccess;
+import uk.num.net.NUMURLConnection;
+import uk.num.net.NumProtocolSupport;
 import uk.num.numlib.exc.NumInvalidDNSHostException;
 import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.exc.NumInvalidRedirectException;
@@ -241,7 +240,7 @@ public class NumAPIWithURITest {
     }
 
     @Test
-    public void test_24_url_branch_query_redirect_success() throws Throwable {
+    public void test_24_url_branch_query_redirect_success() {
         final String numId = "http://url.redirect2.com:1/sales/";
         log.info("Trying: " + numId);
 
@@ -462,7 +461,7 @@ public class NumAPIWithURITest {
     }
 
     @Test
-    public void test_44_url_branch_query_redirect_success() throws Throwable {
+    public void test_44_url_branch_query_redirect_success() {
         final String numId = "http://hosted.url.redirect2.com:1/sales/";
         log.info("Trying: " + numId);
 
@@ -615,7 +614,7 @@ public class NumAPIWithURITest {
 
     @Test
     public void test_82_set_top_level_zone() throws Throwable {
-        final NumAPI api = new NumAPIImpl("1.1.1.1", 53);
+        final NumAPIImpl api = new NumAPIImpl("1.1.1.1", 53);
         api.setTopLevelZone("example.com");
 
         // Set it back again so it doesn't mess up the other tests.
@@ -624,7 +623,7 @@ public class NumAPIWithURITest {
 
     @Test(expected = NumInvalidParameterException.class)
     public void test_83_set_top_level_zone_invalid() throws Throwable {
-        final NumAPI api = new NumAPIImpl("1.1.1.1", 53);
+        final NumAPIImpl api = new NumAPIImpl("1.1.1.1", 53);
         api.setTopLevelZone("");
         Assert.fail("Expected a NumInvalidParameterException.");
     }

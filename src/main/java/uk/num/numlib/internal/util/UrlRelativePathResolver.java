@@ -24,7 +24,7 @@ import java.util.Stack;
 /**
  * Convert a path of the form `/a/b/c/../../d/../e/../..` etc to a resolved path.
  */
-public class UrlRelativePathResolver {
+public final class UrlRelativePathResolver {
 
     /**
      * Convert a path of the form `/a/b/c/../../d/../e/../..` etc to a resolved path.

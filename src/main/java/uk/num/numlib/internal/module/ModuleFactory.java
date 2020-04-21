@@ -29,7 +29,7 @@ import java.net.MalformedURLException;
  * @author tonywalmsley
  */
 @Log4j2
-public class ModuleFactory {
+public final class ModuleFactory {
     /**
      * A cache for module/NUM ID combinations.
      */

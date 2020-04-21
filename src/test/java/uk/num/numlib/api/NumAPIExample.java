@@ -30,7 +30,7 @@ public class NumAPIExample {
         //
         // Create the NumAPI Object
         //
-        final NumAPI numAPI = new NumAPIImpl(new DummyDNSServices(), "0");
+        final NumAPIImpl numAPI = new NumAPIImpl(new DummyDNSServices(), "0");
 //        	final NumAPI numAPI = new NumAPIImpl();
         numAPI.setTopLevelZone("num.net");
         //numAPI.setTCPOnly(true);
@@ -40,7 +40,6 @@ public class NumAPIExample {
         // Domain name can be a simple domain name, URL, email address, or sub-domain
         //
         final NumAPIContext ctx = numAPI.begin("tesco.co.uk", TIMEOUT);
-
         //
         // Get the required user variables - the client must populate values obtained from the user or from its own config data
         //

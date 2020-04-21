@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-public class NUMURLConnection extends URLConnection {
+public final class NUMURLConnection extends URLConnection {
     public static final String USE_POPULATOR = "NUM_USE_POPULATOR";
     public static final String HIDE_PARAMS = "NUM_HIDE_PARAMS";
     @Getter

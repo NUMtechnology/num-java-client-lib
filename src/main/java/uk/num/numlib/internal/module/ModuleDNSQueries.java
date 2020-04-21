@@ -33,7 +33,7 @@ import java.net.MalformedURLException;
  * @author tonywalmsley
  */
 @Log4j2
-public class ModuleDNSQueries {
+public final class ModuleDNSQueries {
     /**
      * The module ID, e.g. "1"
      */

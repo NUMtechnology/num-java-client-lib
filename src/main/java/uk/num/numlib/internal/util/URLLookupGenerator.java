@@ -22,7 +22,7 @@ import uk.num.numlib.internal.ctx.AppContext;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class URLLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
+public final class URLLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
 
     public URLLookupGenerator(final AppContext appContext, final @NonNull String numId) throws
                                                                                         MalformedURLException {

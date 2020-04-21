@@ -21,7 +21,7 @@ import uk.num.numlib.exc.NumInvalidParameterException;
 /**
  * Uitility to guarantee a populated String value - it cannot be just spaces
  */
-public class NonBlankString {
+public final class NonBlankString {
     public final String value;
 
     /**

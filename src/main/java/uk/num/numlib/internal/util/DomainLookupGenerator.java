@@ -23,14 +23,14 @@ import uk.num.numlib.internal.ctx.AppContext;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DomainLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
+public final class DomainLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
 
     public DomainLookupGenerator(final AppContext appContext, final @NonNull String numId) throws
                                                                                            MalformedURLException {
         super(appContext, numId);
         // We can now handle NUM IDs as NUM URLs
         final URL url = NumProtocolSupport.toUrl(numId);
-        assert url != null;
+
         domain = normaliseDomainName(url.getHost());
         branch = url.getPath();
         if (branch != null && ((branch.equals("/") || branch.equals("")))) {

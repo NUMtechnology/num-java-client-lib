@@ -16,7 +16,7 @@
 
 package uk.num.numlib.internal.util;
 
-public class PopulatorRetryConfig {
+public final class PopulatorRetryConfig {
     public static int ERROR_RETRIES = 2;
     public static int[] RETRY_DELAYS = {2000, 2000, 2000, 2000, 5000, 5000, 5000, 5000};
     public static int[] ERROR_RETRY_DELAYS = {5000, 5000};
