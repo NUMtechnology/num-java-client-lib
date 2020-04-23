@@ -31,9 +31,6 @@ public class NumAPIExample {
         // Create the NumAPI Object
         //
         final NumAPIImpl numAPI = new NumAPIImpl(new DummyDNSServices(), "0");
-//        	final NumAPI numAPI = new NumAPIImpl();
-        numAPI.setTopLevelZone("num.net");
-        //numAPI.setTCPOnly(true);
 
         //
         // Create a module context. The NumAPI will retrieve the module config from modules.num.uk

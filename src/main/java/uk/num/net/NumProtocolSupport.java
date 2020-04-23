@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
 
 /**
  * Add NUM Protocol Support
- * <p>
  */
 public final class NumProtocolSupport {
 

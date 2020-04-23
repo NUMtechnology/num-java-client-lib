@@ -193,20 +193,6 @@ public final class NumAPIImpl implements NumAPI {
     }
 
     /**
-     * Override the top-level zone from 'num.net' to 'myzone.com' for example.
-     *
-     * @param zone The top level zone to use for DNS lookups. Replaces the default of 'num.net'
-     * @throws NumInvalidParameterException if the zone is null or empty
-     */
-    void setTopLevelZone(final String zone) throws NumInvalidParameterException {
-        log.info("setTopLevelZone({})", zone);
-        if (StringUtils.isEmpty(zone)) {
-            throw new NumInvalidParameterException("zone cannot be null or empty");
-        }
-        appContext.stringConstants.setTopLevelZone(zone);
-    }
-
-    /**
      * Initialise a new NumAPIContextBase object for a specific module/NUM ID combination.
      * The returned context object can be used to obtain the list of required user variables that must be set
      * before moving on to retrieveNumRecord().

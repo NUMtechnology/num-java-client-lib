@@ -613,22 +613,6 @@ public class NumAPIWithURITest {
     }
 
     @Test
-    public void test_82_set_top_level_zone() throws Throwable {
-        final NumAPIImpl api = new NumAPIImpl("1.1.1.1", 53);
-        api.setTopLevelZone("example.com");
-
-        // Set it back again so it doesn't mess up the other tests.
-        api.setTopLevelZone("num.uk");
-    }
-
-    @Test(expected = NumInvalidParameterException.class)
-    public void test_83_set_top_level_zone_invalid() throws Throwable {
-        final NumAPIImpl api = new NumAPIImpl("1.1.1.1", 53);
-        api.setTopLevelZone("");
-        Assert.fail("Expected a NumInvalidParameterException.");
-    }
-
-    @Test
     public void test_90_email_distribution_independent_1_level_success() throws Throwable {
         final String numId = "john.smith@dist1.email.com:1";
         log.info("Trying: " + numId);

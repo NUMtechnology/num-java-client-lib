@@ -16,9 +16,6 @@
 
 package uk.num.numlib.internal.util;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Constants defined by the NUM Protocol Specification
  *
@@ -31,17 +28,14 @@ public final class StringConstants {
     public static final String URL_PATH_HERE = ".";
 
     /**
-     * The top level zone to use. Can be overridden.
+     * The top level zone to use.
      */
-    @Getter
-    private String topLevelZone = "num.net";
+    public static final String TOP_LEVEL_ZONE = "num.net";
 
     /**
-     * The top level zone to use. Can be overridden.
+     * The top level zone to use.
      */
-    @Getter
-    @Setter
-    private String populatorTopLevelZone = "populator.num.net";
+    public static final String POPULATOR_TOP_LEVEL_ZONE = "populator.num.net";
 
     /**
      * Used to indicate a requirement for distributing email records across DNS zone files.
@@ -86,7 +80,7 @@ public final class StringConstants {
      * @return the HOSTED_RECORD_SUFFIX value.
      */
     public String HOSTED_RECORD_SUFFIX() {
-        return StringConstants.DOMAIN_SEPARATOR + topLevelZone;
+        return StringConstants.DOMAIN_SEPARATOR + TOP_LEVEL_ZONE;
     }
 
     /**
@@ -95,11 +89,7 @@ public final class StringConstants {
      * @return the POPULATOR_SERVICE_SUFFIX value.
      */
     public String POPULATOR_SERVICE_SUFFIX() {
-        return StringConstants.DOMAIN_SEPARATOR + populatorTopLevelZone;
+        return StringConstants.DOMAIN_SEPARATOR + POPULATOR_TOP_LEVEL_ZONE;
     }
 
-    public void setTopLevelZone(final String topLevelZone) {
-        this.topLevelZone = topLevelZone;
-        this.populatorTopLevelZone = "populator." + topLevelZone;
-    }
 }
