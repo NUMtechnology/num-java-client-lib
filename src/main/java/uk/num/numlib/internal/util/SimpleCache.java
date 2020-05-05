@@ -50,7 +50,7 @@ public final class SimpleCache<K, V> {
     }
 
     /**
-     * Override the default cache timeour. Can be set at any time but only affects items cached after the value is set.
+     * Override the default cache timeout. Can be set at any time but only affects items cached after the value is set.
      *
      * @param millis The number of milliseconds until the cached item should be considered stale.
      */

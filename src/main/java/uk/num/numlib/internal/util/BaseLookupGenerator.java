@@ -94,6 +94,11 @@ abstract class BaseLookupGenerator implements LookupGenerator {
             if (pathComponents.length > 0 && pathComponents[0].contains(StringConstants.DOMAIN_SEPARATOR)) {
                 pathComponents[0] = "";// Ignore the first item (i.e. last item before it was reversed) if it contains a '.' character
             }
+            for (int i = 0; i < pathComponents.length; i++) {
+                if (!StringUtils.isAsciiPrintable(pathComponents[i])) {
+                    pathComponents[i] = IDN.toASCII(pathComponents[i]);
+                }
+            }
             if (pathComponents.length > 0) {
                 result = StringUtils.join(pathComponents, StringConstants.DOMAIN_SEPARATOR);
                 result = result.replaceAll(" ", "_");
@@ -147,6 +152,11 @@ abstract class BaseLookupGenerator implements LookupGenerator {
         final String[] split = s.substring(i + 1)
                 .split("/");
         ArrayUtils.reverse(split);
+        for (int j = 0; j < split.length; j++) {
+            if (!StringUtils.isAsciiPrintable(split[j])) {
+                split[j] = IDN.toASCII(split[j]);
+            }
+        }
         return String.join(StringConstants.DOMAIN_SEPARATOR, split);
     }
 
