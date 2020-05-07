@@ -18,6 +18,7 @@ package uk.num.net;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Method;
 import java.net.*;
 import java.util.regex.Pattern;
 
@@ -27,17 +28,52 @@ import java.util.regex.Pattern;
 public final class NumProtocolSupport {
 
     public static final String NUM_PROTOCOL = "num://";
+
     public static final String HTTPS_PROTOCOL = "https://";
+
     public static final String HTTP_PROTOCOL = "http://";
+
     public static final Pattern NUM_DOMAIN_REGEX = Pattern.compile("^(([^.\\s\f\t\r\b]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?))\\.??$");
+
     public static final Pattern NUM_PATH_REGEX = Pattern.compile("^(/[^;,/?:@&=+$.\\s]+?)*?/??$");
+
     public static final Pattern NUM_EMAIL_REGEX = Pattern.compile("^(?!\\s)[^@\f\t\r\b\n]+?(?<!\\s)@(([^.\\s\f\t\r\b\n]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?))\\.??$");
 
     /*
      * Add a NumStreamHandlerFactory for the `num` protocol
      */
     static {
-        URL.setURLStreamHandlerFactory(new NumStreamHandlerFactory());
+        final NumStreamHandlerFactory factory = new NumStreamHandlerFactory();
+        try {
+            URL.setURLStreamHandlerFactory(factory);
+        } catch (final Throwable e) {
+            System.out.println("There is an existing protocol handler registered - checking for embedded Tomcat...");
+            if (hasEmbeddedTomcat()) {
+                try {
+                    final Class<?> aClass = Class.forName("org.apache.catalina.webresources.TomcatURLStreamHandlerFactory");
+                    final Method getInstance = aClass.getMethod("getInstance");
+                    final Object instance = getInstance.invoke(null);
+
+                    final Method addUserFactory = aClass.getMethod("addUserFactory", URLStreamHandlerFactory.class);
+                    addUserFactory.invoke(instance, factory);
+                    System.out.println("Added the NUM protocol handler with the TomcatURLStreamHandlerFactory.");
+                } catch (final Throwable ex) {
+                    System.err.println("There is an existing protocol handler registered - cannot register the NUM protocol handler with the TomcatURLStreamHandlerFactory.");
+                    System.err.println("Error: " + ex.getMessage());
+                }
+            } else {
+                System.err.println("There is an existing protocol handler registered - cannot register the NUM protocol handler.");
+            }
+        }
+    }
+
+    private static boolean hasEmbeddedTomcat() {
+        try {
+            Class.forName("org.apache.catalina.webresources.TomcatURLStreamHandlerFactory");
+            return true;
+        } catch (final Throwable e) {
+            return false;
+        }
     }
 
     /**
@@ -100,6 +136,7 @@ public final class NumProtocolSupport {
         public URLStreamHandler createURLStreamHandler(final String protocol) {
             if ("num".equalsIgnoreCase(protocol)) {
                 return new URLStreamHandler() {
+
                     @Override
                     protected URLConnection openConnection(final URL u) {
                         return new NUMURLConnection(u);
@@ -108,5 +145,7 @@ public final class NumProtocolSupport {
             }
             return null;
         }
+
     }
+
 }
