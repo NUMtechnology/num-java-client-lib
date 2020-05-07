@@ -67,11 +67,11 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     public String getRootIndependentLocation(final String moduleId) {
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.EMAIL_DOMAIN_SEPARATOR() +
-                appContext.stringConstants.UTILITY_MODULE_PREFIX() +
+                StringConstants.EMAIL_DOMAIN_SEPARATOR +
+                StringConstants.UTILITY_MODULE_PREFIX +
                 domain + StringConstants.DOMAIN_SEPARATOR;
     }
 
@@ -79,14 +79,14 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     public String getRootHostedLocation(final String moduleId) {
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.EMAIL_DOMAIN_SEPARATOR() +
+                StringConstants.EMAIL_DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 domain + HashUtils.hash3(domain) +
-                appContext.stringConstants.HOSTED_RECORD_SUFFIX() +
+                StringConstants.HOSTED_RECORD_SUFFIX +
                 StringConstants.DOMAIN_SEPARATOR;
     }
 
@@ -94,12 +94,12 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
         final String emailLocalPartHash = HashUtils.hash(localPart, levels);
         final String result = moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
                 emailLocalPartHash +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.EMAIL_DOMAIN_SEPARATOR() +
-                appContext.stringConstants.UTILITY_MODULE_PREFIX() +
+                StringConstants.EMAIL_DOMAIN_SEPARATOR +
+                StringConstants.UTILITY_MODULE_PREFIX +
                 domain + StringConstants.DOMAIN_SEPARATOR;
         if (branch == null) {
             return result;
@@ -112,15 +112,15 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
         final String emailLocalPartHash = HashUtils.hash(localPart, levels);
         final String result = moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
                 emailLocalPartHash +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.EMAIL_DOMAIN_SEPARATOR() +
+                StringConstants.EMAIL_DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 domain + HashUtils.hash3(domain) +
-                appContext.stringConstants.HOSTED_RECORD_SUFFIX() +
+                StringConstants.HOSTED_RECORD_SUFFIX +
                 StringConstants.DOMAIN_SEPARATOR;
         if (branch == null) {
             return result;

@@ -38,6 +38,7 @@ import uk.num.numlib.internal.module.ModuleFactory;
 import uk.num.numlib.internal.util.LegacyEscapeReplacer;
 import uk.num.numlib.internal.util.NonBlankString;
 import uk.num.numlib.internal.util.PopulatorRetryConfig;
+import uk.num.numlib.internal.util.StringConstants;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -447,7 +448,7 @@ public final class NumAPIImpl implements NumAPI {
      * @return the de-prefixed ZDR
      */
     private Function<String, String> removeZDRPrefix() {
-        return s -> s.substring(appContext.stringConstants.ZONE_DISTRIBUTION_RECORD_PREFIX()
+        return s -> s.substring(StringConstants.ZONE_DISTRIBUTION_RECORD_PREFIX
                 .length());
     }
 
@@ -457,7 +458,7 @@ public final class NumAPIImpl implements NumAPI {
      * @return a Predicate
      */
     private Predicate<String> isZoneDistributionRecord() {
-        return s -> s.startsWith(appContext.stringConstants.ZONE_DISTRIBUTION_RECORD_PREFIX());
+        return s -> s.startsWith(StringConstants.ZONE_DISTRIBUTION_RECORD_PREFIX);
     }
 
     /**

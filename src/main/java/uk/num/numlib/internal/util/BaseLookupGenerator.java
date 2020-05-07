@@ -26,9 +26,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 abstract class BaseLookupGenerator implements LookupGenerator {
+
     protected final String numId;
+
     protected final AppContext appContext;
+
     protected String branch;
+
     protected String domain;
 
     public BaseLookupGenerator(@NonNull final AppContext appContext, final @NonNull String numId) {
@@ -167,16 +171,16 @@ abstract class BaseLookupGenerator implements LookupGenerator {
         }
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 domain +
-                appContext.stringConstants.POPULATOR_SERVICE_SUFFIX() +
+                StringConstants.POPULATOR_SERVICE_SUFFIX +
                 StringConstants.DOMAIN_SEPARATOR;
     }
 
     @Override
     public String getRootIndependentLocation(@NonNull final String moduleId) {
         return moduleId +
-                appContext.stringConstants.UTILITY_MODULE_PREFIX() +
+                StringConstants.UTILITY_MODULE_PREFIX +
                 domain +
                 StringConstants.DOMAIN_SEPARATOR;
     }
@@ -185,11 +189,12 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     public String getRootHostedLocation(@NonNull final String moduleId) {
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
-                appContext.stringConstants.DOMAIN_NAME_PREFIX() +
+                StringConstants.DOMAIN_NAME_PREFIX +
                 domain +
                 HashUtils.hash3(domain) +
-                appContext.stringConstants.HOSTED_RECORD_SUFFIX() +
+                StringConstants.HOSTED_RECORD_SUFFIX +
                 StringConstants.DOMAIN_SEPARATOR;
 
     }
+
 }

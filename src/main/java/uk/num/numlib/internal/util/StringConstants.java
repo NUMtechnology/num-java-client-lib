@@ -22,74 +22,53 @@ package uk.num.numlib.internal.util;
  * @author tonywalmsley
  */
 public final class StringConstants {
+
     public static final String DOMAIN_SEPARATOR = ".";
+
     public static final String URL_PATH_SEPARATOR = "/";
+
     public static final String URL_PATH_UP = "..";
+
     public static final String URL_PATH_HERE = ".";
 
     /**
-     * The top level zone to use.
-     */
-    public static final String TOP_LEVEL_ZONE = "num.net";
-
-    /**
-     * The top level zone to use.
-     */
-    public static final String POPULATOR_TOP_LEVEL_ZONE = "populator.num.net";
-
-    /**
      * Used to indicate a requirement for distributing email records across DNS zone files.
-     *
-     * @return a String
      */
-    public String ZONE_DISTRIBUTION_RECORD_PREFIX() {
-        return "_n=1;zd=";
-    }
+    public static final String ZONE_DISTRIBUTION_RECORD_PREFIX = "_n=1;zd=";
 
     /**
-     * Accessor
-     *
-     * @return the DOMAIN_NAME_PREFIX value.
+     * the DOMAIN_NAME_PREFIX value.
      */
-    public String DOMAIN_NAME_PREFIX() {
-        return "_";
-    }
+    public static final String DOMAIN_NAME_PREFIX = "_";
 
     /**
-     * /**
-     * Accessor
      *
-     * @return the DOMAIN_NAME_PREFIX value.
      */
-    public String EMAIL_DOMAIN_SEPARATOR() {
-        return "e";
-    }
+    public static final String EMAIL_DOMAIN_SEPARATOR = "e";
 
     /**
-     * Accessor
      *
-     * @return the UTILITY_MODULE_PREFIX value.
      */
-    public String UTILITY_MODULE_PREFIX() {
-        return "._num.";
-    }
+    public static final String UTILITY_MODULE_PREFIX = "._num.";
 
     /**
-     * Accessor
-     *
-     * @return the HOSTED_RECORD_SUFFIX value.
+     * The top level zone to use.
      */
-    public String HOSTED_RECORD_SUFFIX() {
-        return StringConstants.DOMAIN_SEPARATOR + TOP_LEVEL_ZONE;
-    }
+    public static String TOP_LEVEL_ZONE = "num.net";
 
     /**
-     * Accessor
-     *
-     * @return the POPULATOR_SERVICE_SUFFIX value.
+     * The top level zone to use.
      */
-    public String POPULATOR_SERVICE_SUFFIX() {
-        return StringConstants.DOMAIN_SEPARATOR + POPULATOR_TOP_LEVEL_ZONE;
-    }
+    public static String POPULATOR_TOP_LEVEL_ZONE = "populator.num.net";
+
+    /**
+     *
+     */
+    public static String HOSTED_RECORD_SUFFIX = StringConstants.DOMAIN_SEPARATOR + TOP_LEVEL_ZONE;
+
+    /**
+     *
+     */
+    public static String POPULATOR_SERVICE_SUFFIX = StringConstants.DOMAIN_SEPARATOR + POPULATOR_TOP_LEVEL_ZONE;
 
 }
