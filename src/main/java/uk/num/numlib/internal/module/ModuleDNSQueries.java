@@ -88,15 +88,18 @@ public final class ModuleDNSQueries {
     /**
      * Constructor
      *
-     * @param moduleId the module ID string
-     * @param numId    the NUM ID.
+     * @param moduleNumber the module ID string
+     * @param numId        the NUM ID.
      */
-    public ModuleDNSQueries(final int moduleId, @NonNull final String numId) throws NumInvalidParameterException {
+    public ModuleDNSQueries(final int moduleNumber, @NonNull final String numId) throws NumInvalidParameterException {
         if (StringUtils.isAllBlank(numId)) {
             throw new NumInvalidParameterException(numId);
         }
-        log.debug("ModuleDNSQueries({}, {})", moduleId, numId);
-        this.moduleId = moduleId;
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("ModuleNumber should be >= 0 but is: " + moduleNumber);
+        }
+        log.debug("ModuleDNSQueries({}, {})", moduleNumber, numId);
+        this.moduleId = moduleNumber;
         this.numId = numId;
     }
 
@@ -106,7 +109,7 @@ public final class ModuleDNSQueries {
      * @param appContext An AppContext object
      * @throws MalformedURLException on error
      */
-    public void initialise(final AppContext appContext) throws MalformedURLException {
+    public void initialise(final AppContext appContext) throws MalformedURLException, NumInvalidParameterException {
         log.trace("initialise()");
 
         // Create a suitable LookupGenerator based on the type of the record specifier
@@ -136,7 +139,8 @@ public final class ModuleDNSQueries {
      * @param appContext the AppContext
      * @param levels     the number of levels to use for zone distribution
      */
-    public void setEmailRecordDistributionLevels(final AppContext appContext, final int levels) {
+    public void setEmailRecordDistributionLevels(final AppContext appContext, final int levels) throws
+                                                                                                NumInvalidParameterException {
         if (numId.contains("@")) {
             // This only applies to email NUM IDs
             final EmailLookupGenerator generator = new EmailLookupGenerator(appContext, numId);

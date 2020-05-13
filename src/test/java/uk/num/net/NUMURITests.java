@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NUMURITests {
+
     private final String[] validUriStrings = {
             "test_$*&.example.com",
             "numexample.com",
@@ -49,6 +50,7 @@ public class NUMURITests {
             "test=test@gmail.com",
             "e226c478-c284-4c57-8187-95bfe204dbe7.com",
             "me@test.com",
+            "num://test.com:123456/test"
     };
 
     private final String[] invalidUriStrings = {
@@ -71,6 +73,9 @@ public class NUMURITests {
             "test\rtesttest.com",
             "test\btesttest.com",
             "test\ftesttest.com",
+            "num://test:a/a",
+            "num://test:-1/a",
+            "num://test:-1000/a"
     };
 
     @BeforeClass
@@ -110,4 +115,5 @@ public class NUMURITests {
             Assert.fail("There are errors");
         }
     }
+
 }

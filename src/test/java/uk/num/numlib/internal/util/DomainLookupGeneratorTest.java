@@ -17,6 +17,7 @@
 package uk.num.numlib.internal.util;
 
 import org.junit.Test;
+import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
@@ -56,7 +57,7 @@ public class DomainLookupGeneratorTest {
     }
 
     @Test
-    public void testConstructor5() throws MalformedURLException {
+    public void testConstructor5() throws MalformedURLException, NumInvalidParameterException {
         final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com/test1例/test2例/test3例");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
         assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h", domainLookupGenerator.branch);
@@ -65,7 +66,7 @@ public class DomainLookupGeneratorTest {
     }
 
     @Test
-    public void testConstructor6() throws MalformedURLException {
+    public void testConstructor6() throws MalformedURLException, NumInvalidParameterException {
         final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
         assertEquals("1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation(1));

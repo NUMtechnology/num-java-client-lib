@@ -19,6 +19,7 @@ package uk.num.numlib.internal.util;
 import lombok.NonNull;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.IDN;
@@ -118,8 +119,11 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getIndependentLocation(final int moduleId) {
-        final String result = getRootIndependentLocation(moduleId);
+    public String getIndependentLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        final String result = getRootIndependentLocation(moduleNumber);
         if (branch == null) {
             return result;
         } else {
@@ -128,8 +132,11 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getHostedLocation(final int moduleId) {
-        final String result = getRootHostedLocation(moduleId);
+    public String getHostedLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        final String result = getRootHostedLocation(moduleNumber);
         if (branch == null) {
             return result;
         } else {
@@ -165,11 +172,14 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getPopulatorLocation(final int moduleId) {
+    public String getPopulatorLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
         if (branch != null) {
             return null;
         }
-        return moduleId +
+        return moduleNumber +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
                 domain +
@@ -178,16 +188,22 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getRootIndependentLocation(final int moduleId) {
-        return moduleId +
+    public String getRootIndependentLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        return moduleNumber +
                 StringConstants.UTILITY_MODULE_PREFIX +
                 domain +
                 StringConstants.DOMAIN_SEPARATOR;
     }
 
     @Override
-    public String getRootHostedLocation(final int moduleId) {
-        return moduleId +
+    public String getRootHostedLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        return moduleNumber +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
                 domain +

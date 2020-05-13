@@ -16,18 +16,20 @@
 
 package uk.num.numlib.internal.util;
 
+import uk.num.numlib.exc.NumInvalidParameterException;
+
 public interface LookupGenerator {
 
-    String getIndependentLocation(final int moduleId);
+    String getIndependentLocation(final int moduleId) throws NumInvalidParameterException;
 
-    String getHostedLocation(final int moduleId);
+    String getHostedLocation(final int moduleId) throws NumInvalidParameterException;
 
     boolean isDomainRoot();
 
-    String getPopulatorLocation(final int moduleId);
+    String getPopulatorLocation(final int moduleId) throws NumInvalidParameterException;
 
-    String getRootIndependentLocation(final int moduleId);
+    String getRootIndependentLocation(final int moduleId) throws NumInvalidParameterException;
 
-    String getRootHostedLocation(final int moduleId);
+    String getRootHostedLocation(final int moduleId) throws NumInvalidParameterException;
 
 }

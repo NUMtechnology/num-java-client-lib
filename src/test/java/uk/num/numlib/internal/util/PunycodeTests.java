@@ -18,6 +18,7 @@ package uk.num.numlib.internal.util;
 
 import org.junit.Assert;
 import org.junit.Test;
+import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.internal.ctx.AppContext;
 
 public class PunycodeTests {
@@ -64,7 +65,7 @@ public class PunycodeTests {
      * Convert unicode to text for the independent record using an email branch lookup
      */
     @Test
-    public void test_05() {
+    public void test_05() throws NumInvalidParameterException {
         final LookupGenerator utils = new EmailLookupGenerator(appContext, "xi@num例.com");
 
         final String result = utils.getIndependentLocation(1);
@@ -76,7 +77,7 @@ public class PunycodeTests {
      * Convert unicode to text for the hosted record an email branch lookup
      */
     @Test
-    public void test_06() {
+    public void test_06() throws NumInvalidParameterException {
         final LookupGenerator utils = new EmailLookupGenerator(appContext, "xi@num例.com");
 
         final String result = utils.getHostedLocation(1);

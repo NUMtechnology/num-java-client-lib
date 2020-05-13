@@ -17,6 +17,7 @@
 package uk.num.numlib.internal.util;
 
 import lombok.NonNull;
+import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.internal.ctx.AppContext;
 
 public final class EmailLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
@@ -39,8 +40,11 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getIndependentLocation(final int moduleId) {
-        final String result = getRootIndependentLocation(moduleId);
+    public String getIndependentLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        final String result = getRootIndependentLocation(moduleNumber);
         if (branch == null) {
             return result;
         } else {
@@ -49,8 +53,11 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getHostedLocation(final int moduleId) {
-        final String result = getRootHostedLocation(moduleId);
+    public String getHostedLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        final String result = getRootHostedLocation(moduleNumber);
         if (branch == null) {
             return result;
         } else {
@@ -64,8 +71,11 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getRootIndependentLocation(final int moduleId) {
-        return moduleId +
+    public String getRootIndependentLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        return moduleNumber +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
@@ -76,8 +86,11 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getRootHostedLocation(final int moduleId) {
-        return moduleId +
+    public String getRootHostedLocation(final int moduleNumber) throws NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
+        return moduleNumber +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
@@ -90,9 +103,13 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
                 StringConstants.DOMAIN_SEPARATOR;
     }
 
-    public String getDistributedIndependentLocation(final int moduleId, final int levels) {
+    public String getDistributedIndependentLocation(final int moduleNumber, final int levels) throws
+                                                                                              NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
         final String emailLocalPartHash = HashUtils.hash(localPart, levels);
-        final String result = moduleId +
+        final String result = moduleNumber +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +
@@ -108,9 +125,13 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
         }
     }
 
-    public String getDistributedHostedLocation(final int moduleId, final int levels) {
+    public String getDistributedHostedLocation(final int moduleNumber, final int levels) throws
+                                                                                         NumInvalidParameterException {
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
         final String emailLocalPartHash = HashUtils.hash(localPart, levels);
-        final String result = moduleId +
+        final String result = moduleNumber +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
                 localPart +

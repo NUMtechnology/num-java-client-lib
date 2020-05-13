@@ -409,8 +409,12 @@ public final class NumAPIImpl implements NumAPI {
     private Function<Integer, String> handleZoneDistributionRecord(final NumAPIContextBase context) {
         return n -> {
             log.info("Handling a Zone Distribution Record for {}", context.getRecordLocation());
-            context.getModuleDNSQueries()
-                    .setEmailRecordDistributionLevels(appContext, n);
+            try {
+                context.getModuleDNSQueries()
+                        .setEmailRecordDistributionLevels(appContext, n);
+            } catch (final NumInvalidParameterException e) {
+                log.error("Invalid parameter.", e);
+            }
             return context.getRecordLocation();
         };
     }

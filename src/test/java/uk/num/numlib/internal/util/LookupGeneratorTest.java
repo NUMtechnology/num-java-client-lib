@@ -17,6 +17,7 @@
 package uk.num.numlib.internal.util;
 
 import org.junit.Test;
+import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
@@ -34,7 +35,7 @@ public class LookupGeneratorTest {
     private static final AppContext appContext = new AppContext();
 
     @Test
-    public void consistencyTest1() throws MalformedURLException {
+    public void consistencyTest1() throws MalformedURLException, NumInvalidParameterException {
         final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getHostedLocation(1);
         final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getHostedLocation(1);
         final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getHostedLocation(1);
@@ -63,7 +64,7 @@ public class LookupGeneratorTest {
     }
 
     @Test
-    public void consistencyTest2() throws MalformedURLException {
+    public void consistencyTest2() throws MalformedURLException, NumInvalidParameterException {
         final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getIndependentLocation(1);
         final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getIndependentLocation(1);
         final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getIndependentLocation(1);
@@ -92,7 +93,7 @@ public class LookupGeneratorTest {
     }
 
     @Test
-    public void consistencyTest3() throws MalformedURLException {
+    public void consistencyTest3() throws MalformedURLException, NumInvalidParameterException {
         final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getPopulatorLocation(1);
         final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getPopulatorLocation(1);
         final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getPopulatorLocation(1);

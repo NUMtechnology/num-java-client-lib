@@ -50,6 +50,9 @@ public final class ModuleFactory {
                                                                                                                  NumInvalidParameterException {
         ModuleDNSQueries result;
 
+        if (moduleNumber < 0) {
+            throw new NumInvalidParameterException("Module number should be >= 0 but is: " + moduleNumber);
+        }
         final String key = moduleNumber + "_" + numId;
         // Critical section - we're reading then updating moduleMap, which is a potential race condition
         synchronized (moduleMap) {
