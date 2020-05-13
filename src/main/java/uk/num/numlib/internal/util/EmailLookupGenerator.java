@@ -39,7 +39,7 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getIndependentLocation(final String moduleId) {
+    public String getIndependentLocation(final int moduleId) {
         final String result = getRootIndependentLocation(moduleId);
         if (branch == null) {
             return result;
@@ -49,7 +49,7 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getHostedLocation(final String moduleId) {
+    public String getHostedLocation(final int moduleId) {
         final String result = getRootHostedLocation(moduleId);
         if (branch == null) {
             return result;
@@ -59,12 +59,12 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getPopulatorLocation(final String moduleId) {
+    public String getPopulatorLocation(final int moduleId) {
         return null;// Always
     }
 
     @Override
-    public String getRootIndependentLocation(final String moduleId) {
+    public String getRootIndependentLocation(final int moduleId) {
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
@@ -76,7 +76,7 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
     }
 
     @Override
-    public String getRootHostedLocation(final String moduleId) {
+    public String getRootHostedLocation(final int moduleId) {
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +
@@ -90,7 +90,7 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
                 StringConstants.DOMAIN_SEPARATOR;
     }
 
-    public String getDistributedIndependentLocation(final String moduleId, final int levels) {
+    public String getDistributedIndependentLocation(final int moduleId, final int levels) {
         final String emailLocalPartHash = HashUtils.hash(localPart, levels);
         final String result = moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
@@ -108,7 +108,7 @@ public final class EmailLookupGenerator extends BaseLookupGenerator implements L
         }
     }
 
-    public String getDistributedHostedLocation(final String moduleId, final int levels) {
+    public String getDistributedHostedLocation(final int moduleId, final int levels) {
         final String emailLocalPartHash = HashUtils.hash(localPart, levels);
         final String result = moduleId +
                 StringConstants.DOMAIN_SEPARATOR +

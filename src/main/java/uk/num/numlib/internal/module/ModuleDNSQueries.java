@@ -20,7 +20,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.exc.NumInvalidDNSQueryException;
+import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.exc.NumInvalidRedirectException;
 import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.internal.util.*;
@@ -34,12 +36,12 @@ import java.net.MalformedURLException;
  */
 @Log4j2
 public final class ModuleDNSQueries {
+
     /**
      * The module ID, e.g. "1"
      */
     @Getter
-    @NonNull
-    private final String moduleId;
+    private final int moduleId;
 
     /**
      * The NUM ID to be queried.
@@ -89,10 +91,13 @@ public final class ModuleDNSQueries {
      * @param moduleId the module ID string
      * @param numId    the NUM ID.
      */
-    public ModuleDNSQueries(@NonNull final NonBlankString moduleId, @NonNull final NonBlankString numId) {
+    public ModuleDNSQueries(final int moduleId, @NonNull final String numId) throws NumInvalidParameterException {
+        if (StringUtils.isAllBlank(numId)) {
+            throw new NumInvalidParameterException(numId);
+        }
         log.debug("ModuleDNSQueries({}, {})", moduleId, numId);
-        this.moduleId = moduleId.value;
-        this.numId = numId.value;
+        this.moduleId = moduleId;
+        this.numId = numId;
     }
 
     /**
@@ -228,4 +233,5 @@ public final class ModuleDNSQueries {
         }
         return path;
     }
+
 }

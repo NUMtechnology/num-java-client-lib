@@ -18,7 +18,6 @@ package uk.num.numlib.internal.dns;
 
 import org.xbill.DNS.Record;
 import uk.num.numlib.exc.*;
-import uk.num.numlib.internal.util.NonBlankString;
 
 /**
  * This interface defines the contract for the DNS Service provider.
@@ -49,8 +48,9 @@ public interface DNSServices {
      * @throws NumInvalidDNSQueryException   on error
      * @throws NumNoRecordAvailableException if a CNAME or SPF record is received instead of a TXT record
      */
-    Record[] getRecordFromDnsNoCache(NonBlankString query, int timeoutMillis) throws
-                                                                              NumNotImplementedException,
-                                                                              NumInvalidDNSQueryException,
-                                                                              NumNoRecordAvailableException;
+    Record[] getRecordFromDnsNoCache(String query, int timeoutMillis) throws
+                                                                      NumNotImplementedException,
+                                                                      NumInvalidDNSQueryException,
+                                                                      NumNoRecordAvailableException;
+
 }

@@ -118,7 +118,7 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getIndependentLocation(@NonNull final String moduleId) {
+    public String getIndependentLocation(final int moduleId) {
         final String result = getRootIndependentLocation(moduleId);
         if (branch == null) {
             return result;
@@ -128,7 +128,7 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getHostedLocation(@NonNull final String moduleId) {
+    public String getHostedLocation(final int moduleId) {
         final String result = getRootHostedLocation(moduleId);
         if (branch == null) {
             return result;
@@ -165,7 +165,7 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getPopulatorLocation(@NonNull final String moduleId) {
+    public String getPopulatorLocation(final int moduleId) {
         if (branch != null) {
             return null;
         }
@@ -178,7 +178,7 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getRootIndependentLocation(@NonNull final String moduleId) {
+    public String getRootIndependentLocation(final int moduleId) {
         return moduleId +
                 StringConstants.UTILITY_MODULE_PREFIX +
                 domain +
@@ -186,7 +186,7 @@ abstract class BaseLookupGenerator implements LookupGenerator {
     }
 
     @Override
-    public String getRootHostedLocation(@NonNull final String moduleId) {
+    public String getRootHostedLocation(final int moduleId) {
         return moduleId +
                 StringConstants.DOMAIN_SEPARATOR +
                 StringConstants.DOMAIN_NAME_PREFIX +

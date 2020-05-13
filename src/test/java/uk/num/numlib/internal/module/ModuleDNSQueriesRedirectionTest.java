@@ -24,7 +24,6 @@ import org.junit.Test;
 import uk.num.numlib.api.NumAPICallbacks;
 import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.internal.ctx.NumAPIContextBase;
-import uk.num.numlib.internal.util.NonBlankString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,9 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class ModuleDNSQueriesRedirectionTest {
+
     private static final AppContext appContext = new AppContext();
+
     private static final List<String[]> testData = new ArrayList<>();
 
     static {
@@ -104,12 +105,12 @@ public class ModuleDNSQueriesRedirectionTest {
         boolean pass = false;
         String message = "";
         try {
-            final ModuleDNSQueries moduleDNSQueries = new ModuleDNSQueries(NonBlankString.of("1"), NonBlankString.of(testData.address));
+            final ModuleDNSQueries moduleDNSQueries = new ModuleDNSQueries(1, testData.address);
             moduleDNSQueries.initialise(appContext);
             final NumAPIContextBase ctx = new NumAPIContextBase();
             ctx.setModuleDNSQueries(moduleDNSQueries);
             ctx.setLocation((testData.location.equals("Independent") ? NumAPICallbacks.Location.INDEPENDENT : NumAPICallbacks.Location.HOSTED));
-            ctx.handleQueryRedirect(NonBlankString.of(testData.redirect), ctx);
+            ctx.handleQueryRedirect(testData.redirect, ctx);
 
             if (testData.location.equals("Independent")) {
                 final String actual = moduleDNSQueries.getIndependentRecordLocation();
@@ -141,17 +142,26 @@ public class ModuleDNSQueriesRedirectionTest {
     @RequiredArgsConstructor
     @ToString
     private static class TestResult {
+
         public final TestData testData;
+
         public final boolean pass;
+
         public final String message;
+
     }
 
     @ToString
     private static class TestData {
+
         public final String type;
+
         public final String location;
+
         public final String redirect;
+
         public final String address;
+
         public final String expectedResult;
 
         TestData(final String[] data) {
@@ -161,5 +171,7 @@ public class ModuleDNSQueriesRedirectionTest {
             address = data[3];
             expectedResult = data[4];
         }
+
     }
+
 }

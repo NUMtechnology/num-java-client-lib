@@ -22,7 +22,6 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.internal.ctx.AppContext;
-import uk.num.numlib.internal.util.NonBlankString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,9 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class ModuleDNSQueriesTest2 {
+
     private static final AppContext appContext = new AppContext();
+
     private static final List<String[]> testData = new ArrayList<>();
 
     static {
@@ -103,7 +104,7 @@ public class ModuleDNSQueriesTest2 {
         boolean pass = false;
         String message = "";
         try {
-            final ModuleDNSQueries m = new ModuleDNSQueries(NonBlankString.of("1"), NonBlankString.of(testData.address));
+            final ModuleDNSQueries m = new ModuleDNSQueries(1, testData.address);
             m.initialise(appContext);
             String actual = "";
 
@@ -138,16 +139,24 @@ public class ModuleDNSQueriesTest2 {
     @RequiredArgsConstructor
     @ToString
     private static class TestResult {
+
         public final TestData testData;
+
         public final boolean pass;
+
         public final String message;
+
     }
 
     @ToString
     private static class TestData {
+
         public final String type;
+
         public final String location;
+
         public final String address;
+
         public final String expectedResult;
 
         TestData(final String[] data) {
@@ -156,5 +165,7 @@ public class ModuleDNSQueriesTest2 {
             address = data[2];
             expectedResult = data[3];
         }
+
     }
+
 }

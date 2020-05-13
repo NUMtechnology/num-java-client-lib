@@ -21,6 +21,7 @@ import org.junit.Test;
 import uk.num.numlib.internal.ctx.AppContext;
 
 public class PunycodeTests {
+
     private static final AppContext appContext = new AppContext();
 
     /**
@@ -30,7 +31,7 @@ public class PunycodeTests {
     public void test_01() throws Exception {
         final LookupGenerator utils = new DomainLookupGenerator(appContext, "num例.com");
 
-        final String result = utils.getIndependentLocation("1");
+        final String result = utils.getIndependentLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "1._num.xn--num-xc0e.com.", result);
     }
@@ -42,7 +43,7 @@ public class PunycodeTests {
     public void test_02() throws Exception {
         final LookupGenerator utils = new DomainLookupGenerator(appContext, "num例.com");
 
-        final String result = utils.getHostedLocation("1");
+        final String result = utils.getHostedLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "1._xn--num-xc0e.com.n.f.5.num.net.", result);
     }
@@ -54,7 +55,7 @@ public class PunycodeTests {
     public void test_04() throws Exception {
         final LookupGenerator utils = new DomainLookupGenerator(appContext, "num例.com");
 
-        final String result = utils.getPopulatorLocation("1");
+        final String result = utils.getPopulatorLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "1._xn--num-xc0e.com.populator.num.net.", result);
     }
@@ -63,10 +64,10 @@ public class PunycodeTests {
      * Convert unicode to text for the independent record using an email branch lookup
      */
     @Test
-    public void test_05() throws Exception {
+    public void test_05() {
         final LookupGenerator utils = new EmailLookupGenerator(appContext, "xi@num例.com");
 
-        final String result = utils.getIndependentLocation("1");
+        final String result = utils.getIndependentLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "1._xi.e._num.xn--num-xc0e.com.", result);
     }
@@ -75,10 +76,10 @@ public class PunycodeTests {
      * Convert unicode to text for the hosted record an email branch lookup
      */
     @Test
-    public void test_06() throws Exception {
+    public void test_06() {
         final LookupGenerator utils = new EmailLookupGenerator(appContext, "xi@num例.com");
 
-        final String result = utils.getHostedLocation("1");
+        final String result = utils.getHostedLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "1._xi.e._xn--num-xc0e.com.n.f.5.num.net.", result);
     }
@@ -90,7 +91,7 @@ public class PunycodeTests {
     public void test_09() throws Exception {
         final LookupGenerator utils = new URLLookupGenerator(appContext, "http://www.num例.com/sales/index.html");
 
-        final String result = utils.getIndependentLocation("1");
+        final String result = utils.getIndependentLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "sales.1._num.xn--num-xc0e.com.", result);
 
@@ -103,8 +104,9 @@ public class PunycodeTests {
     public void test_10() throws Exception {
         final LookupGenerator utils = new URLLookupGenerator(appContext, "http://www.num例.com/sales/index.html");
 
-        final String result = utils.getHostedLocation("1");
+        final String result = utils.getHostedLocation(1);
         Assert.assertNotNull("Bad result.", result);
         Assert.assertEquals("Incorrect result.", "sales.1._xn--num-xc0e.com.n.f.5.num.net.", result);
     }
+
 }

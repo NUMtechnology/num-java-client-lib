@@ -19,7 +19,6 @@ package uk.num.numlib.internal.dns;
 import lombok.extern.log4j.Log4j2;
 import org.xbill.DNS.*;
 import uk.num.numlib.exc.*;
-import uk.num.numlib.internal.util.NonBlankString;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,6 +36,7 @@ import java.util.function.Predicate;
 public class DNSServicesDefaultImpl implements DNSServices {
 
     public static final String MATCH_MULTIPART_RECORD_FRAGMENT = "(^\\d+\\|.*)|(\\d+\\/\\d+\\|_n=\\d+;.*)";
+
     /**
      * Is a record an SPF or CNAME record?
      */
@@ -144,7 +144,7 @@ public class DNSServicesDefaultImpl implements DNSServices {
      *                                       instead of a TXT record
      */
     @Override
-    public Record[] getRecordFromDnsNoCache(final NonBlankString query, final int timeoutMillis)
+    public Record[] getRecordFromDnsNoCache(final String query, final int timeoutMillis)
             throws NumInvalidDNSQueryException, NumNoRecordAvailableException {
         assert timeoutMillis > 0;
 
@@ -157,7 +157,7 @@ public class DNSServicesDefaultImpl implements DNSServices {
         resolver.setIgnoreTruncation(false);
 
         try {
-            final Record queryTxtRecord = Record.newRecord(new Name(query.value), Type.TXT, DClass.IN);
+            final Record queryTxtRecord = Record.newRecord(new Name(query), Type.TXT, DClass.IN);
             final Message queryMessage = Message.newQuery(queryTxtRecord);
             log.debug("Sending DNS Query: {}", queryMessage);
 
@@ -180,4 +180,5 @@ public class DNSServicesDefaultImpl implements DNSServices {
 
         return records;
     }
+
 }

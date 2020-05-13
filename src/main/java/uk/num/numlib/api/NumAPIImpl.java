@@ -36,7 +36,6 @@ import uk.num.numlib.internal.modl.PopulatorResponse;
 import uk.num.numlib.internal.module.ModuleDNSQueries;
 import uk.num.numlib.internal.module.ModuleFactory;
 import uk.num.numlib.internal.util.LegacyEscapeReplacer;
-import uk.num.numlib.internal.util.NonBlankString;
 import uk.num.numlib.internal.util.PopulatorRetryConfig;
 import uk.num.numlib.internal.util.StringConstants;
 
@@ -65,6 +64,7 @@ import static uk.num.numlib.api.NumAPICallbacks.Location.*;
 public final class NumAPIImpl implements NumAPI {
 
     public static final String MATCH_NUM_RECORDS = "(_n=[0-9]+;.*)|(^\\d+\\|.*)|(\\d+/\\d+\\|_n=\\d+;.*)";
+
     /**
      * The ApplicationContext to use for this NUM API Session
      */
@@ -73,14 +73,17 @@ public final class NumAPIImpl implements NumAPI {
     private final ModuleFactory moduleFactory = new ModuleFactory();
 
     private final LegacyEscapeReplacer legacyEscapeReplacer;
+
     /**
      * Services for running the MODL Interpreter
      */
     private final ModlServices modlServices;
+
     /**
      * Supports running DNS queries asynchronously.
      */
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
     /**
      * Services for accessing DNS and processing the resulting records.
      */
@@ -201,8 +204,7 @@ public final class NumAPIImpl implements NumAPI {
      * @param numAddress    E.g. `domain:module/path` or `user@domain:module/path` module is optional and defaults to 1
      * @param timeoutMillis the timeout in milliseconds to wait for responses from DNS.
      * @return a new NumAPIContextBase object.
-     * @throws MalformedURLException        on error
-     * @throws NumInvalidParameterException on error
+     * @throws MalformedURLException on error
      */
     @Override
     public NumAPIContext begin(@NonNull final String numAddress, final int timeoutMillis) throws
@@ -220,8 +222,7 @@ public final class NumAPIImpl implements NumAPI {
      * @param numAddress    E.g. `domain:module/path` or `user@domain:module/path` module is optional and defaults to 1
      * @param timeoutMillis the timeout in milliseconds to wait for responses from DNS.
      * @return a new NumAPIContextBase object.
-     * @throws MalformedURLException        on error
-     * @throws NumInvalidParameterException on error
+     * @throws MalformedURLException on error
      */
     @Override
     public NumAPIContext begin(@NonNull final URL numAddress, final int timeoutMillis) throws
@@ -235,16 +236,15 @@ public final class NumAPIImpl implements NumAPI {
         final String numId = (numAddress.getUserInfo() != null) ? numAddress.getUserInfo() + "@" + numAddress.getHost() + path : numAddress.getHost() + path;
 
         // Default to module (port) 0
-        final int port = (numAddress.getPort() > -1) ? numAddress.getPort() : 0;
-        final String moduleId = "" + port;
+        final int moduleNumber = (numAddress.getPort() > -1) ? numAddress.getPort() : 0;
 
-        log.info("enter - begin({}, {}, {})", moduleId, numId, timeoutMillis);
+        log.info("enter - begin({}, {}, {})", moduleNumber, numId, timeoutMillis);
         assert timeoutMillis > 0;
 
         // Create the context object and the validated ModuleDNSQueries object.
         final NumAPIContextBase ctx = new NumAPIContextBase();
 
-        final ModuleDNSQueries moduleDNSQueries = moduleFactory.getInstance(appContext, NonBlankString.of(moduleId), NonBlankString.of(numId));
+        final ModuleDNSQueries moduleDNSQueries = moduleFactory.getInstance(appContext, moduleNumber, numId);
         ctx.setModuleDNSQueries(moduleDNSQueries);
 
         log.info("exit - begin()");
@@ -299,7 +299,6 @@ public final class NumAPIImpl implements NumAPI {
      * @return a NUM record String
      * @throws NumBadRecordException                    on error
      * @throws NumInvalidRedirectException              on error
-     * @throws NumInvalidParameterException             on error
      * @throws NumNotImplementedException               on error
      * @throws NumInvalidDNSQueryException              on error
      * @throws NumMaximumRedirectsExceededException     on error
@@ -313,7 +312,6 @@ public final class NumAPIImpl implements NumAPI {
     private String numLookup(final NumAPIContext ctx, final NumAPICallbacks handler, final int timeoutMillis) throws
                                                                                                               NumBadRecordException,
                                                                                                               NumInvalidRedirectException,
-                                                                                                              NumInvalidParameterException,
                                                                                                               NumNotImplementedException,
                                                                                                               NumInvalidDNSQueryException,
                                                                                                               NumMaximumRedirectsExceededException,
@@ -395,9 +393,9 @@ public final class NumAPIImpl implements NumAPI {
                 }
             } catch (final NumLookupRedirect numLookupRedirect) {
                 context.setLocation(INDEPENDENT);
-                context.handleQueryRedirect(NonBlankString.of(numLookupRedirect.getRedirect()), context);
+                context.handleQueryRedirect(numLookupRedirect.getRedirect(), context);
             } catch (final NumQueryRedirect numQueryRedirect) {
-                context.handleQueryRedirect(NonBlankString.of(numQueryRedirect.getRedirect()), context);
+                context.handleQueryRedirect(numQueryRedirect.getRedirect(), context);
             }
         } while (true);
     }
@@ -487,8 +485,7 @@ public final class NumAPIImpl implements NumAPI {
                                                                                                                                 NumInvalidDNSQueryException,
                                                                                                                                 RrSetHeaderFormatException,
                                                                                                                                 RrSetIncompleteException,
-                                                                                                                                RrSetNoHeadersException,
-                                                                                                                                NumInvalidParameterException {
+                                                                                                                                RrSetNoHeadersException {
         log.info("getNumRecordFromPopulator()");
         final String recordLocation = context.getModuleDNSQueries()
                 .getPopulatorLocation();
@@ -499,7 +496,7 @@ public final class NumAPIImpl implements NumAPI {
 
         String numRecord = null;
         while (numRecord == null) {
-            numRecord = getNumRecordNoCache(timeoutMillis, NonBlankString.of(recordLocation));
+            numRecord = getNumRecordNoCache(timeoutMillis, recordLocation);
             if (numRecord == null) {
                 // This is unrecoverable, we should get status_ or error_ object.
                 break;
@@ -576,8 +573,7 @@ public final class NumAPIImpl implements NumAPI {
                                                                                                                                                        NumNotImplementedException,
                                                                                                                                                        RrSetHeaderFormatException,
                                                                                                                                                        RrSetIncompleteException,
-                                                                                                                                                       RrSetNoHeadersException,
-                                                                                                                                                       NumInvalidParameterException {
+                                                                                                                                                       RrSetNoHeadersException {
         log.info("handlePopulatorStatusCodes()");
         String numRecord = null;
         switch (response.getStatus_()
@@ -660,10 +656,10 @@ public final class NumAPIImpl implements NumAPI {
      * @throws NumQueryRedirect      on error
      * @throws NumLookupRedirect     on error
      */
-    private String getInterpretedNumRecordAsJson(final String moduleNumber, final NumAPIContext context, final String numRecord) throws
-                                                                                                                                 NumBadRecordException,
-                                                                                                                                 NumQueryRedirect,
-                                                                                                                                 NumLookupRedirect {
+    private String getInterpretedNumRecordAsJson(final int moduleNumber, final NumAPIContext context, final String numRecord) throws
+                                                                                                                              NumBadRecordException,
+                                                                                                                              NumQueryRedirect,
+                                                                                                                              NumLookupRedirect {
         log.info("getInterpretedNumRecordAsJson({}, {})", moduleNumber, numRecord);
         final StringBuilder numRecordBuffer = new StringBuilder();
 
@@ -677,7 +673,7 @@ public final class NumAPIImpl implements NumAPI {
                 numRecordBuffer.append(";");
             }
         }
-        if (!"0".equals(moduleNumber)) {
+        if (moduleNumber > 0) {
             numRecordBuffer.append("*load=\"http://modules.num.uk/");
             numRecordBuffer.append(moduleNumber);
             numRecordBuffer.append("/rcf.txt!\";");
@@ -733,15 +729,14 @@ public final class NumAPIImpl implements NumAPI {
                                                                               NumNoRecordAvailableException,
                                                                               RrSetHeaderFormatException,
                                                                               RrSetIncompleteException,
-                                                                              RrSetNoHeadersException,
-                                                                              NumInvalidParameterException {
+                                                                              RrSetNoHeadersException {
         final String recordLocation = context.getRecordLocation();
         if (recordLocation == null) {
             return null;
         }
         log.info("getNumRecord({}, context, {})", timeoutMillis, recordLocation);
         Record[] recordFromDns;
-        recordFromDns = dnsServices.getRecordFromDnsNoCache(NonBlankString.of(recordLocation), timeoutMillis);
+        recordFromDns = dnsServices.getRecordFromDnsNoCache(recordLocation, timeoutMillis);
         if (recordFromDns == null || recordFromDns.length == 0) {
             return null;
         }
@@ -761,13 +756,13 @@ public final class NumAPIImpl implements NumAPI {
      * @throws RrSetHeaderFormatException    on error
      * @throws RrSetNoHeadersException       on error
      */
-    private String getNumRecordNoCache(int timeoutMillis, NonBlankString recordLocation) throws
-                                                                                         NumInvalidDNSQueryException,
-                                                                                         NumNotImplementedException,
-                                                                                         NumNoRecordAvailableException,
-                                                                                         RrSetHeaderFormatException,
-                                                                                         RrSetIncompleteException,
-                                                                                         RrSetNoHeadersException {
+    private String getNumRecordNoCache(int timeoutMillis, String recordLocation) throws
+                                                                                 NumInvalidDNSQueryException,
+                                                                                 NumNotImplementedException,
+                                                                                 NumNoRecordAvailableException,
+                                                                                 RrSetHeaderFormatException,
+                                                                                 RrSetIncompleteException,
+                                                                                 RrSetNoHeadersException {
         log.info("getNumRecordNoCache({}, context, {})", timeoutMillis, recordLocation);
         Record[] recordFromDns;
         recordFromDns = dnsServices.getRecordFromDnsNoCache(recordLocation, timeoutMillis);
@@ -796,5 +791,6 @@ public final class NumAPIImpl implements NumAPI {
         }
         log.info("Shutdown complete.");
     }
+
 }
 

@@ -17,15 +17,17 @@
 package uk.num.numlib.internal.util;
 
 public interface LookupGenerator {
-    String getIndependentLocation(final String moduleId);
 
-    String getHostedLocation(final String moduleId);
+    String getIndependentLocation(final int moduleId);
+
+    String getHostedLocation(final int moduleId);
 
     boolean isDomainRoot();
 
-    String getPopulatorLocation(final String moduleId);
+    String getPopulatorLocation(final int moduleId);
 
-    String getRootIndependentLocation(final String moduleId);
+    String getRootIndependentLocation(final int moduleId);
 
-    String getRootHostedLocation(final String moduleId);
+    String getRootHostedLocation(final int moduleId);
+
 }

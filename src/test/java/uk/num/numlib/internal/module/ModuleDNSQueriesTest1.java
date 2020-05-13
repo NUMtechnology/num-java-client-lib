@@ -19,43 +19,43 @@ package uk.num.numlib.internal.module;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.util.NonBlankString;
 
 public class ModuleDNSQueriesTest1 {
 
     @Test(expected = Exception.class)
-    public void initialise1() {
-        new ModuleDNSQueries(null, null);
+    public void initialise1() throws NumInvalidParameterException {
+        new ModuleDNSQueries(-1, null);
     }
 
     @Test(expected = Exception.class)
-    public void initialise2() throws Exception {
-        new ModuleDNSQueries(NonBlankString.of(""), null);
+    public void initialise2() throws NumInvalidParameterException {
+        new ModuleDNSQueries(-1, null);
     }
 
     @Test(expected = Exception.class)
-    public void initialise3() throws Exception {
-        new ModuleDNSQueries(NonBlankString.of("  "), null);
+    public void initialise3() throws NumInvalidParameterException {
+        new ModuleDNSQueries(-1, null);
     }
 
     @Test(expected = Exception.class)
-    public void initialise4() throws Exception {
-        new ModuleDNSQueries(NonBlankString.of("1"), null);
+    public void initialise4() throws NumInvalidParameterException {
+        new ModuleDNSQueries(1, null);
     }
 
     @Test(expected = Exception.class)
-    public void initialise5() throws Exception {
-        new ModuleDNSQueries(NonBlankString.of("1"), NonBlankString.of(""));
+    public void initialise5() throws NumInvalidParameterException {
+        new ModuleDNSQueries(1, "");
     }
 
     @Test(expected = Exception.class)
-    public void initialise6() throws Exception {
-        new ModuleDNSQueries(NonBlankString.of("1"), NonBlankString.of(" "));
+    public void initialise6() throws NumInvalidParameterException {
+        new ModuleDNSQueries(1, " ");
     }
 
     @Test
     public void getModuleId() throws NumInvalidParameterException {
-        final ModuleDNSQueries m = new ModuleDNSQueries(NonBlankString.of("1"), NonBlankString.of("numexample.com"));
-        Assert.assertEquals("ModuleDNSQueries Id not set correctly", "1", m.getModuleId());
+        final ModuleDNSQueries m = new ModuleDNSQueries(1, "numexample.com");
+        Assert.assertEquals("ModuleDNSQueries Id not set correctly", 1, m.getModuleId());
     }
+
 }

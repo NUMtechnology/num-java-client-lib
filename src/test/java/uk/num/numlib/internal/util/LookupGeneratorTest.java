@@ -21,28 +21,32 @@ import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class LookupGeneratorTest {
+
     public static final String EXPECTED_INDEPENDENT = "1._num.numexample.com.";
+
     public static final String EXPECTED_HOSTED = "1._numexample.com.c.7.m.num.net.";
+
     public static final String EXPECTED_POPULATOR = "1._numexample.com.populator.num.net.";
+
     private static final AppContext appContext = new AppContext();
 
     @Test
     public void consistencyTest1() throws MalformedURLException {
-        final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getHostedLocation("1");
-        final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getHostedLocation("1");
-        final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getHostedLocation("1");
-        final String s4 = new DomainLookupGenerator(appContext, "www.numexample.com/").getHostedLocation("1");
-        final String s5 = new URLLookupGenerator(appContext, "http://numexample.com").getHostedLocation("1");
-        final String s6 = new URLLookupGenerator(appContext, "https://numexample.com").getHostedLocation("1");
-        final String s7 = new URLLookupGenerator(appContext, "http://www.numexample.com").getHostedLocation("1");
-        final String s8 = new URLLookupGenerator(appContext, "https://www.numexample.com").getHostedLocation("1");
-        final String s9 = new URLLookupGenerator(appContext, "http://numexample.com/").getHostedLocation("1");
-        final String s10 = new URLLookupGenerator(appContext, "https://numexample.com/").getHostedLocation("1");
-        final String s11 = new URLLookupGenerator(appContext, "http://www.numexample.com/").getHostedLocation("1");
-        final String s12 = new URLLookupGenerator(appContext, "https://www.numexample.com/").getHostedLocation("1");
+        final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getHostedLocation(1);
+        final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getHostedLocation(1);
+        final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getHostedLocation(1);
+        final String s4 = new DomainLookupGenerator(appContext, "www.numexample.com/").getHostedLocation(1);
+        final String s5 = new URLLookupGenerator(appContext, "http://numexample.com").getHostedLocation(1);
+        final String s6 = new URLLookupGenerator(appContext, "https://numexample.com").getHostedLocation(1);
+        final String s7 = new URLLookupGenerator(appContext, "http://www.numexample.com").getHostedLocation(1);
+        final String s8 = new URLLookupGenerator(appContext, "https://www.numexample.com").getHostedLocation(1);
+        final String s9 = new URLLookupGenerator(appContext, "http://numexample.com/").getHostedLocation(1);
+        final String s10 = new URLLookupGenerator(appContext, "https://numexample.com/").getHostedLocation(1);
+        final String s11 = new URLLookupGenerator(appContext, "http://www.numexample.com/").getHostedLocation(1);
+        final String s12 = new URLLookupGenerator(appContext, "https://www.numexample.com/").getHostedLocation(1);
 
         assertEquals(EXPECTED_HOSTED, s1);
         assertEquals(EXPECTED_HOSTED, s2);
@@ -60,18 +64,18 @@ public class LookupGeneratorTest {
 
     @Test
     public void consistencyTest2() throws MalformedURLException {
-        final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getIndependentLocation("1");
-        final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getIndependentLocation("1");
-        final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getIndependentLocation("1");
-        final String s4 = new DomainLookupGenerator(appContext, "www.numexample.com/").getIndependentLocation("1");
-        final String s5 = new URLLookupGenerator(appContext, "http://numexample.com").getIndependentLocation("1");
-        final String s6 = new URLLookupGenerator(appContext, "https://numexample.com").getIndependentLocation("1");
-        final String s7 = new URLLookupGenerator(appContext, "http://www.numexample.com").getIndependentLocation("1");
-        final String s8 = new URLLookupGenerator(appContext, "https://www.numexample.com").getIndependentLocation("1");
-        final String s9 = new URLLookupGenerator(appContext, "http://numexample.com/").getIndependentLocation("1");
-        final String s10 = new URLLookupGenerator(appContext, "https://numexample.com/").getIndependentLocation("1");
-        final String s11 = new URLLookupGenerator(appContext, "http://www.numexample.com/").getIndependentLocation("1");
-        final String s12 = new URLLookupGenerator(appContext, "https://www.numexample.com/").getIndependentLocation("1");
+        final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getIndependentLocation(1);
+        final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getIndependentLocation(1);
+        final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getIndependentLocation(1);
+        final String s4 = new DomainLookupGenerator(appContext, "www.numexample.com/").getIndependentLocation(1);
+        final String s5 = new URLLookupGenerator(appContext, "http://numexample.com").getIndependentLocation(1);
+        final String s6 = new URLLookupGenerator(appContext, "https://numexample.com").getIndependentLocation(1);
+        final String s7 = new URLLookupGenerator(appContext, "http://www.numexample.com").getIndependentLocation(1);
+        final String s8 = new URLLookupGenerator(appContext, "https://www.numexample.com").getIndependentLocation(1);
+        final String s9 = new URLLookupGenerator(appContext, "http://numexample.com/").getIndependentLocation(1);
+        final String s10 = new URLLookupGenerator(appContext, "https://numexample.com/").getIndependentLocation(1);
+        final String s11 = new URLLookupGenerator(appContext, "http://www.numexample.com/").getIndependentLocation(1);
+        final String s12 = new URLLookupGenerator(appContext, "https://www.numexample.com/").getIndependentLocation(1);
 
         assertEquals(EXPECTED_INDEPENDENT, s1);
         assertEquals(EXPECTED_INDEPENDENT, s2);
@@ -89,18 +93,18 @@ public class LookupGeneratorTest {
 
     @Test
     public void consistencyTest3() throws MalformedURLException {
-        final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getPopulatorLocation("1");
-        final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getPopulatorLocation("1");
-        final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getPopulatorLocation("1");
-        final String s4 = new DomainLookupGenerator(appContext, "www.numexample.com/").getPopulatorLocation("1");
-        final String s5 = new URLLookupGenerator(appContext, "http://numexample.com").getPopulatorLocation("1");
-        final String s6 = new URLLookupGenerator(appContext, "https://numexample.com").getPopulatorLocation("1");
-        final String s7 = new URLLookupGenerator(appContext, "http://www.numexample.com").getPopulatorLocation("1");
-        final String s8 = new URLLookupGenerator(appContext, "https://www.numexample.com").getPopulatorLocation("1");
-        final String s9 = new URLLookupGenerator(appContext, "http://numexample.com/").getPopulatorLocation("1");
-        final String s10 = new URLLookupGenerator(appContext, "https://numexample.com/").getPopulatorLocation("1");
-        final String s11 = new URLLookupGenerator(appContext, "http://www.numexample.com/").getPopulatorLocation("1");
-        final String s12 = new URLLookupGenerator(appContext, "https://www.numexample.com/").getPopulatorLocation("1");
+        final String s1 = new DomainLookupGenerator(appContext, "numexample.com").getPopulatorLocation(1);
+        final String s2 = new DomainLookupGenerator(appContext, "www.numexample.com").getPopulatorLocation(1);
+        final String s3 = new DomainLookupGenerator(appContext, "numexample.com/").getPopulatorLocation(1);
+        final String s4 = new DomainLookupGenerator(appContext, "www.numexample.com/").getPopulatorLocation(1);
+        final String s5 = new URLLookupGenerator(appContext, "http://numexample.com").getPopulatorLocation(1);
+        final String s6 = new URLLookupGenerator(appContext, "https://numexample.com").getPopulatorLocation(1);
+        final String s7 = new URLLookupGenerator(appContext, "http://www.numexample.com").getPopulatorLocation(1);
+        final String s8 = new URLLookupGenerator(appContext, "https://www.numexample.com").getPopulatorLocation(1);
+        final String s9 = new URLLookupGenerator(appContext, "http://numexample.com/").getPopulatorLocation(1);
+        final String s10 = new URLLookupGenerator(appContext, "https://numexample.com/").getPopulatorLocation(1);
+        final String s11 = new URLLookupGenerator(appContext, "http://www.numexample.com/").getPopulatorLocation(1);
+        final String s12 = new URLLookupGenerator(appContext, "https://www.numexample.com/").getPopulatorLocation(1);
 
         assertEquals(EXPECTED_POPULATOR, s1);
         assertEquals(EXPECTED_POPULATOR, s2);
@@ -115,4 +119,5 @@ public class LookupGeneratorTest {
         assertEquals(EXPECTED_POPULATOR, s11);
         assertEquals(EXPECTED_POPULATOR, s12);
     }
+
 }

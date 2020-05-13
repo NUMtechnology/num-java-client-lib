@@ -18,7 +18,6 @@ package uk.num.numlib.internal.module;
 
 import lombok.extern.log4j.Log4j2;
 import uk.num.numlib.internal.ctx.AppContext;
-import uk.num.numlib.internal.util.NonBlankString;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,6 +28,7 @@ import java.io.InputStreamReader;
  */
 @Log4j2
 public class Interactive {
+
     private static final AppContext appContext = new AppContext();
 
     public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class Interactive {
                 final String s = getLine();
                 checkExit(s);
                 System.out.println("Input = " + s);
-                final ModuleDNSQueries m = new ModuleDNSQueries(NonBlankString.of("1"), NonBlankString.of(s));
+                final ModuleDNSQueries m = new ModuleDNSQueries(1, s);
                 m.initialise(appContext);
 
                 System.out.println(m.getIndependentRecordLocation());
@@ -61,4 +61,5 @@ public class Interactive {
         final BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
         return buffer.readLine();
     }
+
 }

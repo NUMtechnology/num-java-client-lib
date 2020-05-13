@@ -27,7 +27,6 @@ import uk.num.numlib.exc.NumInvalidRedirectException;
 import uk.num.numlib.exc.NumMaximumRedirectsExceededException;
 import uk.num.numlib.exc.RelativePathException;
 import uk.num.numlib.internal.module.ModuleDNSQueries;
-import uk.num.numlib.internal.util.NonBlankString;
 import uk.num.numlib.internal.util.UrlRelativePathResolver;
 
 /**
@@ -37,6 +36,7 @@ import uk.num.numlib.internal.util.UrlRelativePathResolver;
  */
 @Log4j2
 public class NumAPIContextBase implements NumAPIContext {
+
     private static final int MAX_NUM_REDIRECTS = 3;
 
     /**
@@ -62,6 +62,7 @@ public class NumAPIContextBase implements NumAPIContext {
      * Count redirects so we don't redirect forever.
      */
     private int redirectCount = 0;
+
     /**
      * The location currently being checked for a NUM record.
      */
@@ -106,10 +107,10 @@ public class NumAPIContextBase implements NumAPIContext {
      * @throws NumInvalidDNSQueryException          on Error
      * @throws NumInvalidRedirectException          on Error
      */
-    public void handleQueryRedirect(final NonBlankString redirect, final NumAPIContextBase context) throws
-                                                                                                    NumMaximumRedirectsExceededException,
-                                                                                                    NumInvalidDNSQueryException,
-                                                                                                    NumInvalidRedirectException {
+    public void handleQueryRedirect(final String redirect, final NumAPIContextBase context) throws
+                                                                                            NumMaximumRedirectsExceededException,
+                                                                                            NumInvalidDNSQueryException,
+                                                                                            NumInvalidRedirectException {
         log.info("Query Redirected to: {}", redirect);
         int redirectCount = context.incrementRedirectCount();
         if (redirectCount >= MAX_NUM_REDIRECTS) {
@@ -134,12 +135,12 @@ public class NumAPIContextBase implements NumAPIContext {
      * @throws NumInvalidDNSQueryException on error
      * @throws NumInvalidRedirectException on error
      */
-    private void handleHostedQueryRedirect(final NonBlankString redirectTo) throws
-                                                                            NumInvalidDNSQueryException,
-                                                                            NumInvalidRedirectException {
+    private void handleHostedQueryRedirect(final String redirectTo) throws
+                                                                    NumInvalidDNSQueryException,
+                                                                    NumInvalidRedirectException {
         final String hostedRecordPath = moduleDNSQueries.getHostedRecordPath();
         try {
-            moduleDNSQueries.redirectHostedPath(UrlRelativePathResolver.resolve(hostedRecordPath, redirectTo.value));
+            moduleDNSQueries.redirectHostedPath(UrlRelativePathResolver.resolve(hostedRecordPath, redirectTo));
         } catch (final RelativePathException e) {
             throw new NumInvalidRedirectException(e);
         }
@@ -152,12 +153,12 @@ public class NumAPIContextBase implements NumAPIContext {
      * @throws NumInvalidDNSQueryException on error
      * @throws NumInvalidRedirectException on error
      */
-    private void handleIndependentQueryRedirect(final NonBlankString redirectTo) throws
-                                                                                 NumInvalidRedirectException,
-                                                                                 NumInvalidDNSQueryException {
+    private void handleIndependentQueryRedirect(final String redirectTo) throws
+                                                                         NumInvalidRedirectException,
+                                                                         NumInvalidDNSQueryException {
         final String independentRecordPath = moduleDNSQueries.getIndependentRecordPath();
         try {
-            moduleDNSQueries.redirectIndependentPath(UrlRelativePathResolver.resolve(independentRecordPath, redirectTo.value));
+            moduleDNSQueries.redirectIndependentPath(UrlRelativePathResolver.resolve(independentRecordPath, redirectTo));
         } catch (final RelativePathException e) {
             throw new NumInvalidRedirectException(e);
         }
@@ -185,4 +186,5 @@ public class NumAPIContextBase implements NumAPIContext {
     public void setRequiredUserVariables(final UserVariable[] uv) {
         this.requiredUserVariables = uv;
     }
+
 }

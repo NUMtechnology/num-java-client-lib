@@ -23,7 +23,6 @@ import org.xbill.DNS.Record;
 import org.xbill.DNS.TXTRecord;
 import org.xbill.DNS.TextParseException;
 import uk.num.numlib.internal.util.HashUtils;
-import uk.num.numlib.internal.util.NonBlankString;
 import uk.num.numlib.internal.util.StringConstants;
 
 import java.util.Arrays;
@@ -33,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class DummyDNSServices extends DNSServicesDefaultImpl {
+
     private static final Map<String, String[]> dns = new HashMap<>();
 
     static {
@@ -201,10 +201,10 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
      * @return An array of Records
      */
     @Override
-    public Record[] getRecordFromDnsNoCache(final NonBlankString query, final int timeoutMillis) {
+    public Record[] getRecordFromDnsNoCache(final String query, final int timeoutMillis) {
 
         log.info("DUMMY DNS QUERY: {}", query);
-        final String noDotQuery = (query.value.endsWith(StringConstants.DOMAIN_SEPARATOR)) ? StringUtils.removeEnd(query.value, StringConstants.DOMAIN_SEPARATOR) : query.value;
+        final String noDotQuery = (query.endsWith(StringConstants.DOMAIN_SEPARATOR)) ? StringUtils.removeEnd(query, StringConstants.DOMAIN_SEPARATOR) : query;
         Record[] records;
         final String[] values = dns.get(noDotQuery);
 
@@ -212,7 +212,7 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
             records = Arrays.stream(values)
                     .map(s -> {
                         try {
-                            return new TXTRecord(Name.fromString(query.value), 0, 0, s);
+                            return new TXTRecord(Name.fromString(query), 0, 0, s);
                         } catch (TextParseException e) {
                             log.error("Error parsing Name object", e);
                         }
@@ -227,4 +227,5 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
 
         return records;
     }
+
 }

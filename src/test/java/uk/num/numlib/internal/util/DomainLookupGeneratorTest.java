@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import static org.junit.Assert.*;
 
 public class DomainLookupGeneratorTest {
+
     private static final AppContext appContext = new AppContext();
 
     @Test
@@ -59,17 +60,17 @@ public class DomainLookupGeneratorTest {
         final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com/test1例/test2例/test3例");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
         assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h", domainLookupGenerator.branch);
-        assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h.1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation("1"));
-        assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h.1._xn--testdomain-4y5p.com.b.5.m.num.net.", domainLookupGenerator.getHostedLocation("1"));
+        assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h.1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation(1));
+        assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h.1._xn--testdomain-4y5p.com.b.5.m.num.net.", domainLookupGenerator.getHostedLocation(1));
     }
 
     @Test
     public void testConstructor6() throws MalformedURLException {
         final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
-        assertEquals("1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation("1"));
-        assertEquals("1._xn--testdomain-4y5p.com.b.5.m.num.net.", domainLookupGenerator.getHostedLocation("1"));
-        assertEquals("1._xn--testdomain-4y5p.com.populator.num.net.", domainLookupGenerator.getPopulatorLocation("1"));
+        assertEquals("1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation(1));
+        assertEquals("1._xn--testdomain-4y5p.com.b.5.m.num.net.", domainLookupGenerator.getHostedLocation(1));
+        assertEquals("1._xn--testdomain-4y5p.com.populator.num.net.", domainLookupGenerator.getPopulatorLocation(1));
     }
 
 }
