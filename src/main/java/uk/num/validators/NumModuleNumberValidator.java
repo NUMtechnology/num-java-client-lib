@@ -16,9 +16,18 @@
 
 package uk.num.validators;
 
+/**
+ * Validate Module Numbers
+ */
 public class NumModuleNumberValidator {
 
 
+    /**
+     * Validate a module number
+     *
+     * @param moduleNumber int
+     * @return ValidationResult
+     */
     public ValidationResult validate(final int moduleNumber) {
         final ValidationResult result = new ValidationResult();
 
@@ -29,6 +38,12 @@ public class NumModuleNumberValidator {
         return result;
     }
 
+    /**
+     * Validate a module number
+     *
+     * @param moduleNumber String
+     * @return ValidationResult
+     */
     public ValidationResult validate(final String moduleNumber) {
         final ValidationResult result = new ValidationResult();
 
@@ -36,7 +51,7 @@ public class NumModuleNumberValidator {
         try {
             number = Integer.parseInt(moduleNumber);
         } catch (final Throwable e) {
-            result.addMessage(ValidationResult.ErrorCode.INVALID_NUM_PROTOCOL_PREFIX, moduleNumber);
+            result.addMessage(ValidationResult.ErrorCode.INVALID_MODULE_NUMBER, moduleNumber);
         }
 
         if (number < 0) {

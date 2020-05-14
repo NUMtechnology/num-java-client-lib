@@ -19,12 +19,30 @@ package uk.num.validators;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+/**
+ * Validate Domain Strings.
+ * Note: Use NumUriValidator instead if the module number is known.
+ */
 public class NumDomainValidator {
 
+    /**
+     * Domain Regex
+     */
     public static final Pattern NUM_DOMAIN_REGEX = Pattern.compile("^(([^.\\s\f\t\r\b]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?))\\.??$");
 
+    /**
+     * @see "https://en.wikipedia.org/wiki/Domain_name#Domain_name_syntax"
+     */
     public static final int MAX_DOMAIN_NAME_LENGTH = 253;
 
+    public static final int MAX_LABEL_LENGTH = 63;
+
+    /**
+     * Sometimes nulls are considered valid.
+     *
+     * @param domain a String
+     * @return a ValidationResult
+     */
     public ValidationResult validateAcceptingNullAsValid(final String domain) {
         if (domain == null) {
             return ValidationResult.VALID_NO_ERRORS;
@@ -32,6 +50,12 @@ public class NumDomainValidator {
         return validate(domain);
     }
 
+    /**
+     * Validate a domain.
+     *
+     * @param domain a String
+     * @return a ValidationResult
+     */
     public ValidationResult validate(final String domain) {
         final ValidationResult result = new ValidationResult();
 
@@ -39,15 +63,19 @@ public class NumDomainValidator {
             if (domain == null) {
                 result.addMessage(ValidationResult.ErrorCode.NULL_UNACCEPTABLE, "domain");
             } else {
+                // Max length
                 if (domain.getBytes().length > MAX_DOMAIN_NAME_LENGTH) {
                     result.addMessage(ValidationResult.ErrorCode.DOMAIN_NAME_TOO_LONG, domain);
                 }
 
                 Arrays.stream(domain.split("\\."))
                         .forEach(label -> {
+                            //
+                            // Check label lengths and invalid characters
+                            //
                             if (label.getBytes().length == 0) {
                                 result.addMessage(ValidationResult.ErrorCode.ZERO_LENGTH_LABEL, domain);
-                            } else if (label.getBytes().length > 63) {
+                            } else if (label.getBytes().length > MAX_LABEL_LENGTH) {
                                 result.addMessage(ValidationResult.ErrorCode.LABEL_TOO_LONG, label);
                             }
 
@@ -70,6 +98,10 @@ public class NumDomainValidator {
                                 result.addMessage(ValidationResult.ErrorCode.NEWLINE_IN_LABEL, label);
                             }
                         });
+
+                //
+                // Catch any other errors using the regex
+                //
                 if (!NUM_DOMAIN_REGEX.matcher(domain)
                         .matches()) {
                     result.addMessage(ValidationResult.ErrorCode.PATTERN_MISMATCH, domain);

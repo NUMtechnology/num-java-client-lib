@@ -21,12 +21,27 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+/**
+ * Validate the path part of a NUM URI
+ */
 public class NumUriPathValidator {
 
+    /**
+     * Path regex
+     */
     public static final Pattern NUM_PATH_REGEX = Pattern.compile("^(/[^;,/?:@&=+$.\\s]+?)*?/??$");
 
-    public static final int MAX_PATH_PART_LENGTH = 63;
+    /**
+     * Path components are converted to domain name labels so have the same length restriction.
+     */
+    public static final int MAX_PATH_PART_LENGTH = NumDomainValidator.MAX_LABEL_LENGTH;
 
+    /**
+     * Sometimes null values are considered valid.
+     *
+     * @param path a String
+     * @return ValidationResult
+     */
     public ValidationResult validateAcceptingNullAsValid(final String path) {
         if (path == null) {
             return ValidationResult.VALID_NO_ERRORS;
@@ -34,6 +49,12 @@ public class NumUriPathValidator {
         return validate(path);
     }
 
+    /**
+     * Validate a URI path.
+     *
+     * @param path a String
+     * @return ValidationResult
+     */
     public ValidationResult validate(final String path) {
         final ValidationResult result = new ValidationResult();
 
@@ -41,24 +62,28 @@ public class NumUriPathValidator {
             if (path == null) {
                 result.addMessage(ValidationResult.ErrorCode.NULL_UNACCEPTABLE, "path");
             } else {
+
+                // Check for leading slash
                 if (!path.startsWith("/")) {
                     result.addMessage(ValidationResult.ErrorCode.PATH_MUST_START_WITH_SLASH, path);
                 }
 
-                final String[] parts = StringUtils.removeStart(path, "/")
+                // Split into path components
+                final String[] pathComponents = StringUtils.removeStart(path, "/")
                         .split("/");
 
-                Arrays.stream(parts)
-                        .forEach(part -> {
-                            if (part.getBytes().length == 0) {
+                // Check each path component
+                Arrays.stream(pathComponents)
+                        .forEach(pathComponent -> {
+                            if (pathComponent.getBytes().length == 0) {
                                 result.addMessage(ValidationResult.ErrorCode.ZERO_LENGTH_PATH_COMPONENT, path);
                             }
-                            if (part.getBytes().length > MAX_PATH_PART_LENGTH) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_TOO_LONG, part);
+                            if (pathComponent.getBytes().length > MAX_PATH_PART_LENGTH) {
+                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_TOO_LONG, pathComponent);
                             }
                         });
 
-
+                // Catch any other errors using the regex
                 if (!NUM_PATH_REGEX.matcher(path)
                         .matches()) {
                     result.addMessage(ValidationResult.ErrorCode.PATTERN_MISMATCH, path);

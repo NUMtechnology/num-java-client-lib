@@ -18,12 +18,27 @@ package uk.num.validators;
 
 import java.util.regex.Pattern;
 
+/**
+ * Validate email addresses
+ */
 public class NumEmailAddressValidator {
 
+    /**
+     * Email address regex
+     */
     public static final Pattern NUM_EMAIL_REGEX = Pattern.compile("^(?!\\s)[^@\f\t\r\b\n]+?(?<!\\s)@(([^.\\s\f\t\r\b\n]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?))\\.??$");
 
+    /**
+     * @see "https://en.wikipedia.org/wiki/Email_address#Syntax"
+     */
     public static final int MAX_LOCAL_PART_LENGTH = 64;
 
+    /**
+     * Sometimes null values are considered valid.
+     *
+     * @param emailAddress a String
+     * @return a ValidationResult
+     */
     public ValidationResult validateAcceptingNullAsValid(final String emailAddress) {
         if (emailAddress == null) {
             return ValidationResult.VALID_NO_ERRORS;
@@ -31,6 +46,12 @@ public class NumEmailAddressValidator {
         return validate(emailAddress);
     }
 
+    /**
+     * Validate an email address.
+     *
+     * @param emailAddress a String
+     * @return a ValidationResult
+     */
     public ValidationResult validate(final String emailAddress) {
         final ValidationResult result = new ValidationResult();
 
@@ -38,6 +59,8 @@ public class NumEmailAddressValidator {
             if (emailAddress == null) {
                 result.addMessage(ValidationResult.ErrorCode.NULL_UNACCEPTABLE, "emailAddress");
             } else {
+
+                // Check for a single @
                 final String[] parts = emailAddress.split("@");
                 if (parts.length < 2) {
                     result.addMessage(ValidationResult.ErrorCode.NO_AT_SYMBOL, emailAddress);
@@ -49,8 +72,10 @@ public class NumEmailAddressValidator {
                 final String localPart = parts[0];
                 final String domain = parts[1];
 
+                // Use the domain validator
                 result.merge(new NumDomainValidator().validate(domain));
 
+                // Check the local part
                 if (localPart.getBytes().length > MAX_LOCAL_PART_LENGTH) {
                     result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_TOO_LONG, localPart);
                 }
@@ -59,6 +84,7 @@ public class NumEmailAddressValidator {
                     result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_IS_EMPTY, localPart);
                 }
 
+                // Catch any other errors using the regex
                 if (!NUM_EMAIL_REGEX.matcher(emailAddress)
                         .matches()) {
                     result.addMessage(ValidationResult.ErrorCode.PATTERN_MISMATCH, emailAddress);

@@ -23,29 +23,65 @@ import lombok.Value;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The results of a validator
+ */
 public class ValidationResult {
 
+    /**
+     * Only one of these really needed.
+     */
     public static final ValidationResult VALID_NO_ERRORS = new ValidationResult();
 
+    /**
+     * A List of results
+     */
     @Getter
     private final List<Result> errors;
 
+    /**
+     * Default constructor
+     */
     public ValidationResult() {
         errors = new ArrayList<>();
     }
 
-    public void addMessage(@NonNull final ErrorCode code, @NonNull final String offendingPart) {
-        errors.add(new Result(code, offendingPart));
+    /**
+     * Add an error message
+     *
+     * @param code          an ErrorCode
+     * @param offendingPart something to indicate what contains the error. Can be null.
+     * @return this
+     */
+    public ValidationResult addMessage(@NonNull final ErrorCode code, final String offendingPart) {
+        final String part = (offendingPart == null) ? "null" : offendingPart;
+        errors.add(new Result(code, part));
+        return this;
     }
 
+    /**
+     * The result of the validation.
+     *
+     * @return false if there are any error messages
+     */
     public boolean isValid() {
         return errors.isEmpty();
     }
 
-    public void merge(@NonNull final ValidationResult other) {
+    /**
+     * Merge errors from another validator
+     *
+     * @param other a ValidationResult
+     * @return this
+     */
+    public ValidationResult merge(@NonNull final ValidationResult other) {
         errors.addAll(other.errors);
+        return this;
     }
 
+    /**
+     * Possible errors
+     */
     public enum ErrorCode {
         INVALID_NUM_PROTOCOL_PREFIX,
         TOO_MANY_COLONS,
@@ -67,14 +103,23 @@ public class ValidationResult {
         PATH_MUST_START_WITH_SLASH,
         ZERO_LENGTH_PATH_COMPONENT,
         PATH_COMPONENT_TOO_LONG,
-        NEGATIVE_MODULE_NUMBER, NULL_UNACCEPTABLE
+        NEGATIVE_MODULE_NUMBER,
+        HOSTED_DOMAIN_NAME_TOO_LONG,
+        INDEPENDENT_DOMAIN_NAME_TOO_LONG,
+        INVALID_MODULE_NUMBER,
+        NULL_UNACCEPTABLE
     }
 
+    /**
+     * Error result POJO
+     */
     @Value
     public static class Result {
 
+        @NonNull
         ErrorCode code;
 
+        @NonNull
         String offendingPart;
 
     }
