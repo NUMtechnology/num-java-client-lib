@@ -17,7 +17,7 @@
 package uk.num.numlib.api;
 
 import lombok.NonNull;
-import uk.num.numlib.exc.*;
+import uk.num.numlib.exc.NumInvalidParameterException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,25 +39,11 @@ public interface NumAPI {
      * @param numAddress    E.g. `domain:module/path` or `user@domain:module/path` module is optional and defaults to 1
      * @param timeoutMillis the timeout in milliseconds to wait for responses from DNS.
      * @return a new NumAPIContextBase object.
-     * @throws NumBadModuleIdException         on error
      * @throws MalformedURLException           on error
      * @throws NumInvalidParameterException    on error
-     * @throws NumBadRecordException           on error
-     * @throws NumDNSQueryException            on error
-     * @throws NumInvalidDNSQueryException     on error
-     * @throws RrSetHeaderFormatException      on error
-     * @throws RrSetNoHeadersException         on error
-     * @throws RrSetIncompleteException        on error
      */
     NumAPIContext begin(@NonNull final String numAddress, int timeoutMillis) throws
-                                                                             NumBadModuleIdException,
                                                                              NumInvalidParameterException,
-                                                                             NumBadRecordException,
-                                                                             NumDNSQueryException,
-                                                                             NumInvalidDNSQueryException,
-                                                                             RrSetNoHeadersException,
-                                                                             RrSetHeaderFormatException,
-                                                                             RrSetIncompleteException,
                                                                              MalformedURLException;
 
     /**

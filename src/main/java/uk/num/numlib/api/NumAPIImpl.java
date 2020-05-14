@@ -509,7 +509,7 @@ public final class NumAPIImpl implements NumAPI {
             log.info("Response from Populator: {}.", numRecord);
             // Parse the MODL response
             final PopulatorResponse response = modlServices.interpretPopulatorResponse(numRecord);
-            if (!response.isValid()) {
+            if (response.isValid()) {
                 throw new NumInvalidPopulatorResponseCodeException("Bad response received from the populator service.");
             }
             // Handle the status_ response codes

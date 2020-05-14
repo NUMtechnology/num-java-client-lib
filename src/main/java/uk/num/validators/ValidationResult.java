@@ -51,12 +51,10 @@ public class ValidationResult {
      *
      * @param code          an ErrorCode
      * @param offendingPart something to indicate what contains the error. Can be null.
-     * @return this
      */
-    public ValidationResult addMessage(@NonNull final ErrorCode code, final String offendingPart) {
+    public void addMessage(@NonNull final ErrorCode code, final String offendingPart) {
         final String part = (offendingPart == null) ? "null" : offendingPart;
         errors.add(new Result(code, part));
-        return this;
     }
 
     /**
@@ -72,11 +70,9 @@ public class ValidationResult {
      * Merge errors from another validator
      *
      * @param other a ValidationResult
-     * @return this
      */
-    public ValidationResult merge(@NonNull final ValidationResult other) {
+    public void merge(@NonNull final ValidationResult other) {
         errors.addAll(other.errors);
-        return this;
     }
 
     /**

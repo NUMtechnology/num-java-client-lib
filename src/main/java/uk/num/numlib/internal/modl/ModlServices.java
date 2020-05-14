@@ -151,7 +151,7 @@ public final class ModlServices {
             log.trace("Interpreted populator response: {}", json);
             final PopulatorResponse response = objectMapper.readValue(json, PopulatorResponse.class);
 
-            if (!response.isValid() && response.getStatus_() == null) {
+            if (response.isValid() && response.getStatus_() == null) {
                 // We have a valid MODL record because we didn't get any errors from the interpreter, so it must be a
                 // TXT record. Set the status to indicate this and return the MODL record in the response object.
                 final PopulatorResponseRecord status_ = new PopulatorResponseRecord();

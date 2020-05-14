@@ -44,12 +44,10 @@ public interface DNSServices {
      * @param query         The NUM formatted DNS query.
      * @param timeoutMillis The number of milliseconds to wait for a response.
      * @return An array of Records
-     * @throws NumNotImplementedException    on error
      * @throws NumInvalidDNSQueryException   on error
      * @throws NumNoRecordAvailableException if a CNAME or SPF record is received instead of a TXT record
      */
     Record[] getRecordFromDnsNoCache(String query, int timeoutMillis) throws
-                                                                      NumNotImplementedException,
                                                                       NumInvalidDNSQueryException,
                                                                       NumNoRecordAvailableException;
 

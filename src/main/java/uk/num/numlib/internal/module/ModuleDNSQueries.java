@@ -27,8 +27,6 @@ import uk.num.numlib.exc.NumInvalidRedirectException;
 import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.internal.util.*;
 
-import java.net.MalformedURLException;
-
 /**
  * Class to hold the DNS query strings for a module and NUM ID combination.
  *
@@ -107,9 +105,8 @@ public final class ModuleDNSQueries {
      * Build the DNS query Strings and set the root/branch flag.
      *
      * @param appContext An AppContext object
-     * @throws MalformedURLException on error
      */
-    public void initialise(final AppContext appContext) throws MalformedURLException, NumInvalidParameterException {
+    public void initialise(final AppContext appContext) throws NumInvalidParameterException {
         log.trace("initialise()");
 
         // Create a suitable LookupGenerator based on the type of the record specifier

@@ -47,18 +47,18 @@ public final class PopulatorResponse {
 
     public boolean isValid() {
         if (status_ == null && error_ == null) {
-            return false;
+            return true;
         }
         if (status_ != null) {
             final int code = status_.getCode();
             if (code < 1 || (code > 3 && code != VALID_TXT_RECORD_CODE)) {
-                return false;
+                return true;
             }
         }
         if (error_ != null) {
             final int code = error_.getCode();
-            return code >= 100 && code <= 104;
+            return code < 100 || code > 104;
         }
-        return true;
+        return false;
     }
 }

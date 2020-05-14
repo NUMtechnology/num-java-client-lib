@@ -18,28 +18,26 @@ package uk.num.numlib.internal.util;
 
 import org.junit.Test;
 
-import java.net.MalformedURLException;
-
 import static org.junit.Assert.*;
 
 public class URLLookupGeneratorTest {
 
     @Test
-    public void testConstructor1() throws MalformedURLException {
+    public void testConstructor1() {
         final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator("http://numexample.com");
         assertEquals("numexample.com", urlLookupGenerator.domain);
         assertNull(urlLookupGenerator.branch);
     }
 
     @Test
-    public void testConstructor2() throws MalformedURLException {
+    public void testConstructor2() {
         final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator("http://numexample.com/foo");
         assertEquals("numexample.com", urlLookupGenerator.domain);
         assertEquals("foo", urlLookupGenerator.branch);
     }
 
     @Test
-    public void testConstructor3() throws MalformedURLException {
+    public void testConstructor3() {
         final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator("http://numexample.com/foo/bar");
         assertEquals("numexample.com", urlLookupGenerator.domain);
         assertEquals("bar.foo", urlLookupGenerator.branch);

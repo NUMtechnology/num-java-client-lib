@@ -18,33 +18,31 @@ package uk.num.numlib.internal.util;
 
 import org.junit.Test;
 
-import java.net.MalformedURLException;
-
 import static org.junit.Assert.*;
 import static uk.num.numlib.internal.util.LookupGenerator.TrailingDot.*;
 
 public class BaseLookupGeneratorTest {
 
     @Test
-    public void testGetRootHostedLocationNoModuleNumber() throws MalformedURLException {
+    public void testGetRootHostedLocationNoModuleNumber() {
         final DomainLookupGenerator lookupGenerator = new DomainLookupGenerator("example.com");
         assertEquals("_example.com.9.h.1.num.net", lookupGenerator.getRootHostedLocationNoModuleNumber(NO_TRAILING_DOT));
     }
 
     @Test
-    public void testGetRootIndependentLocationNoModuleNumber() throws MalformedURLException {
+    public void testGetRootIndependentLocationNoModuleNumber() {
         final DomainLookupGenerator lookupGenerator = new DomainLookupGenerator("example.com");
         assertEquals("_num.example.com", lookupGenerator.getRootIndependentLocationNoModuleNumber(NO_TRAILING_DOT));
     }
 
     @Test
-    public void testGetRootHostedLocationNoModuleNumberWithTrailingDot() throws MalformedURLException {
+    public void testGetRootHostedLocationNoModuleNumberWithTrailingDot() {
         final DomainLookupGenerator lookupGenerator = new DomainLookupGenerator("example.com");
         assertEquals("_example.com.9.h.1.num.net.", lookupGenerator.getRootHostedLocationNoModuleNumber(ADD_TRAILING_DOT));
     }
 
     @Test
-    public void testGetRootIndependentLocationNoModuleNumberWithTrailingDot() throws MalformedURLException {
+    public void testGetRootIndependentLocationNoModuleNumberWithTrailingDot() {
         final DomainLookupGenerator lookupGenerator = new DomainLookupGenerator("example.com");
         assertEquals("_num.example.com.", lookupGenerator.getRootIndependentLocationNoModuleNumber(ADD_TRAILING_DOT));
     }
