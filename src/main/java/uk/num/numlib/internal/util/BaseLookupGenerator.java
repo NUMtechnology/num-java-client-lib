@@ -209,4 +209,40 @@ abstract class BaseLookupGenerator implements LookupGenerator {
 
     }
 
+    /**
+     * Note - this method does not return a trailing dot
+     *
+     * @return String
+     */
+    @Override
+    public String getRootIndependentLocationNoModuleNumber(final TrailingDot addTrailingDot) {
+        if (addTrailingDot == TrailingDot.ADD_TRAILING_DOT) {
+            return StringConstants.UTILITY_MODULE_PREFIX_NO_START_DOT +
+                    domain + StringConstants.DOMAIN_SEPARATOR;
+        } else {
+            return StringConstants.UTILITY_MODULE_PREFIX_NO_START_DOT +
+                    domain;
+        }
+    }
+
+    /**
+     * Note - this method does not return a trailing dot
+     *
+     * @return String
+     */
+    @Override
+    public String getRootHostedLocationNoModuleNumber(final TrailingDot addTrailingDot) {
+        if (addTrailingDot == TrailingDot.ADD_TRAILING_DOT) {
+            return StringConstants.DOMAIN_NAME_PREFIX +
+                    domain +
+                    HashUtils.hash3(domain) +
+                    StringConstants.HOSTED_RECORD_SUFFIX + StringConstants.DOMAIN_SEPARATOR;
+        } else {
+            return StringConstants.DOMAIN_NAME_PREFIX +
+                    domain +
+                    HashUtils.hash3(domain) +
+                    StringConstants.HOSTED_RECORD_SUFFIX;
+        }
+    }
+
 }

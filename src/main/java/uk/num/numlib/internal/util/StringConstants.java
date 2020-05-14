@@ -51,6 +51,8 @@ public final class StringConstants {
      */
     public static final String UTILITY_MODULE_PREFIX = "._num.";
 
+    public static final String UTILITY_MODULE_PREFIX_NO_START_DOT = "_num.";
+
     /**
      * The top level zone to use.
      */

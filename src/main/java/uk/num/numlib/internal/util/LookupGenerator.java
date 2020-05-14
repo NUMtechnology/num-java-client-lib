@@ -32,4 +32,12 @@ public interface LookupGenerator {
 
     String getRootHostedLocation(final int moduleId) throws NumInvalidParameterException;
 
+    String getRootIndependentLocationNoModuleNumber(final TrailingDot addTrailingDot);
+
+    String getRootHostedLocationNoModuleNumber(final TrailingDot addTrailingDot);
+
+    enum TrailingDot {
+        ADD_TRAILING_DOT, NO_TRAILING_DOT
+    }
+
 }
