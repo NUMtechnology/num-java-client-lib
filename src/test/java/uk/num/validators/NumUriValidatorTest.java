@@ -44,6 +44,8 @@ public class NumUriValidatorTest {
             "john.smith@numexample.com:10",
             "john.smith@numexample.com:1/home",
             "num://john.smith@numexample.com:1/",
+            "num://john.smith@numexample.com:/",
+            "num://john.smith@numexample.com/",
             "num://john.smith@numexample.com:12/test",
             "test@test.test",
             "test with spaces@test.test",
