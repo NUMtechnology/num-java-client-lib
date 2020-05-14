@@ -16,28 +16,18 @@
 
 package uk.num.net;
 
-import org.apache.commons.lang3.StringUtils;
+import uk.num.numlib.internal.util.BaseLookupGenerator;
+import uk.num.numlib.internal.util.LookupGenerator;
+import uk.num.validators.NumUriValidator;
+import uk.num.validators.ValidationResult;
 
 import java.lang.reflect.Method;
 import java.net.*;
-import java.util.regex.Pattern;
 
 /**
  * Add NUM Protocol Support
  */
 public final class NumProtocolSupport {
-
-    public static final String NUM_PROTOCOL = "num://";
-
-    public static final String HTTPS_PROTOCOL = "https://";
-
-    public static final String HTTP_PROTOCOL = "http://";
-
-    public static final Pattern NUM_DOMAIN_REGEX = Pattern.compile("^(([^.\\s\f\t\r\b]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b]+?))\\.??$");
-
-    public static final Pattern NUM_PATH_REGEX = Pattern.compile("^(/[^;,/?:@&=+$.\\s]+?)*?/??$");
-
-    public static final Pattern NUM_EMAIL_REGEX = Pattern.compile("^(?!\\s)[^@\f\t\r\b\n]+?(?<!\\s)@(([^.\\s\f\t\r\b\n]+?\\.)*?([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?\\.)([^!\"#$%&'()*+,./:;<=>?@\\[\\]^_`{|}~\\s\f\t\r\b\n]+?))\\.??$");
 
     /*
      * Add a NumStreamHandlerFactory for the `num` protocol
@@ -84,40 +74,15 @@ public final class NumProtocolSupport {
      * @throws MalformedURLException on error
      */
     public static URL toUrl(final String numAddress) throws MalformedURLException {
-        final URL result;
-        final String lowerCase = numAddress.toLowerCase();
 
-        if (lowerCase
-                .startsWith(HTTPS_PROTOCOL)) {
-            result = new URL(NUM_PROTOCOL + StringUtils.removeStart(numAddress, HTTPS_PROTOCOL));
-        } else if (lowerCase
-                .startsWith(HTTP_PROTOCOL)) {
-            result = new URL(NUM_PROTOCOL + StringUtils.removeStart(numAddress, HTTP_PROTOCOL));
-        } else if (!numAddress.startsWith(NUM_PROTOCOL)) {
-            result = new URL(NUM_PROTOCOL + numAddress);
-        } else {
-            result = new URL(numAddress);
+        final LookupGenerator.NumUriComponents components = BaseLookupGenerator.parseNumUriString(numAddress);
+
+        final ValidationResult validationResult = NumUriValidator.validate(components.getDomain(), components.getModuleNumber(), components.getPath());
+        if (!validationResult.isValid()) {
+            throw new MalformedURLException(numAddress);
         }
 
-        if (!NUM_DOMAIN_REGEX.matcher(result.getHost())
-                .matches()) {
-            throw new MalformedURLException("Invalid domain URI for the NUM protocol: " + numAddress);
-        }
-
-        if (!NUM_PATH_REGEX.matcher(result.getPath())
-                .matches()) {
-            throw new MalformedURLException("Invalid Path in the URI: " + numAddress);
-        }
-
-        if (StringUtils.isNotEmpty(result.getUserInfo())) {
-            final String email = result.getUserInfo() + "@" + result.getHost();
-            if (!NUM_EMAIL_REGEX.matcher(email)
-                    .matches()) {
-                throw new MalformedURLException("Invalid email URI for the NUM protocol: " + numAddress);
-            }
-        }
-
-        return result;
+        return new URL(components.toString());
     }
 
     /**

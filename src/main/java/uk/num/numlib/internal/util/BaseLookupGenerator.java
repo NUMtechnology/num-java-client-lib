@@ -22,10 +22,15 @@ import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.exc.NumInvalidParameterException;
 
 import java.net.IDN;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Arrays;
 
-abstract class BaseLookupGenerator implements LookupGenerator {
+public abstract class BaseLookupGenerator implements LookupGenerator {
+
+    public static final String NUM_PROTOCOL = "num://";
+
+    public static final String HTTPS_PROTOCOL = "https://";
+
+    public static final String HTTP_PROTOCOL = "http://";
 
     protected final String numId;
 
@@ -45,13 +50,8 @@ abstract class BaseLookupGenerator implements LookupGenerator {
      */
     protected static String normaliseDomainName(@NonNull final String numId) {
         if (numId.startsWith("http")) {
-            try {
-                final URL url = new URL(numId);
-                final String host = url.getHost();
-                return normaliseDomainName(host);
-            } catch (MalformedURLException e) {
-                throw new RuntimeException("Invalid URL: " + numId);
-            }
+            final String host = parseNumUriString(numId).getDomain();
+            return normaliseDomainName(host);
         }
 
         String result = numId;
@@ -112,6 +112,42 @@ abstract class BaseLookupGenerator implements LookupGenerator {
             }
         }
         return result;
+    }
+
+    /**
+     * Attempt to parse a NUM URI String into its components.
+     *
+     * @param possibleNumUri a String
+     * @return NumUriComponents
+     */
+    public static NumUriComponents parseNumUriString(@NonNull final String possibleNumUri) {
+
+        String withoutProtocol = StringUtils.removeStartIgnoreCase(possibleNumUri, HTTP_PROTOCOL);
+        withoutProtocol = StringUtils.removeStartIgnoreCase(withoutProtocol, HTTPS_PROTOCOL);
+        withoutProtocol = StringUtils.removeStartIgnoreCase(withoutProtocol, NUM_PROTOCOL);
+
+        // Split into path components and the domain and module number parts
+        final String[] urlAndParams = withoutProtocol.split("\\?");
+        final String[] parts = urlAndParams[0].split("/");
+        final String[] domainAndModuleNumber = parts[0].split(":");
+
+        // The module number is a single digit if not specified in the NUM URI.
+        int moduleNumber = 0;
+        if (domainAndModuleNumber.length > 1) {
+            try {
+                moduleNumber = Integer.parseInt(domainAndModuleNumber[1]);
+            } catch (final Exception e) {
+                // Defaults to 0
+            }
+        }
+
+        String path = "/";
+        if (parts.length > 1) {
+            final String[] tailParts = Arrays.copyOfRange(parts, 1, parts.length);
+            path = "/" + String.join("/", tailParts);
+        }
+        final String params = (urlAndParams.length > 1) ? urlAndParams[1] : null;
+        return new NumUriComponents(domainAndModuleNumber[0], moduleNumber, path, params);
     }
 
     @Override

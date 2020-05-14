@@ -16,6 +16,8 @@
 
 package uk.num.numlib.internal.util;
 
+import lombok.NonNull;
+import lombok.Value;
 import uk.num.numlib.exc.NumInvalidParameterException;
 
 public interface LookupGenerator {
@@ -38,6 +40,30 @@ public interface LookupGenerator {
 
     enum TrailingDot {
         ADD_TRAILING_DOT, NO_TRAILING_DOT
+    }
+
+    @Value
+    class NumUriComponents {
+
+        @NonNull
+        String domain;
+
+        int moduleNumber;
+
+        @NonNull
+        String path;
+
+        String params;// E.g. "a=b&c=d"
+
+        @Override
+        public String toString() {
+            if (params == null) {
+                return "num://" + domain + ":" + moduleNumber + path;
+            } else {
+                return "num://" + domain + ":" + moduleNumber + path + "?" + params;
+            }
+        }
+
     }
 
 }

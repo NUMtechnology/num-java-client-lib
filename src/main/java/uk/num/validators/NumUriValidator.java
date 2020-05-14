@@ -16,8 +16,10 @@
 
 package uk.num.validators;
 
+import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.internal.util.DomainLookupGenerator;
+import uk.num.numlib.internal.util.LookupGenerator;
 
 import java.util.Arrays;
 
@@ -40,6 +42,18 @@ public class NumUriValidator {
      * All methods are static
      */
     private NumUriValidator() {
+    }
+
+    /**
+     * Build a NUM URI from the parts and validate it.
+     *
+     * @param domain       a non-null domain String
+     * @param moduleNumber a non-negative module number int
+     * @param path         a non-null path String
+     * @return ValidationResult
+     */
+    public static ValidationResult validate(@NonNull final String domain, final int moduleNumber, @NonNull final String path) {
+        return validate(new LookupGenerator.NumUriComponents(domain, moduleNumber, path, null).toString());
     }
 
     /**

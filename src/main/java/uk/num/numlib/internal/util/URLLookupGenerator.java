@@ -18,18 +18,14 @@ package uk.num.numlib.internal.util;
 
 import lombok.NonNull;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 public final class URLLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
 
-    public URLLookupGenerator(final @NonNull String numId) throws
-                                                           MalformedURLException {
+    public URLLookupGenerator(final @NonNull String numId) {
         super(numId);
 
-        final URL url = new URL(numId);
-        domain = normaliseDomainName(url.getHost());
-        branch = url.getPath();
+        final NumUriComponents components = parseNumUriString(numId);
+        domain = normaliseDomainName(components.getDomain());
+        branch = components.getPath();
         if (branch != null && ((branch.equals("/") || branch.equals("")))) {
             branch = null;
         } else {
