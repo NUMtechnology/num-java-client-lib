@@ -17,34 +17,32 @@
 package uk.num.numlib.internal.util;
 
 import org.junit.Test;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class URLLookupGeneratorTest {
-    private static final AppContext appContext = new AppContext();
 
     @Test
     public void testConstructor1() throws MalformedURLException {
-        final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator(appContext, "http://numexample.com");
+        final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator("http://numexample.com");
         assertEquals("numexample.com", urlLookupGenerator.domain);
         assertNull(urlLookupGenerator.branch);
     }
 
     @Test
     public void testConstructor2() throws MalformedURLException {
-        final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator(appContext, "http://numexample.com/foo");
+        final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator("http://numexample.com/foo");
         assertEquals("numexample.com", urlLookupGenerator.domain);
         assertEquals("foo", urlLookupGenerator.branch);
     }
 
     @Test
     public void testConstructor3() throws MalformedURLException {
-        final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator(appContext, "http://numexample.com/foo/bar");
+        final URLLookupGenerator urlLookupGenerator = new URLLookupGenerator("http://numexample.com/foo/bar");
         assertEquals("numexample.com", urlLookupGenerator.domain);
         assertEquals("bar.foo", urlLookupGenerator.branch);
     }
+
 }

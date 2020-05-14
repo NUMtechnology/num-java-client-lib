@@ -18,7 +18,6 @@ package uk.num.numlib.internal.util;
 
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 
@@ -26,39 +25,37 @@ import static org.junit.Assert.*;
 
 public class DomainLookupGeneratorTest {
 
-    private static final AppContext appContext = new AppContext();
-
     @Test
     public void testConstructor1() throws MalformedURLException {
-        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "numexample.com");
+        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator("numexample.com");
         assertEquals("numexample.com", domainLookupGenerator.domain);
         assertNull(domainLookupGenerator.branch);
     }
 
     @Test
     public void testConstructor2() throws MalformedURLException {
-        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "numexample.com/foo");
+        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator("numexample.com/foo");
         assertEquals("numexample.com", domainLookupGenerator.domain);
         assertEquals("foo", domainLookupGenerator.branch);
     }
 
     @Test
     public void testConstructor3() throws MalformedURLException {
-        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "numexample.com/foo/bar");
+        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator("numexample.com/foo/bar");
         assertEquals("numexample.com", domainLookupGenerator.domain);
         assertEquals("bar.foo", domainLookupGenerator.branch);
     }
 
     @Test
     public void testConstructor4() throws MalformedURLException {
-        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com/test1例");
+        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator("testdomain例.com/test1例");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
         assertEquals("xn--test1-9d3h", domainLookupGenerator.branch);
     }
 
     @Test
     public void testConstructor5() throws MalformedURLException, NumInvalidParameterException {
-        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com/test1例/test2例/test3例");
+        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator("testdomain例.com/test1例/test2例/test3例");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
         assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h", domainLookupGenerator.branch);
         assertEquals("xn--test3-9d3h.xn--test2-9d3h.xn--test1-9d3h.1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation(1));
@@ -67,7 +64,7 @@ public class DomainLookupGeneratorTest {
 
     @Test
     public void testConstructor6() throws MalformedURLException, NumInvalidParameterException {
-        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator(appContext, "testdomain例.com");
+        final DomainLookupGenerator domainLookupGenerator = new DomainLookupGenerator("testdomain例.com");
         assertEquals("xn--testdomain-4y5p.com", domainLookupGenerator.domain);
         assertEquals("1._num.xn--testdomain-4y5p.com.", domainLookupGenerator.getIndependentLocation(1));
         assertEquals("1._xn--testdomain-4y5p.com.b.5.m.num.net.", domainLookupGenerator.getHostedLocation(1));

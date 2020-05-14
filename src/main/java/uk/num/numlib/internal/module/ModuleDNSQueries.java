@@ -115,11 +115,11 @@ public final class ModuleDNSQueries {
         // Create a suitable LookupGenerator based on the type of the record specifier
         final LookupGenerator lookupGenerator;
         if (numId.contains("@")) {
-            lookupGenerator = new EmailLookupGenerator(appContext, numId);
+            lookupGenerator = new EmailLookupGenerator(numId);
         } else if (numId.startsWith("http")) {
-            lookupGenerator = new URLLookupGenerator(appContext, numId);
+            lookupGenerator = new URLLookupGenerator(numId);
         } else {
-            lookupGenerator = new DomainLookupGenerator(appContext, numId);
+            lookupGenerator = new DomainLookupGenerator(numId);
         }
 
         independentRecordLocation = lookupGenerator.getIndependentLocation(moduleId);
@@ -143,7 +143,7 @@ public final class ModuleDNSQueries {
                                                                                                 NumInvalidParameterException {
         if (numId.contains("@")) {
             // This only applies to email NUM IDs
-            final EmailLookupGenerator generator = new EmailLookupGenerator(appContext, numId);
+            final EmailLookupGenerator generator = new EmailLookupGenerator(numId);
             independentRecordLocation = generator.getDistributedIndependentLocation(moduleId, levels);
             hostedRecordLocation = generator.getDistributedHostedLocation(moduleId, levels);
         } else {

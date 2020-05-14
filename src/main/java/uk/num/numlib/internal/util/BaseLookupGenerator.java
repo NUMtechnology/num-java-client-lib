@@ -20,7 +20,6 @@ import lombok.NonNull;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.IDN;
 import java.net.MalformedURLException;
@@ -30,15 +29,12 @@ abstract class BaseLookupGenerator implements LookupGenerator {
 
     protected final String numId;
 
-    protected final AppContext appContext;
-
     protected String branch;
 
     protected String domain;
 
-    public BaseLookupGenerator(@NonNull final AppContext appContext, final @NonNull String numId) {
+    public BaseLookupGenerator(final @NonNull String numId) {
         this.numId = numId;
-        this.appContext = appContext;
     }
 
     /**

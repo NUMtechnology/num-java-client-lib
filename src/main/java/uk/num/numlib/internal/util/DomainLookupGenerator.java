@@ -18,16 +18,15 @@ package uk.num.numlib.internal.util;
 
 import lombok.NonNull;
 import uk.num.net.NumProtocolSupport;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public final class DomainLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
 
-    public DomainLookupGenerator(final AppContext appContext, final @NonNull String numId) throws
-                                                                                           MalformedURLException {
-        super(appContext, numId);
+    public DomainLookupGenerator(final @NonNull String numId) throws
+                                                              MalformedURLException {
+        super(numId);
         // We can now handle NUM IDs as NUM URLs
         final URL url = NumProtocolSupport.toUrl(numId);
 
@@ -39,4 +38,5 @@ public final class DomainLookupGenerator extends BaseLookupGenerator implements 
             branch = transformBranch(normalisePath(branch));
         }
     }
+
 }

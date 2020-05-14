@@ -19,18 +19,15 @@ package uk.num.numlib.internal.util;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 public class PunycodeTests {
-
-    private static final AppContext appContext = new AppContext();
 
     /**
      * Convert unicode to text for the independent record
      */
     @Test
     public void test_01() throws Exception {
-        final LookupGenerator utils = new DomainLookupGenerator(appContext, "num例.com");
+        final LookupGenerator utils = new DomainLookupGenerator("num例.com");
 
         final String result = utils.getIndependentLocation(1);
         Assert.assertNotNull("Bad result.", result);
@@ -42,7 +39,7 @@ public class PunycodeTests {
      */
     @Test
     public void test_02() throws Exception {
-        final LookupGenerator utils = new DomainLookupGenerator(appContext, "num例.com");
+        final LookupGenerator utils = new DomainLookupGenerator("num例.com");
 
         final String result = utils.getHostedLocation(1);
         Assert.assertNotNull("Bad result.", result);
@@ -54,7 +51,7 @@ public class PunycodeTests {
      */
     @Test
     public void test_04() throws Exception {
-        final LookupGenerator utils = new DomainLookupGenerator(appContext, "num例.com");
+        final LookupGenerator utils = new DomainLookupGenerator("num例.com");
 
         final String result = utils.getPopulatorLocation(1);
         Assert.assertNotNull("Bad result.", result);
@@ -66,7 +63,7 @@ public class PunycodeTests {
      */
     @Test
     public void test_05() throws NumInvalidParameterException {
-        final LookupGenerator utils = new EmailLookupGenerator(appContext, "xi@num例.com");
+        final LookupGenerator utils = new EmailLookupGenerator("xi@num例.com");
 
         final String result = utils.getIndependentLocation(1);
         Assert.assertNotNull("Bad result.", result);
@@ -78,7 +75,7 @@ public class PunycodeTests {
      */
     @Test
     public void test_06() throws NumInvalidParameterException {
-        final LookupGenerator utils = new EmailLookupGenerator(appContext, "xi@num例.com");
+        final LookupGenerator utils = new EmailLookupGenerator("xi@num例.com");
 
         final String result = utils.getHostedLocation(1);
         Assert.assertNotNull("Bad result.", result);
@@ -90,7 +87,7 @@ public class PunycodeTests {
      */
     @Test
     public void test_09() throws Exception {
-        final LookupGenerator utils = new URLLookupGenerator(appContext, "http://www.num例.com/sales/index.html");
+        final LookupGenerator utils = new URLLookupGenerator("http://www.num例.com/sales/index.html");
 
         final String result = utils.getIndependentLocation(1);
         Assert.assertNotNull("Bad result.", result);
@@ -103,7 +100,7 @@ public class PunycodeTests {
      */
     @Test
     public void test_10() throws Exception {
-        final LookupGenerator utils = new URLLookupGenerator(appContext, "http://www.num例.com/sales/index.html");
+        final LookupGenerator utils = new URLLookupGenerator("http://www.num例.com/sales/index.html");
 
         final String result = utils.getHostedLocation(1);
         Assert.assertNotNull("Bad result.", result);

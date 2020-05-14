@@ -17,16 +17,15 @@
 package uk.num.numlib.internal.util;
 
 import lombok.NonNull;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public final class URLLookupGenerator extends BaseLookupGenerator implements LookupGenerator {
 
-    public URLLookupGenerator(final AppContext appContext, final @NonNull String numId) throws
-                                                                                        MalformedURLException {
-        super(appContext, numId);
+    public URLLookupGenerator(final @NonNull String numId) throws
+                                                           MalformedURLException {
+        super(numId);
 
         final URL url = new URL(numId);
         domain = normaliseDomainName(url.getHost());
@@ -37,4 +36,5 @@ public final class URLLookupGenerator extends BaseLookupGenerator implements Loo
             branch = transformBranch(normalisePath(branch));
         }
     }
+
 }
