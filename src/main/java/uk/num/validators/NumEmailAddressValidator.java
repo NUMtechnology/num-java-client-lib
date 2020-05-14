@@ -90,6 +90,22 @@ public class NumEmailAddressValidator {
                     result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_IS_EMPTY, localPart);
                 }
 
+                if (localPart.contains("\n")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_NEWLINE, localPart);
+                }
+                if (localPart.contains("\r")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_CARRIAGE_RETURN, localPart);
+                }
+                if (localPart.contains("\t")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_TAB, localPart);
+                }
+                if (localPart.contains("\b")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_BACKSPACE, localPart);
+                }
+                if (localPart.contains("\f")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_FORMFEED, localPart);
+                }
+
                 // Catch any other errors using the regex
                 if (!NUM_EMAIL_REGEX.matcher(emailAddress)
                         .matches()) {
