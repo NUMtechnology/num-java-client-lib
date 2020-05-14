@@ -21,7 +21,6 @@ import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,6 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class ModuleDNSQueriesTest2 {
-
-    private static final AppContext appContext = new AppContext();
 
     private static final List<String[]> testData = new ArrayList<>();
 
@@ -105,7 +102,7 @@ public class ModuleDNSQueriesTest2 {
         String message = "";
         try {
             final ModuleDNSQueries m = new ModuleDNSQueries(1, testData.address);
-            m.initialise(appContext);
+            m.initialise();
             String actual = "";
 
             switch (testData.location) {

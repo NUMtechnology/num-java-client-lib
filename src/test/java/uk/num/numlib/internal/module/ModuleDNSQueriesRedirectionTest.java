@@ -22,7 +22,6 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.api.NumAPICallbacks;
-import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.internal.ctx.NumAPIContextBase;
 
 import java.util.ArrayList;
@@ -31,8 +30,6 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class ModuleDNSQueriesRedirectionTest {
-
-    private static final AppContext appContext = new AppContext();
 
     private static final List<String[]> testData = new ArrayList<>();
 
@@ -106,7 +103,7 @@ public class ModuleDNSQueriesRedirectionTest {
         String message = "";
         try {
             final ModuleDNSQueries moduleDNSQueries = new ModuleDNSQueries(1, testData.address);
-            moduleDNSQueries.initialise(appContext);
+            moduleDNSQueries.initialise();
             final NumAPIContextBase ctx = new NumAPIContextBase();
             ctx.setModuleDNSQueries(moduleDNSQueries);
             ctx.setLocation((testData.location.equals("Independent") ? NumAPICallbacks.Location.INDEPENDENT : NumAPICallbacks.Location.HOSTED));

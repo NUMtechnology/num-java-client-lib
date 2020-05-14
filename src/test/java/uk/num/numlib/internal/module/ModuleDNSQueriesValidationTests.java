@@ -18,13 +18,10 @@ package uk.num.numlib.internal.module;
 
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 
 public class ModuleDNSQueriesValidationTests {
-
-    private static final AppContext appContext = new AppContext();
 
     @Test
     public void testGetPath_1() throws MalformedURLException, NumInvalidParameterException {
@@ -42,7 +39,7 @@ public class ModuleDNSQueriesValidationTests {
                                                                                             MalformedURLException,
                                                                                             NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(moduleNumber, numIdAndPath1);
-        queries.initialise(appContext);
+        queries.initialise();
 
         System.out.println(queries.getRootHostedRecordLocation());
         // Get the independent and hosted names

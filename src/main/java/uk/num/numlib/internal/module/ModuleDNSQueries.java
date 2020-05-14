@@ -88,6 +88,7 @@ public final class ModuleDNSQueries {
      *
      * @param moduleNumber the module ID string
      * @param numId        the NUM ID.
+     * @throws NumInvalidParameterException on error
      */
     public ModuleDNSQueries(final int moduleNumber, @NonNull final String numId) throws NumInvalidParameterException {
         if (StringUtils.isAllBlank(numId)) {
@@ -104,9 +105,9 @@ public final class ModuleDNSQueries {
     /**
      * Build the DNS query Strings and set the root/branch flag.
      *
-     * @param appContext An AppContext object
+     * @throws NumInvalidParameterException on error
      */
-    public void initialise(final AppContext appContext) throws NumInvalidParameterException {
+    public void initialise() throws NumInvalidParameterException {
         log.trace("initialise()");
 
         // Create a suitable LookupGenerator based on the type of the record specifier
@@ -135,6 +136,7 @@ public final class ModuleDNSQueries {
      *
      * @param appContext the AppContext
      * @param levels     the number of levels to use for zone distribution
+     * @throws NumInvalidParameterException on error
      */
     public void setEmailRecordDistributionLevels(final AppContext appContext, final int levels) throws
                                                                                                 NumInvalidParameterException {

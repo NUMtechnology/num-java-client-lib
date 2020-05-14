@@ -22,20 +22,18 @@ import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidDNSQueryException;
 import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.exc.NumInvalidRedirectException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 
+
 @Log4j2
 public class ModuleDNSQueriesTest4 {
-
-    private static final AppContext appContext = new AppContext();
 
     @Test
     public void testGetPath_1() throws NumInvalidDNSQueryException,
                                        MalformedURLException, NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "test.numexample.com/sales/manager");
-        queries.initialise(appContext);
+        queries.initialise();
         final String path = queries.getHostedRecordPath();
         Assert.assertEquals("/sales/manager", path);
     }
@@ -44,7 +42,7 @@ public class ModuleDNSQueriesTest4 {
     public void testGetPath_2() throws NumInvalidDNSQueryException,
                                        MalformedURLException, NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "test.numexample.com");
-        queries.initialise(appContext);
+        queries.initialise();
         final String path = queries.getHostedRecordPath();
         Assert.assertEquals("/", path);
     }
@@ -53,7 +51,7 @@ public class ModuleDNSQueriesTest4 {
     public void testGetPath_3() throws NumInvalidDNSQueryException,
                                        MalformedURLException, NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "test.numexample.com/");
-        queries.initialise(appContext);
+        queries.initialise();
         final String path = queries.getHostedRecordPath();
         Assert.assertEquals("/", path);
     }
@@ -62,7 +60,7 @@ public class ModuleDNSQueriesTest4 {
     public void testRedirectHostedPath_1() throws MalformedURLException, NumInvalidRedirectException,
                                                   NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "test.numexample.com");
-        queries.initialise(appContext);
+        queries.initialise();
         queries.redirectHostedPath("/test1/test2");
         final String path = queries.getHostedRecordLocation();
         Assert.assertEquals("test2.test1.1._test.numexample.com.y.m.p.num.net.", path);
@@ -72,7 +70,7 @@ public class ModuleDNSQueriesTest4 {
     public void testRedirectHostedPath_2() throws MalformedURLException, NumInvalidRedirectException,
                                                   NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "test.numexample.com/");
-        queries.initialise(appContext);
+        queries.initialise();
         queries.redirectHostedPath("/test1/test2");
         final String path = queries.getHostedRecordLocation();
         Assert.assertEquals("test2.test1.1._test.numexample.com.y.m.p.num.net.", path);
@@ -82,7 +80,7 @@ public class ModuleDNSQueriesTest4 {
     public void testRedirectHostedPath_3() throws MalformedURLException, NumInvalidRedirectException,
                                                   NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "test.numexample.com/test");
-        queries.initialise(appContext);
+        queries.initialise();
         queries.redirectHostedPath("/test1/test2");
         final String path = queries.getHostedRecordLocation();
         Assert.assertEquals("test2.test1.1._test.numexample.com.y.m.p.num.net.", path);

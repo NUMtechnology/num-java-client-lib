@@ -244,7 +244,7 @@ public final class NumAPIImpl implements NumAPI {
         // Create the context object and the validated ModuleDNSQueries object.
         final NumAPIContextBase ctx = new NumAPIContextBase();
 
-        final ModuleDNSQueries moduleDNSQueries = moduleFactory.getInstance(appContext, moduleNumber, numId);
+        final ModuleDNSQueries moduleDNSQueries = moduleFactory.getInstance(moduleNumber, numId);
         ctx.setModuleDNSQueries(moduleDNSQueries);
 
         log.info("exit - begin()");

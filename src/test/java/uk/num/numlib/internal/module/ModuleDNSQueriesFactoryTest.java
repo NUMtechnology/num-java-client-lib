@@ -19,52 +19,49 @@ package uk.num.numlib.internal.module;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 import java.net.MalformedURLException;
 
 public class ModuleDNSQueriesFactoryTest {
 
-    private static final AppContext appContext = new AppContext();
-
     private static final ModuleFactory moduleFactory = new ModuleFactory();
 
     @Test(expected = Exception.class)
     public void getInstance1() throws MalformedURLException, NumInvalidParameterException {
-        moduleFactory.getInstance(appContext, -1, null);
+        moduleFactory.getInstance(-1, null);
     }
 
     @Test(expected = Exception.class)
     public void getInstance2() throws Exception {
-        moduleFactory.getInstance(appContext, -1, null);
+        moduleFactory.getInstance(-1, null);
     }
 
     @Test(expected = Exception.class)
     public void getInstance3() throws Exception {
-        moduleFactory.getInstance(appContext, -1, null);
+        moduleFactory.getInstance(-1, null);
     }
 
     @Test(expected = Exception.class)
     public void getInstance4() throws Exception {
-        moduleFactory.getInstance(appContext, 1, null);
+        moduleFactory.getInstance(1, null);
     }
 
     @Test(expected = Exception.class)
     public void getInstance5() throws Exception {
-        moduleFactory.getInstance(appContext, 1, "");
+        moduleFactory.getInstance(1, "");
     }
 
     @Test(expected = Exception.class)
     public void getInstance6() throws Exception {
-        moduleFactory.getInstance(appContext, 1, "  ");
+        moduleFactory.getInstance(1, "  ");
     }
 
     @Test
     public void getInstance7() throws Exception {
-        final ModuleDNSQueries m1 = moduleFactory.getInstance(appContext, 1, "numexample.com");
-        final ModuleDNSQueries m2 = moduleFactory.getInstance(appContext, 1, "numexample.com");
-        final ModuleDNSQueries m3 = moduleFactory.getInstance(appContext, 2, "numexample.com");
-        final ModuleDNSQueries m4 = moduleFactory.getInstance(appContext, 1, "example.com");
+        final ModuleDNSQueries m1 = moduleFactory.getInstance(1, "numexample.com");
+        final ModuleDNSQueries m2 = moduleFactory.getInstance(1, "numexample.com");
+        final ModuleDNSQueries m3 = moduleFactory.getInstance(2, "numexample.com");
+        final ModuleDNSQueries m4 = moduleFactory.getInstance(1, "example.com");
         Assert.assertNotNull("m1 is invalid.", m1);
         Assert.assertNotNull("m2 is invalid.", m2);
         Assert.assertNotNull("m3 is invalid.", m3);

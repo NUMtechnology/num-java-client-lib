@@ -18,10 +18,7 @@ package uk.num.numlib.internal.module;
 
 import lombok.extern.log4j.Log4j2;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.internal.util.SimpleCache;
-
-import java.net.MalformedURLException;
 
 /**
  * A factory for ModuleDNSQuery objects.
@@ -39,15 +36,13 @@ public final class ModuleFactory {
     /**
      * Create and initialise a ModuleDNSQueries object or use a cached object.
      *
-     * @param appContext   the AppContext
      * @param moduleNumber the module name string, e.g. "1"
      * @param numId        the NUM ID to be queried for a NUM record.
      * @return a ModuleDNSQueries object
-     * @throws MalformedURLException on error
+     * @throws NumInvalidParameterException on error
      */
-    public ModuleDNSQueries getInstance(final AppContext appContext, final int moduleNumber, final String numId) throws
-                                                                                                                 MalformedURLException,
-                                                                                                                 NumInvalidParameterException {
+    public ModuleDNSQueries getInstance(final int moduleNumber, final String numId) throws
+                                                                                    NumInvalidParameterException {
         ModuleDNSQueries result;
 
         if (moduleNumber < 0) {
@@ -62,7 +57,7 @@ public final class ModuleFactory {
 
                 // Initialisation as a separate step since its an 'expensive' operation. Allows us to create lots of
                 // Modules if necessary but then only initialise the ones we use.
-                result.initialise(appContext);
+                result.initialise();
 
                 // Do this last in case there's an exception so we don't store an invalid ModuleDNSQueries object
                 moduleMap.put(key, result);
