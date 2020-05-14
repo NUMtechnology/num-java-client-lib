@@ -90,6 +90,15 @@ public class NumEmailAddressValidator {
                     result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_IS_EMPTY, localPart);
                 }
 
+                if (localPart.contains("..")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_DOUBLE_DOT, localPart);
+                }
+                if (localPart.startsWith(".")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_STARTS_WITH_DOT, localPart);
+                }
+                if (localPart.endsWith(".")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_ENDS_WITH_DOT, localPart);
+                }
                 if (localPart.contains("\n")) {
                     result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_NEWLINE, localPart);
                 }

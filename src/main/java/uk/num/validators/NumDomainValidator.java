@@ -74,6 +74,14 @@ public class NumDomainValidator {
                     result.addMessage(ValidationResult.ErrorCode.DOMAIN_NAME_TOO_LONG, domain);
                 }
 
+                if (domain.startsWith("-")) {
+                    result.addMessage(ValidationResult.ErrorCode.HYPHEN_AT_START_OF_DOMAIN, domain);
+                }
+
+                if (domain.endsWith("-")) {
+                    result.addMessage(ValidationResult.ErrorCode.HYPHEN_AT_END_OF_DOMAIN, domain);
+                }
+
                 Arrays.stream(domain.split("\\."))
                         .forEach(label -> {
                             //

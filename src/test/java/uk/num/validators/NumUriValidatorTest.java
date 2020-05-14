@@ -54,7 +54,21 @@ public class NumUriValidatorTest {
             "test=test@gmail.com",
             "e226c478-c284-4c57-8187-95bfe204dbe7.com",
             "me@test.com",
-            "num://test.com:123456/test"
+            "num://test.com:123456/test",
+            "email@example.com",
+            "firstname.lastname@example.com",
+            "email@subdomain.example.com",
+            "firstname+lastname@example.com",
+            "email@123.123.123.123",
+            "\"email\"@example.com",
+            "1234567890@example.com",
+            "email@example-one.com",
+            "_______@example.com",
+            "email@example.name",
+            "email@example.museum",
+            "email@example.co.jp",
+            "firstname-lastname@example.com",
+            "much.\"more\\ unusual\"@example.com",
     };
 
     private final String[] invalidUriStrings = {
@@ -89,6 +103,23 @@ public class NumUriValidatorTest {
             "http://too.long.path.component.com/pathtoolongpathtoolongpathtoolongpathtoolongpathtoolongpathtoolong",
     };
 
+    private final String[] invalidEmailStrings = {
+            "plainaddress",
+            "#@%^%#$@#$@#.com",
+            "@example.com",
+            "Joe Smith <email@example.com>",
+            "email.example.com",
+            "email@example@example.com",
+            ".email@example.com",
+            "email.@example.com",
+            "email..email@example.com",
+            "email@example.com (Joe Smith)",
+            "email@example",
+            "email@-example.com",
+            "email@example..com",
+            "Abc..123@example.com",
+    };
+
     @BeforeClass
     public static void beforeClass() {
         NumProtocolSupport.init();
@@ -120,6 +151,27 @@ public class NumUriValidatorTest {
         final List<String> errors = new ArrayList<>();
         for (final String uri : invalidUriStrings) {
             final ValidationResult validationResult = NumUriValidator.validate(uri);
+            if (validationResult.isValid()) {
+                final String error = "URI: " + StringEscapeUtils.escapeJava(uri) + " is accepted when it should be rejected.";
+                errors.add(error);
+                errors.addAll(validationResult.getErrors()
+                        .stream()
+                        .map(e -> "\t" + e)
+                        .collect(Collectors.toList()));
+                errors.add("");
+            }
+        }
+        if (errors.size() > 0) {
+            errors.forEach(System.out::println);
+            fail("There are errors");
+        }
+    }
+
+    @Test
+    public void testInvalidEmails() {
+        final List<String> errors = new ArrayList<>();
+        for (final String uri : invalidEmailStrings) {
+            final ValidationResult validationResult = NumEmailAddressValidator.validate(uri);
             if (validationResult.isValid()) {
                 final String error = "URI: " + StringEscapeUtils.escapeJava(uri) + " is accepted when it should be rejected.";
                 errors.add(error);
