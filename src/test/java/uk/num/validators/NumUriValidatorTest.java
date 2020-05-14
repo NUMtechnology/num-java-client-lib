@@ -184,4 +184,10 @@ public class NumUriValidatorTest {
                 .isValid());
     }
 
+    @Test
+    public void testPathWithSpacesValidation() {
+        assertFalse(NumUriPathValidator.validate("/with spaces/and spaces")
+                .isValid());
+    }
+
 }
