@@ -37,6 +37,12 @@ public class NumUriValidator {
     public static final String NUM_PROTOCOL_PREFIX = "num://";
 
     /**
+     * All methods are static
+     */
+    private NumUriValidator() {
+    }
+
+    /**
      * Fully validate a NUM URI, including checks to make sure that the independent and hosted domain names are within
      * the maximum length of a domain name.
      * <p>
@@ -45,7 +51,7 @@ public class NumUriValidator {
      * @param uri String
      * @return ValidationResult
      */
-    public ValidationResult validate(final String uri) {
+    public static ValidationResult validate(final String uri) {
         final ValidationResult result = new ValidationResult();
 
         try {
@@ -72,14 +78,14 @@ public class NumUriValidator {
 
                 // Validate as an email address or domain name
                 if (domainAndModuleNumber[0].contains("@")) {
-                    result.merge(new NumEmailAddressValidator().validate(domainAndModuleNumber[0]));
+                    result.merge(NumEmailAddressValidator.validate(domainAndModuleNumber[0]));
                 } else {
-                    result.merge(new NumDomainValidator().validate(domainAndModuleNumber[0]));
+                    result.merge(NumDomainValidator.validate(domainAndModuleNumber[0]));
                 }
 
                 // Check the module number if present.
                 if (domainAndModuleNumber.length == 2) {
-                    result.merge(new NumModuleNumberValidator().validate(domainAndModuleNumber[1]));
+                    result.merge(NumModuleNumberValidator.validate(domainAndModuleNumber[1]));
                 }
 
                 // There should be at most 1 colon before the path
@@ -119,7 +125,7 @@ public class NumUriValidator {
                 if (parts.length > 1) {
                     final String[] tailParts = Arrays.copyOfRange(parts, 1, parts.length);
                     final String path = "/" + String.join("/", tailParts);
-                    result.merge(new NumUriPathValidator().validate(path));
+                    result.merge(NumUriPathValidator.validate(path));
                 }
             }
         } catch (final Exception e) {

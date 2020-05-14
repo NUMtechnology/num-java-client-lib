@@ -34,12 +34,18 @@ public class NumEmailAddressValidator {
     public static final int MAX_LOCAL_PART_LENGTH = 64;
 
     /**
+     * All methods are static
+     */
+    private NumEmailAddressValidator() {
+    }
+
+    /**
      * Sometimes null values are considered valid.
      *
      * @param emailAddress a String
      * @return a ValidationResult
      */
-    public ValidationResult validateAcceptingNullAsValid(final String emailAddress) {
+    public static ValidationResult validateAcceptingNullAsValid(final String emailAddress) {
         if (emailAddress == null) {
             return ValidationResult.VALID_NO_ERRORS;
         }
@@ -52,7 +58,7 @@ public class NumEmailAddressValidator {
      * @param emailAddress a String
      * @return a ValidationResult
      */
-    public ValidationResult validate(final String emailAddress) {
+    public static ValidationResult validate(final String emailAddress) {
         final ValidationResult result = new ValidationResult();
 
         try {
@@ -73,7 +79,7 @@ public class NumEmailAddressValidator {
                 final String domain = parts[1];
 
                 // Use the domain validator
-                result.merge(new NumDomainValidator().validate(domain));
+                result.merge(NumDomainValidator.validate(domain));
 
                 // Check the local part
                 if (localPart.getBytes().length > MAX_LOCAL_PART_LENGTH) {

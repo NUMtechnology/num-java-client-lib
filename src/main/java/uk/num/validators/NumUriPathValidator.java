@@ -37,12 +37,18 @@ public class NumUriPathValidator {
     public static final int MAX_PATH_PART_LENGTH = NumDomainValidator.MAX_LABEL_LENGTH;
 
     /**
+     * All methods are static
+     */
+    private NumUriPathValidator() {
+    }
+
+    /**
      * Sometimes null values are considered valid.
      *
      * @param path a String
      * @return ValidationResult
      */
-    public ValidationResult validateAcceptingNullAsValid(final String path) {
+    public static ValidationResult validateAcceptingNullAsValid(final String path) {
         if (path == null) {
             return ValidationResult.VALID_NO_ERRORS;
         }
@@ -55,7 +61,7 @@ public class NumUriPathValidator {
      * @param path a String
      * @return ValidationResult
      */
-    public ValidationResult validate(final String path) {
+    public static ValidationResult validate(final String path) {
         final ValidationResult result = new ValidationResult();
 
         try {

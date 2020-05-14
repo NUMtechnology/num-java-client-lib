@@ -38,12 +38,18 @@ public class NumDomainValidator {
     public static final int MAX_LABEL_LENGTH = 63;
 
     /**
+     * All methods are static
+     */
+    private NumDomainValidator() {
+    }
+
+    /**
      * Sometimes nulls are considered valid.
      *
      * @param domain a String
      * @return a ValidationResult
      */
-    public ValidationResult validateAcceptingNullAsValid(final String domain) {
+    public static ValidationResult validateAcceptingNullAsValid(final String domain) {
         if (domain == null) {
             return ValidationResult.VALID_NO_ERRORS;
         }
@@ -56,7 +62,7 @@ public class NumDomainValidator {
      * @param domain a String
      * @return a ValidationResult
      */
-    public ValidationResult validate(final String domain) {
+    public static ValidationResult validate(final String domain) {
         final ValidationResult result = new ValidationResult();
 
         try {

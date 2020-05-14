@@ -23,12 +23,18 @@ public class NumModuleNumberValidator {
 
 
     /**
+     * All methods are static
+     */
+    private NumModuleNumberValidator() {
+    }
+
+    /**
      * Validate a module number
      *
      * @param moduleNumber int
      * @return ValidationResult
      */
-    public ValidationResult validate(final int moduleNumber) {
+    public static ValidationResult validate(final int moduleNumber) {
         final ValidationResult result = new ValidationResult();
 
         if (moduleNumber < 0) {
@@ -44,7 +50,7 @@ public class NumModuleNumberValidator {
      * @param moduleNumber String
      * @return ValidationResult
      */
-    public ValidationResult validate(final String moduleNumber) {
+    public static ValidationResult validate(final String moduleNumber) {
         final ValidationResult result = new ValidationResult();
 
         int number = 0;

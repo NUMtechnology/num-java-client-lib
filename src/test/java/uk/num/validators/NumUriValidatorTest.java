@@ -98,7 +98,7 @@ public class NumUriValidatorTest {
     public void testValidURIs() {
         final List<String> errors = new ArrayList<>();
         for (final String uri : validUriStrings) {
-            final ValidationResult validationResult = new NumUriValidator().validate(uri);
+            final ValidationResult validationResult = NumUriValidator.validate(uri);
             if (!validationResult.isValid()) {
                 final String error = "URI: " + StringEscapeUtils.escapeJava(uri) + " is rejected when it should be accepted.";
                 errors.add(error);
@@ -119,7 +119,7 @@ public class NumUriValidatorTest {
     public void testInvalidURIs() {
         final List<String> errors = new ArrayList<>();
         for (final String uri : invalidUriStrings) {
-            final ValidationResult validationResult = new NumUriValidator().validate(uri);
+            final ValidationResult validationResult = NumUriValidator.validate(uri);
             if (validationResult.isValid()) {
                 final String error = "URI: " + StringEscapeUtils.escapeJava(uri) + " is accepted when it should be rejected.";
                 errors.add(error);
@@ -138,49 +138,49 @@ public class NumUriValidatorTest {
 
     @Test
     public void testNullUriValidation() {
-        assertFalse(new NumUriValidator().validate(null)
+        assertFalse(NumUriValidator.validate(null)
                 .isValid());
     }
 
     @Test
     public void testNullDomainValidation() {
-        assertFalse(new NumDomainValidator().validate(null)
+        assertFalse(NumDomainValidator.validate(null)
                 .isValid());
     }
 
     @Test
     public void testNullEmailValidation() {
-        assertFalse(new NumEmailAddressValidator().validate(null)
+        assertFalse(NumEmailAddressValidator.validate(null)
                 .isValid());
     }
 
     @Test
     public void testEmailNoAtSymbolValidation() {
-        assertFalse(new NumEmailAddressValidator().validate("joe.bloggs_example.com")
+        assertFalse(NumEmailAddressValidator.validate("joe.bloggs_example.com")
                 .isValid());
     }
 
     @Test
     public void testEmailLocalPartTooLongValidation() {
-        assertFalse(new NumEmailAddressValidator().validate("thispartistoolongthispartistoolongthispartistoolongthispartistoolong@example.com")
+        assertFalse(NumEmailAddressValidator.validate("thispartistoolongthispartistoolongthispartistoolongthispartistoolong@example.com")
                 .isValid());
     }
 
     @Test
     public void testEmailEmptyLocalPartValidation() {
-        assertFalse(new NumEmailAddressValidator().validate("@example.com")
+        assertFalse(NumEmailAddressValidator.validate("@example.com")
                 .isValid());
     }
 
     @Test
     public void testNullPathValidation() {
-        assertFalse(new NumUriPathValidator().validate(null)
+        assertFalse(NumUriPathValidator.validate(null)
                 .isValid());
     }
 
     @Test
     public void testPathNotStartingWithSlashValidation() {
-        assertFalse(new NumUriPathValidator().validate("noslash/at_start")
+        assertFalse(NumUriPathValidator.validate("noslash/at_start")
                 .isValid());
     }
 
