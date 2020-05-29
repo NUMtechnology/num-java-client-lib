@@ -114,6 +114,9 @@ public class NumEmailAddressValidator {
                 if (localPart.contains("\f")) {
                     result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_FORMFEED, localPart);
                 }
+                if (localPart.contains("\\")) {
+                    result.addMessage(ValidationResult.ErrorCode.LOCAL_PART_OF_EMAIL_CONTAINS_BACKSLASH, localPart);
+                }
 
                 // Catch any other errors using the regex
                 if (!NUM_EMAIL_REGEX.matcher(emailAddress)

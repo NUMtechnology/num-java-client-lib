@@ -29,7 +29,7 @@ public class NumUriPathValidator {
     /**
      * Path regex
      */
-    public static final Pattern NUM_PATH_REGEX = Pattern.compile("^(/[^;,/?:@&=+$.\\s]+?)*?/??$");
+    public static final Pattern NUM_PATH_REGEX = Pattern.compile("^(/[^;,/\\\\?:@&=+$.#\\s]+)*/?$");
 
     /**
      * Path components are converted to domain name labels so have the same length restriction.
@@ -74,38 +74,40 @@ public class NumUriPathValidator {
                     result.addMessage(ValidationResult.ErrorCode.PATH_MUST_START_WITH_SLASH, path);
                 }
 
-                // Split into path components
-                final String[] pathComponents = StringUtils.removeStart(path, "/")
-                        .split("/");
+                if (!path.equals("/")) {
+                    // Split into path components
+                    final String[] pathComponents = StringUtils.removeStart(path, "/")
+                            .split("/");
 
-                // Check each path component
-                Arrays.stream(pathComponents)
-                        .forEach(pathComponent -> {
-                            if (pathComponent.getBytes().length == 0) {
-                                result.addMessage(ValidationResult.ErrorCode.ZERO_LENGTH_PATH_COMPONENT, path);
-                            }
-                            if (pathComponent.getBytes().length > MAX_PATH_PART_LENGTH) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_TOO_LONG, pathComponent);
-                            }
-                            if (pathComponent.contains(" ")) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_SPACE, pathComponent);
-                            }
-                            if (pathComponent.contains("\n")) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_NEWLINE, pathComponent);
-                            }
-                            if (pathComponent.contains("\r")) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_CARRIAGE_RETURN, pathComponent);
-                            }
-                            if (pathComponent.contains("\t")) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_TAB, pathComponent);
-                            }
-                            if (pathComponent.contains("\b")) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_BACKSPACE, pathComponent);
-                            }
-                            if (pathComponent.contains("\f")) {
-                                result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_FORMFEED, pathComponent);
-                            }
-                        });
+                    // Check each path component
+                    Arrays.stream(pathComponents)
+                            .forEach(pathComponent -> {
+                                if (pathComponent.getBytes().length == 0) {
+                                    result.addMessage(ValidationResult.ErrorCode.ZERO_LENGTH_PATH_COMPONENT, path);
+                                }
+                                if (pathComponent.getBytes().length > MAX_PATH_PART_LENGTH) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_TOO_LONG, pathComponent);
+                                }
+                                if (pathComponent.contains(" ")) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_SPACE, pathComponent);
+                                }
+                                if (pathComponent.contains("\n")) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_NEWLINE, pathComponent);
+                                }
+                                if (pathComponent.contains("\r")) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_CARRIAGE_RETURN, pathComponent);
+                                }
+                                if (pathComponent.contains("\t")) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_TAB, pathComponent);
+                                }
+                                if (pathComponent.contains("\b")) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_BACKSPACE, pathComponent);
+                                }
+                                if (pathComponent.contains("\f")) {
+                                    result.addMessage(ValidationResult.ErrorCode.PATH_COMPONENT_CONTAINS_FORMFEED, pathComponent);
+                                }
+                            });
+                }
 
                 // Catch any other errors using the regex
                 if (!NUM_PATH_REGEX.matcher(path)

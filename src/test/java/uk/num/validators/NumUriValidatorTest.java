@@ -71,10 +71,10 @@ public class NumUriValidatorTest {
             "email@example.museum",
             "email@example.co.jp",
             "firstname-lastname@example.com",
-            "much.\"more\\ unusual\"@example.com",
     };
 
     private final String[] invalidUriStrings = {
+            "test.test.com:1/test\\ test/",
             "example.t_l_d",
             "test_domain.com",
             "例",
@@ -105,6 +105,7 @@ public class NumUriValidatorTest {
             "http://too.many.colons.com::0/path",
             "http://zero.length.path.component.com/path//path",
             "http://too.long.path.component.com/pathtoolongpathtoolongpathtoolongpathtoolongpathtoolongpathtoolong",
+            "much.\"more\\ unusual\"@example.com",
     };
 
     private final String[] invalidEmailStrings = {
@@ -121,6 +122,7 @@ public class NumUriValidatorTest {
             "email@example",
             "email@-example.com",
             "email@example..com",
+            "ema\\il@example.com",
             "Abc..123@example.com",
     };
 
@@ -231,6 +233,18 @@ public class NumUriValidatorTest {
     @Test
     public void testNullPathValidation() {
         assertFalse(NumUriPathValidator.validate(null)
+                .isValid());
+    }
+
+    @Test
+    public void testRootPathValidation() {
+        assertTrue(NumUriPathValidator.validate("/")
+                .isValid());
+    }
+
+    @Test
+    public void testBackslashesInPathValidation() {
+        assertFalse(NumUriPathValidator.validate("/test\\ test/")
                 .isValid());
     }
 
