@@ -30,19 +30,18 @@ public class URLAPITests {
     private static final String EXPECTED_SUCCESS_MODULE_0 = "{\n" +
             "  \"o\" : {\n" +
             "    \"n\" : \"NUM Example Co\",\n" +
-            "    \"m\" : [ {\n" +
-            "      \"t\" : [ \"Customer Service\", 441270123456 ]\n" +
+            "    \"c\" : [ {\n" +
+            "      \"t\" : 441270123456\n" +
             "    }, {\n" +
-            "      \"fb\" : \"example\"\n" +
+            "      \"tw\" : \"numexampletweets\"\n" +
             "    } ]\n" +
             "  }\n" +
             "}";
     private static final String EXPECTED_SUCCESS = "{\n" +
             "  \"organisation\" : {\n" +
             "    \"name\" : \"NUM Example Co\",\n" +
-            "    \"m\" : [ {\n" +
+            "    \"contacts\" : [ {\n" +
             "      \"telephone\" : {\n" +
-            "        \"description\" : \"Customer Service\",\n" +
             "        \"value\" : \"441270123456\",\n" +
             "        \"object_type\" : \"media\",\n" +
             "        \"object_display_name\" : \"Telephone\",\n" +
@@ -51,14 +50,15 @@ public class URLAPITests {
             "        \"media_type\" : \"core\"\n" +
             "      }\n" +
             "    }, {\n" +
-            "      \"facebook\" : {\n" +
-            "        \"value\" : \"example\",\n" +
+            "      \"twitter\" : {\n" +
+            "        \"value\" : \"numexampletweets\",\n" +
             "        \"object_type\" : \"media\",\n" +
-            "        \"object_display_name\" : \"Facebook\",\n" +
-            "        \"description_default\" : \"View Facebook profile\",\n" +
-            "        \"prefix\" : \"https://www.facebook.com/\",\n" +
+            "        \"object_display_name\" : \"Twitter\",\n" +
+            "        \"description_default\" : \"View Twitter profile\",\n" +
+            "        \"prefix\" : \"https://www.twitter.com/\",\n" +
             "        \"media_type\" : \"3p\",\n" +
-            "        \"controller\" : \"facebook.com\"\n" +
+            "        \"value_prefix\" : \"@\",\n" +
+            "        \"controller\" : \"twitter.com\"\n" +
             "      }\n" +
             "    } ],\n" +
             "    \"object_type\" : \"entity\",\n" +
@@ -70,9 +70,8 @@ public class URLAPITests {
             "  \"C\" : \"gb\",\n" +
             "  \"organisation\" : {\n" +
             "    \"name\" : \"NUM Example Co\",\n" +
-            "    \"m\" : [ {\n" +
+            "    \"contacts\" : [ {\n" +
             "      \"telephone\" : {\n" +
-            "        \"description\" : \"Customer Service\",\n" +
             "        \"value\" : \"441270123456\",\n" +
             "        \"object_type\" : \"media\",\n" +
             "        \"object_display_name\" : \"Telephone\",\n" +
@@ -81,14 +80,15 @@ public class URLAPITests {
             "        \"media_type\" : \"core\"\n" +
             "      }\n" +
             "    }, {\n" +
-            "      \"facebook\" : {\n" +
-            "        \"value\" : \"example\",\n" +
+            "      \"twitter\" : {\n" +
+            "        \"value\" : \"numexampletweets\",\n" +
             "        \"object_type\" : \"media\",\n" +
-            "        \"object_display_name\" : \"Facebook\",\n" +
-            "        \"description_default\" : \"View Facebook profile\",\n" +
-            "        \"prefix\" : \"https://www.facebook.com/\",\n" +
+            "        \"object_display_name\" : \"Twitter\",\n" +
+            "        \"description_default\" : \"View Twitter profile\",\n" +
+            "        \"prefix\" : \"https://www.twitter.com/\",\n" +
             "        \"media_type\" : \"3p\",\n" +
-            "        \"controller\" : \"facebook.com\"\n" +
+            "        \"value_prefix\" : \"@\",\n" +
+            "        \"controller\" : \"twitter.com\"\n" +
             "      }\n" +
             "    } ],\n" +
             "    \"object_type\" : \"entity\",\n" +

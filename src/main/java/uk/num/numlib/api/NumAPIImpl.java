@@ -721,7 +721,6 @@ public final class NumAPIImpl implements NumAPI {
      * @param context       The context obtained from the NumAPI.begin() method
      * @return The raw NUM record from DNS.
      * @throws NumInvalidDNSQueryException   on error
-     * @throws NumNotImplementedException    on error
      * @throws NumNoRecordAvailableException if a CNAME or SPF record is received instead of a TXT record
      * @throws RrSetIncompleteException      on error
      * @throws RrSetHeaderFormatException    on error
@@ -729,7 +728,6 @@ public final class NumAPIImpl implements NumAPI {
      */
     private String getNumRecord(int timeoutMillis, NumAPIContextBase context) throws
                                                                               NumInvalidDNSQueryException,
-                                                                              NumNotImplementedException,
                                                                               NumNoRecordAvailableException,
                                                                               RrSetHeaderFormatException,
                                                                               RrSetIncompleteException,
@@ -754,7 +752,6 @@ public final class NumAPIImpl implements NumAPI {
      * @param recordLocation The DNS query String.
      * @return The raw NUM record from DNS.
      * @throws NumInvalidDNSQueryException   on error
-     * @throws NumNotImplementedException    on error
      * @throws NumNoRecordAvailableException if a CNAME or SPF record is received instead of a TXT record
      * @throws RrSetIncompleteException      on error
      * @throws RrSetHeaderFormatException    on error
@@ -762,7 +759,6 @@ public final class NumAPIImpl implements NumAPI {
      */
     private String getNumRecordNoCache(int timeoutMillis, String recordLocation) throws
                                                                                  NumInvalidDNSQueryException,
-                                                                                 NumNotImplementedException,
                                                                                  NumNoRecordAvailableException,
                                                                                  RrSetHeaderFormatException,
                                                                                  RrSetIncompleteException,

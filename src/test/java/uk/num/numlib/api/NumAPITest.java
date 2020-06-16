@@ -20,7 +20,9 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.num.numlib.exc.*;
+import uk.num.numlib.exc.NumInvalidDNSHostException;
+import uk.num.numlib.exc.NumInvalidParameterException;
+import uk.num.numlib.exc.NumInvalidRedirectException;
 import uk.num.numlib.internal.dns.DummyDNSServices;
 import uk.num.numlib.internal.util.PopulatorRetryConfig;
 
@@ -671,14 +673,7 @@ public class NumAPITest {
                                                      ExecutionException, TimeoutException,
                                                      NumInvalidDNSHostException,
                                                      NumInvalidParameterException,
-                                                     NumDNSQueryException,
-                                                     NumInvalidDNSQueryException,
-                                                     NumBadModuleIdException,
-                                                     NumBadRecordException,
-                                                     MalformedURLException,
-                                                     RrSetHeaderFormatException,
-                                                     RrSetIncompleteException,
-                                                     RrSetNoHeadersException {
+                                                     MalformedURLException {
         //
         // Create the NumAPI Object
         //

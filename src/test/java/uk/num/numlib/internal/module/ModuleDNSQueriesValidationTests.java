@@ -36,7 +36,6 @@ public class ModuleDNSQueriesValidationTests {
     }
 
     private void checkDomainNameLengths(final int moduleNumber, final String numIdAndPath1) throws
-                                                                                            MalformedURLException,
                                                                                             NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(moduleNumber, numIdAndPath1);
         queries.initialise();

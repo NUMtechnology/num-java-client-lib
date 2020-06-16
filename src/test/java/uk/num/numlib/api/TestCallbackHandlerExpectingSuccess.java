@@ -76,8 +76,8 @@ public class TestCallbackHandlerExpectingSuccess implements NumAPICallbacks {
         Assert.assertTrue("Missing expected value.", json.contains("organisation"));
         Assert.assertTrue("Missing expected value.", json.contains("NUM Example Co"));
         Assert.assertTrue("Missing expected value.", json.contains("telephone"));
-        Assert.assertTrue("Missing expected value.", json.contains("facebook"));
-        Assert.assertTrue("Missing expected value.", json.contains("View Facebook profile"));
+        Assert.assertTrue("Missing expected value.", json.contains("twitter"));
+        Assert.assertTrue("Missing expected value.", json.contains("View Twitter profile"));
         Assert.assertTrue("Missing expected value.", json.contains("object_display_name"));
         Assert.assertFalse("Unexpected value.", json.contains("locale"));
     }

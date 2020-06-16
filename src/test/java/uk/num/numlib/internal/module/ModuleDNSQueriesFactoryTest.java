@@ -20,14 +20,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
 
-import java.net.MalformedURLException;
-
 public class ModuleDNSQueriesFactoryTest {
 
     private static final ModuleFactory moduleFactory = new ModuleFactory();
 
     @Test(expected = Exception.class)
-    public void getInstance1() throws MalformedURLException, NumInvalidParameterException {
+    public void getInstance1() throws NumInvalidParameterException {
         moduleFactory.getInstance(-1, null);
     }
 

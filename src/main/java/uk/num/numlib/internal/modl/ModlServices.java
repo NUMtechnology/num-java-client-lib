@@ -16,15 +16,15 @@
 
 package uk.num.numlib.internal.modl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.vavr.Tuple2;
 import lombok.extern.log4j.Log4j2;
 import uk.modl.interpreter.Interpreter;
-import uk.modl.modlObject.ModlObject;
-import uk.modl.modlObject.ModlValue;
-import uk.modl.parser.printers.JsonPrinter;
+import uk.modl.model.*;
+import uk.modl.transforms.JacksonJsonNodeTransform;
+import uk.modl.transforms.TransformationContext;
 import uk.num.numlib.exc.NumBadRecordException;
-
-import java.util.ArrayList;
 
 /**
  * A class to act as a facade for the MODL interpreter.
@@ -33,16 +33,20 @@ import java.util.ArrayList;
  */
 @Log4j2
 public final class ModlServices {
+
     /**
      * A Jackson object mapper to create the PopulatorResponse object from JSON.
      */
     private final ObjectMapper objectMapper;
+
+    private final Interpreter interpreter;
 
     /**
      * Default constructor
      */
     public ModlServices() {
         objectMapper = new ObjectMapper();
+        interpreter = new Interpreter();
     }
 
     /**
@@ -61,9 +65,14 @@ public final class ModlServices {
         log.trace("Interpreting NUM record: {}", numRecord);
 
         try {
-            final ModlObject modlObject = Interpreter.interpret(numRecord, new ArrayList<>());
-            checkForRedirection(modlObject);
-            return JsonPrinter.printModl(modlObject);
+            final TransformationContext ctx = TransformationContext.emptyCtx();
+            final Tuple2<TransformationContext, Modl> interpreted = interpreter.apply(ctx, numRecord);
+
+            checkForRedirection(interpreted._2);
+
+            final JsonNode jsonNode = new JacksonJsonNodeTransform(ctx).apply(interpreted._2);
+            return new ObjectMapper().writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(jsonNode);
         } catch (Exception e) {
             log.error("Exception during interpretNumRecord().", e);
             throw new NumBadRecordException("Error interpreting NUM record.", e);
@@ -77,9 +86,9 @@ public final class ModlServices {
      * @throws NumQueryRedirect  on error
      * @throws NumLookupRedirect on error
      */
-    private void checkForRedirection(final ModlObject modlObject) throws NumQueryRedirect, NumLookupRedirect {
+    private void checkForRedirection(final Modl modlObject) throws NumQueryRedirect, NumLookupRedirect {
         if (modlObject.getStructures() != null) {
-            for (final ModlObject.Structure structure : modlObject.getStructures()) {
+            for (final Structure structure : modlObject.getStructures()) {
                 findRedirect(structure);
             }
         }
@@ -92,43 +101,43 @@ public final class ModlServices {
      * @throws NumQueryRedirect  on error
      * @throws NumLookupRedirect on error
      */
-    private void findRedirect(final ModlValue structure) throws NumQueryRedirect, NumLookupRedirect {
+    private void findRedirect(final Object structure) throws NumQueryRedirect, NumLookupRedirect {
 
         // If its a Pair then check whether the key indicates a redirect.
-        if (structure instanceof ModlObject.Pair) {
-            final ModlObject.Pair pair = (ModlObject.Pair) structure;
+        if (structure instanceof Pair) {
+            final Pair pair = (Pair) structure;
 
             // Check for q_
-            if ("q_".equals(pair.getKey().string)) {
+            if ("q_".equals(pair.getKey())) {
                 final Object value = pair.getValue();
-                if (value instanceof ModlObject.String) {
-                    final ModlObject.String str = (ModlObject.String) value;
-                    throw new NumQueryRedirect(str.string);
+                if (value instanceof StringPrimitive) {
+                    final StringPrimitive str = (StringPrimitive) value;
+                    throw new NumQueryRedirect(str.getValue());
                 }
             }
             // Check for l_
-            if ("l_".equals(pair.getKey().string)) {
+            if ("l_".equals(pair.getKey())) {
                 final Object value = pair.getValue();
-                if (value instanceof ModlObject.String) {
-                    final ModlObject.String str = (ModlObject.String) value;
-                    throw new NumLookupRedirect(str.string);
+                if (value instanceof StringPrimitive) {
+                    final StringPrimitive str = (StringPrimitive) value;
+                    throw new NumLookupRedirect(str.getValue());
                 }
             }
-            findRedirect(pair.getModlValue());
+            findRedirect(pair.getValue());
         }
 
         // Check the pairs in a Map
-        if (structure instanceof ModlObject.Map) {
-            final ModlObject.Map map = (ModlObject.Map) structure;
-            for (ModlObject.Pair pair : map.getPairs()) {
-                findRedirect(pair);
+        if (structure instanceof Map) {
+            final Map map = (Map) structure;
+            for (MapItem mi : map.getMapItems()) {
+                findRedirect(mi);
             }
         }
         // Check the pairs in an Array
-        if (structure instanceof ModlObject.Array) {
-            final ModlObject.Array array = (ModlObject.Array) structure;
-            for (ModlValue modlValue : array.getModlValues()) {
-                findRedirect(modlValue);
+        if (structure instanceof Array) {
+            final Array array = (Array) structure;
+            for (ArrayItem item : array.getArrayItems()) {
+                findRedirect(item);
             }
         }
     }
@@ -146,8 +155,7 @@ public final class ModlServices {
         log.trace("Interpreting populator response record: {}", numRecord);
 
         try {
-            final ModlObject modlObject = Interpreter.interpret(numRecord, new ArrayList<>());
-            final String json = JsonPrinter.printModl(modlObject);
+            final String json = interpreter.interpretToPrettyJsonString(numRecord);
             log.trace("Interpreted populator response: {}", json);
             final PopulatorResponse response = objectMapper.readValue(json, PopulatorResponse.class);
 
@@ -166,4 +174,5 @@ public final class ModlServices {
             throw new NumBadRecordException("Error interpreting populator response record.", e);
         }
     }
+
 }

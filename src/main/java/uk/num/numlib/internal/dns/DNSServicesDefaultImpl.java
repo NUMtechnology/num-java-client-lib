@@ -79,8 +79,9 @@ public class DNSServicesDefaultImpl implements DNSServices {
                 parts[0] = data.substring(0, pipeIndex);
                 parts[1] = data.substring(pipeIndex + 1);
 
+                final String substring = data.substring(parts[0].length() + 1);
                 if (parts[0].contains("/")) {
-                    ordered.put(0, data.substring(parts[0].length() + 1));
+                    ordered.put(0, substring);
 
                     String[] firstParts = parts[0].split("/");
 
@@ -107,7 +108,7 @@ public class DNSServicesDefaultImpl implements DNSServices {
                     try {
                         int index = Integer.parseInt(parts[0]) - 1;
 
-                        ordered.put(index, data.substring(parts[0].length() + 1));
+                        ordered.put(index, substring);
 
                     } catch (NumberFormatException ex) {
                         throw new RrSetHeaderFormatException("Could not parse index ${parts[0]}");
