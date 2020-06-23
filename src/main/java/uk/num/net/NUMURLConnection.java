@@ -21,8 +21,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.api.*;
+import uk.num.numlib.dns.DNSServices;
 import uk.num.numlib.exc.NumNoRecordAvailableException;
-import uk.num.numlib.internal.dns.DNSServices;
 
 import java.io.*;
 import java.net.ContentHandlerFactory;

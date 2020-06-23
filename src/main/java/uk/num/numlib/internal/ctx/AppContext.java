@@ -16,7 +16,7 @@
 
 package uk.num.numlib.internal.ctx;
 
-import uk.num.numlib.internal.util.StringConstants;
+import uk.num.numlib.util.StringConstants;
 
 /**
  * Some objects need to be globally accessibly

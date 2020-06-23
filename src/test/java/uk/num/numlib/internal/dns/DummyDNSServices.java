@@ -22,8 +22,9 @@ import org.xbill.DNS.Name;
 import org.xbill.DNS.Record;
 import org.xbill.DNS.TXTRecord;
 import org.xbill.DNS.TextParseException;
-import uk.num.numlib.internal.util.HashUtils;
-import uk.num.numlib.internal.util.StringConstants;
+import uk.num.numlib.dns.DNSServicesDefaultImpl;
+import uk.num.numlib.util.HashUtils;
+import uk.num.numlib.util.StringConstants;
 
 import java.util.Arrays;
 import java.util.HashMap;

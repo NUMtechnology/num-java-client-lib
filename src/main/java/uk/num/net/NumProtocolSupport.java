@@ -16,8 +16,8 @@
 
 package uk.num.net;
 
-import uk.num.numlib.internal.util.BaseLookupGenerator;
-import uk.num.numlib.internal.util.LookupGenerator;
+import uk.num.numlib.util.BaseLookupGenerator;
+import uk.num.numlib.util.LookupGenerator;
 import uk.num.validators.NumUriValidator;
 import uk.num.validators.ValidationResult;
 

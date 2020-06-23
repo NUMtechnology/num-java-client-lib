@@ -25,7 +25,7 @@ import uk.num.numlib.exc.NumInvalidDNSQueryException;
 import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.exc.NumInvalidRedirectException;
 import uk.num.numlib.internal.ctx.AppContext;
-import uk.num.numlib.internal.util.*;
+import uk.num.numlib.util.*;
 
 /**
  * Class to hold the DNS query strings for a module and NUM ID combination.

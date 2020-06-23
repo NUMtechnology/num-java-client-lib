@@ -18,6 +18,7 @@ package uk.num.numlib.internal.util;
 
 import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.exc.RelativePathException;
+import uk.num.numlib.util.StringConstants;
 
 import java.util.Stack;
 
@@ -71,4 +72,5 @@ public final class UrlRelativePathResolver {
         // Rebuild the path to a resolved path
         return SEP + String.join(SEP, pathStack);
     }
+
 }
