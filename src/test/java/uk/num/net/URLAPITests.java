@@ -20,6 +20,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import uk.num.numlib.api.NumAPICallbacks;
 import uk.num.numlib.internal.dns.DummyDNSServices;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class URLAPITests {
+
     private static final String EXPECTED_SUCCESS_MODULE_0 = "{\n" +
             "  \"o\" : {\n" +
             "    \"n\" : \"NUM Example Co\",\n" +
@@ -37,6 +39,7 @@ public class URLAPITests {
             "    } ]\n" +
             "  }\n" +
             "}";
+
     private static final String EXPECTED_SUCCESS = "{\n" +
             "  \"organisation\" : {\n" +
             "    \"name\" : \"NUM Example Co\",\n" +
@@ -66,6 +69,7 @@ public class URLAPITests {
             "    \"description_default\" : \"View Organisation\"\n" +
             "  }\n" +
             "}";
+
     private static final String EXPECTED_SUCCESS_SHOW_PARAMS = "{\n" +
             "  \"C\" : \"gb\",\n" +
             "  \"organisation\" : {\n" +
@@ -138,6 +142,9 @@ public class URLAPITests {
         connection.setRequestProperty(NUMURLConnection.HIDE_PARAMS, "false");
         final String json = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
         Assert.assertEquals(EXPECTED_SUCCESS_SHOW_PARAMS, json);
+
+        Assert.assertFalse(connection.isDnsSecSigned());
+        Assert.assertEquals(NumAPICallbacks.Location.INDEPENDENT, connection.getLocation());
     }
 
 }

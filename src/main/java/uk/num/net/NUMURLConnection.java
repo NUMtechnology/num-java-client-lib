@@ -36,13 +36,24 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public final class NUMURLConnection extends URLConnection {
+
     public static final String USE_POPULATOR = "NUM_USE_POPULATOR";
+
     public static final String HIDE_PARAMS = "NUM_HIDE_PARAMS";
+
     @Getter
     @Setter
     private static DNSServices dnsServices = null;
+
     private NumAPIImpl numAPI = null;
+
     private NumAPIContext ctx = null;
+
+    @Getter
+    private boolean dnsSecSigned;
+
+    @Getter
+    private NumAPICallbacks.Location location;
 
     /**
      * Constructs a URL connection to the specified URL. A connection to
@@ -438,12 +449,14 @@ public final class NUMURLConnection extends URLConnection {
             if (!connected) {
                 connect();
             }
-            final NumAPICallbacks handler = new NumAPICallbacksDefaultHandler();
+            final NumAPICallbacksDefaultHandler handler = new NumAPICallbacksDefaultHandler();
             final Future<String> future = numAPI.retrieveNumRecord(ctx, handler, getReadTimeout());
             final String json = future.get(getReadTimeout(), TimeUnit.MILLISECONDS);
             numAPI.shutdown();
             connected = false;
             if (json != null) {
+                dnsSecSigned = handler.isSignedDNSSEC();
+                location = handler.getLocation();
                 final InputStream stream = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
                 return new BufferedInputStream(stream);
             }
@@ -793,4 +806,5 @@ public final class NUMURLConnection extends URLConnection {
             }
         }
     }
+
 }

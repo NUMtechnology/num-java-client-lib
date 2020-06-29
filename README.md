@@ -107,6 +107,15 @@ The code example above shows the use of NUM connection properties; the following
 - `NUMURLConnection.USE_POPULATOR` defaults to `"false"`. When set to `"true"` if no NUM record is found then the NUM Server will attempt to scrape information to satisfy the query.
 - `NUMURLConnection.HIDE_PARAMS` defaults to `"true"` and automatically prefixes query parameters with an underscore so that they do not appear in the JSON output. When set to `"false"` the parameters are left untouched, each parameter can be hidden manually by prepending with an underscore. 
 
+### Record Location and DNSSEC Signature Check
+
+When using the `NUMURLConnection` object there are two additional results available after the NUM record is retrieved:
+
+```java
+        final boolean signed = connection.isDnsSecSigned();
+        NumAPICallbacks.Location location = connection.getLocation(); // INDEPENDENT or HOSTED
+
+``` 
 ## Logging
 
 The NUM library uses slf4j over Logback for logging, and requires a `logback.xml` file on the classpath.

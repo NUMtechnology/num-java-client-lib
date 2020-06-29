@@ -177,7 +177,7 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
      * @return An array of Records
      */
     @Override
-    public Record[] getRecordFromDnsNoCache(final String query, final int timeoutMillis) {
+    public GetRecordResponse getRecordFromDnsNoCache(final String query, final int timeoutMillis) {
 
         log.info("DUMMY DNS QUERY: {}", query);
         final String noDotQuery = (query.endsWith(StringConstants.DOMAIN_SEPARATOR)) ? StringUtils.removeEnd(query, StringConstants.DOMAIN_SEPARATOR) : query;
@@ -201,7 +201,7 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
             records = new Record[]{};
         }
 
-        return records;
+        return new GetRecordResponse(false, records);
     }
 
 }

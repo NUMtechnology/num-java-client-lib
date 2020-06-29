@@ -22,6 +22,7 @@ package uk.num.numlib.api;
  * @author tonywalmsley
  */
 public interface NumAPIContext {
+
     /**
      * Get the user variables.
      *
@@ -36,8 +37,6 @@ public interface NumAPIContext {
      */
     void setRequiredUserVariables(final UserVariable[] userVariables);
 
-    void setLocation(final NumAPICallbacks.Location location);
-
     /**
      * @return true if the library should query the Populator
      */
@@ -47,4 +46,22 @@ public interface NumAPIContext {
      * @param populatorQueryRequired true if the library should query the Populator
      */
     void setPopulatorQueryRequired(final boolean populatorQueryRequired);
+
+    /**
+     * @return the location the record was retrieved from.
+     */
+    NumAPICallbacks.Location getLocation();
+
+    /**
+     * Used internally to set the NUM record retrieval location.
+     *
+     * @param location the NumAPICallbacks.Location
+     */
+    void setLocation(final NumAPICallbacks.Location location);
+
+    /**
+     * @return true if the record was DNSSEC signed.
+     */
+    boolean isDnsSecSigned();
+
 }

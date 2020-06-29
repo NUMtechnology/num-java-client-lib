@@ -72,6 +72,10 @@ public class NumAPIContextBase implements NumAPIContext {
     @Setter
     private NumAPICallbacks.Location location;
 
+    @Getter
+    @Setter
+    private boolean dnsSecSigned;
+
     /**
      * Count redirects and return the current number of redirects.
      *

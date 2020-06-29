@@ -21,7 +21,6 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.xbill.DNS.ExtendedResolver;
 import org.xbill.DNS.Lookup;
-import org.xbill.DNS.Record;
 import org.xbill.DNS.SimpleResolver;
 import uk.num.net.NumProtocolSupport;
 import uk.num.numlib.dns.DNSServices;
@@ -276,6 +275,9 @@ public final class NumAPIImpl implements NumAPI {
                 return null;
             } else {
                 handler.setResult(result);
+                handler.setLocation(ctx.getLocation());
+                handler.setSignedDNSSEC(ctx.isDnsSecSigned());
+                // handler.setSignedDNSSEC(ctx.isDnsSecSigned());
                 return result;
             }
         });
@@ -487,7 +489,7 @@ public final class NumAPIImpl implements NumAPI {
 
         String numRecord = null;
         while (numRecord == null) {
-            numRecord = getNumRecordNoCache(timeoutMillis, recordLocation);
+            numRecord = getNumRecordNoCache(timeoutMillis, recordLocation, context);
             if (numRecord == null) {
                 // This is unrecoverable, we should get status_ or error_ object.
                 break;
@@ -707,23 +709,24 @@ public final class NumAPIImpl implements NumAPI {
      * @throws RrSetHeaderFormatException    on error
      * @throws RrSetNoHeadersException       on error
      */
-    private String getNumRecord(int timeoutMillis, NumAPIContextBase context) throws
-                                                                              NumInvalidDNSQueryException,
-                                                                              NumNoRecordAvailableException,
-                                                                              RrSetHeaderFormatException,
-                                                                              RrSetIncompleteException,
-                                                                              RrSetNoHeadersException {
+    private String getNumRecord(int timeoutMillis, final NumAPIContextBase context) throws
+                                                                                    NumInvalidDNSQueryException,
+                                                                                    NumNoRecordAvailableException,
+                                                                                    RrSetHeaderFormatException,
+                                                                                    RrSetIncompleteException,
+                                                                                    RrSetNoHeadersException {
         final String recordLocation = context.getRecordLocation();
         if (recordLocation == null) {
             return null;
         }
         log.info("getNumRecord({}, context, {})", timeoutMillis, recordLocation);
-        Record[] recordFromDns;
+        DNSServices.GetRecordResponse recordFromDns;
         recordFromDns = dnsServices.getRecordFromDnsNoCache(recordLocation, timeoutMillis);
-        if (recordFromDns == null || recordFromDns.length == 0) {
+        if (recordFromDns == null || recordFromDns.getRecords().length == 0) {
             return null;
         }
-        return dnsServices.rebuildTXTRecordContent(recordFromDns);
+        context.setDnsSecSigned(recordFromDns.isSigned());
+        return dnsServices.rebuildTXTRecordContent(recordFromDns.getRecords());
     }
 
     /**
@@ -738,19 +741,20 @@ public final class NumAPIImpl implements NumAPI {
      * @throws RrSetHeaderFormatException    on error
      * @throws RrSetNoHeadersException       on error
      */
-    private String getNumRecordNoCache(int timeoutMillis, String recordLocation) throws
-                                                                                 NumInvalidDNSQueryException,
-                                                                                 NumNoRecordAvailableException,
-                                                                                 RrSetHeaderFormatException,
-                                                                                 RrSetIncompleteException,
-                                                                                 RrSetNoHeadersException {
+    private String getNumRecordNoCache(int timeoutMillis, String recordLocation, final NumAPIContextBase context) throws
+                                                                                                                  NumInvalidDNSQueryException,
+                                                                                                                  NumNoRecordAvailableException,
+                                                                                                                  RrSetHeaderFormatException,
+                                                                                                                  RrSetIncompleteException,
+                                                                                                                  RrSetNoHeadersException {
         log.info("getNumRecordNoCache({}, context, {})", timeoutMillis, recordLocation);
-        Record[] recordFromDns;
+        DNSServices.GetRecordResponse recordFromDns;
         recordFromDns = dnsServices.getRecordFromDnsNoCache(recordLocation, timeoutMillis);
-        if (recordFromDns == null || recordFromDns.length == 0) {
+        if (recordFromDns == null || recordFromDns.getRecords().length == 0) {
             return null;
         }
-        return dnsServices.rebuildTXTRecordContent(recordFromDns);
+        context.setDnsSecSigned(recordFromDns.isSigned());
+        return dnsServices.rebuildTXTRecordContent(recordFromDns.getRecords());
     }
 
     /**
