@@ -42,21 +42,41 @@ public class ModuleDNSQueriesRedirectionTest {
         testData.add(new String[]{"Domain", "Independent", "/new",  "redir.numexample.com",                "new.1._num.redir.numexample.com."});
         testData.add(new String[]{"Domain", "Independent", "../new",  "redir.numexample.com",              "error"});
         testData.add(new String[]{"Domain", "Independent", "../../new", "redir.numexample.com",            "error"});
+        testData.add(new String[]{"Domain", "Independent", "test.com:1", "redir.numexample.com",            "1._num.test.com."});
+        testData.add(new String[]{"Domain", "Independent", "test.com:1/", "redir.numexample.com",            "1._num.test.com."});
+        testData.add(new String[]{"Domain", "Independent", "test.com:3/", "redir.numexample.com",            "3._num.test.com."});
+        testData.add(new String[]{"Domain", "Independent", "test.com:1/c/b/a", "redir.numexample.com",            "a.b.c.1._num.test.com."});
+        testData.add(new String[]{"Domain", "Independent", "test.com:3/c/b/a", "redir.numexample.com",            "a.b.c.3._num.test.com."});
 
         testData.add(new String[]{"Domain", "Hosted",      "new",   "redir.numexample.com",                "new.1._redir.numexample.com.u.b.s.num.net."});
         testData.add(new String[]{"Domain", "Hosted",      "/new",  "redir.numexample.com",                "new.1._redir.numexample.com.u.b.s.num.net."});
         testData.add(new String[]{"Domain", "Hosted",      "../new",  "redir.numexample.com",              "error"});
         testData.add(new String[]{"Domain", "Hosted",      "../../new", "redir.numexample.com",            "error"});
+        testData.add(new String[]{"Domain", "Hosted",      "test.com:1", "redir.numexample.com",            "1._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Domain", "Hosted",      "test.com:1/", "redir.numexample.com",            "1._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Domain", "Hosted",      "test.com:3/", "redir.numexample.com",            "3._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Domain", "Hosted",      "test.com:1/c/b/a", "redir.numexample.com",            "a.b.c.1._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Domain", "Hosted",      "test.com:3/c/b/a", "redir.numexample.com",            "a.b.c.3._test.com.v.4.b.num.net."});
 
         testData.add(new String[]{"URL",    "Independent", "new",   "http://redir.numexample.com",         "new.1._num.redir.numexample.com."});
         testData.add(new String[]{"URL",    "Independent", "/new",  "http://redir.numexample.com",         "new.1._num.redir.numexample.com."});
         testData.add(new String[]{"URL",    "Independent", "../new",  "http://redir.numexample.com",       "error"});
         testData.add(new String[]{"URL",    "Independent", "../../new", "http://redir.numexample.com",     "error"});
+        testData.add(new String[]{"URL",    "Independent", "test.com:1", "http://redir.numexample.com",            "1._num.test.com."});
+        testData.add(new String[]{"URL",    "Independent", "test.com:1/", "http://redir.numexample.com",            "1._num.test.com."});
+        testData.add(new String[]{"URL",    "Independent", "test.com:3/", "http://redir.numexample.com",            "3._num.test.com."});
+        testData.add(new String[]{"URL",    "Independent", "test.com:1/c/b/a", "http://redir.numexample.com",            "a.b.c.1._num.test.com."});
+        testData.add(new String[]{"URL",    "Independent", "test.com:3/c/b/a", "http://redir.numexample.com",            "a.b.c.3._num.test.com."});
 
         testData.add(new String[]{"URL",    "Hosted",      "new",   "http://redir.numexample.com",         "new.1._redir.numexample.com.u.b.s.num.net."});
         testData.add(new String[]{"URL",    "Hosted",      "/new",  "http://redir.numexample.com",         "new.1._redir.numexample.com.u.b.s.num.net."});
         testData.add(new String[]{"URL",    "Hosted",      "../new",  "http://redir.numexample.com",       "error"});
         testData.add(new String[]{"URL",    "Hosted",      "../../new", "http://redir.numexample.com",     "error"});
+        testData.add(new String[]{"URL",    "Hosted",      "test.com:1", "http://redir.numexample.com",            "1._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"URL",    "Hosted",      "test.com:1/", "http://redir.numexample.com",            "1._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"URL",    "Hosted",      "test.com:3/", "http://redir.numexample.com",            "3._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"URL",    "Hosted",      "test.com:1/c/b/a", "http://redir.numexample.com",            "a.b.c.1._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"URL",    "Hosted",      "test.com:3/c/b/a", "http://redir.numexample.com",            "a.b.c.3._test.com.v.4.b.num.net."});
 
         testData.add(new String[]{"URL",    "Independent", "new",   "http://redir.numexample.com/foo/bar",         "new.bar.foo.1._num.redir.numexample.com."});
         testData.add(new String[]{"URL",    "Independent", "/new",  "http://redir.numexample.com/foo/bar",         "new.1._num.redir.numexample.com."});
@@ -76,11 +96,21 @@ public class ModuleDNSQueriesRedirectionTest {
         testData.add(new String[]{"Email",  "Independent", "/new",  "john.smith@numexample.com",           "new.1._john.smith.e._num.numexample.com."});
         testData.add(new String[]{"Email",  "Independent", "../new",  "john.smith@numexample.com",         "error"});
         testData.add(new String[]{"Email",  "Independent", "../../new", "john.smith@numexample.com",       "error"});
+        testData.add(new String[]{"Email",  "Independent", "jane.doe@test.com:1", "http://redir.numexample.com",            "1._jane.doe.e._num.test.com."});
+        testData.add(new String[]{"Email",  "Independent", "jane.doe@test.com:1/", "http://redir.numexample.com",            "1._jane.doe.e._num.test.com."});
+        testData.add(new String[]{"Email",  "Independent", "jane.doe@test.com:3/", "http://redir.numexample.com",            "3._jane.doe.e._num.test.com."});
+        testData.add(new String[]{"Email",  "Independent", "jane.doe@test.com:1/c/b/a", "http://redir.numexample.com",            "a.b.c.1._jane.doe.e._num.test.com."});
+        testData.add(new String[]{"Email",  "Independent", "jane.doe@test.com:3/c/b/a", "http://redir.numexample.com",            "a.b.c.3._jane.doe.e._num.test.com."});
 
         testData.add(new String[]{"Email",  "Hosted",      "new",   "john.smith@numexample.com",           "new.1._john.smith.e._numexample.com.c.7.m.num.net."});
         testData.add(new String[]{"Email",  "Hosted",      "/new",  "john.smith@numexample.com",           "new.1._john.smith.e._numexample.com.c.7.m.num.net."});
         testData.add(new String[]{"Email",  "Hosted",      "../new",  "john.smith@numexample.com",         "error"});
         testData.add(new String[]{"Email",  "Hosted",      "../../new", "john.smith@numexample.com",       "error"});
+        testData.add(new String[]{"Email",  "Hosted",      "jane.doe@test.com:1", "redir.numexample.com",            "1._jane.doe.e._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Email",  "Hosted",      "jane.doe@test.com:1/", "redir.numexample.com",            "1._jane.doe.e._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Email",  "Hosted",      "jane.doe@test.com:3/", "redir.numexample.com",            "3._jane.doe.e._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Email",  "Hosted",      "jane.doe@test.com:1/c/b/a", "redir.numexample.com",            "a.b.c.1._jane.doe.e._test.com.v.4.b.num.net."});
+        testData.add(new String[]{"Email",  "Hosted",      "jane.doe@test.com:3/c/b/a", "redir.numexample.com",            "a.b.c.3._jane.doe.e._test.com.v.4.b.num.net."});
         // @formatter:on
     }
 
@@ -107,7 +137,7 @@ public class ModuleDNSQueriesRedirectionTest {
             final NumAPIContextBase ctx = new NumAPIContextBase();
             ctx.setModuleDNSQueries(moduleDNSQueries);
             ctx.setLocation((testData.location.equals("Independent") ? NumAPICallbacks.Location.INDEPENDENT : NumAPICallbacks.Location.HOSTED));
-            ctx.handleQueryRedirect(testData.redirect, ctx);
+            ctx.handleQueryRedirect(testData.redirect);
 
             if (testData.location.equals("Independent")) {
                 final String actual = moduleDNSQueries.getIndependentRecordLocation();

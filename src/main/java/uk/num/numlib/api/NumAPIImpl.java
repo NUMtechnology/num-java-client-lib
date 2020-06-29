@@ -27,11 +27,9 @@ import uk.num.net.NumProtocolSupport;
 import uk.num.numlib.dns.DNSServices;
 import uk.num.numlib.dns.DNSServicesDefaultImpl;
 import uk.num.numlib.exc.*;
-import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.internal.ctx.NumAPIContextBase;
 import uk.num.numlib.internal.modl.ModlServices;
 import uk.num.numlib.internal.modl.NumLookupRedirect;
-import uk.num.numlib.internal.modl.NumQueryRedirect;
 import uk.num.numlib.internal.modl.PopulatorResponse;
 import uk.num.numlib.internal.module.ModuleDNSQueries;
 import uk.num.numlib.internal.module.ModuleFactory;
@@ -64,11 +62,6 @@ import static uk.num.numlib.api.NumAPICallbacks.Location.*;
 public final class NumAPIImpl implements NumAPI {
 
     public static final String MATCH_NUM_RECORDS = "(_n=[0-9]+;.*)|(^\\d+\\|.*)|(\\d+/\\d+\\|_n=\\d+;.*)";
-
-    /**
-     * The ApplicationContext to use for this NUM API Session
-     */
-    private final AppContext appContext = new AppContext();
 
     private final ModuleFactory moduleFactory = new ModuleFactory();
 
@@ -299,7 +292,6 @@ public final class NumAPIImpl implements NumAPI {
      * @return a NUM record String
      * @throws NumBadRecordException                    on error
      * @throws NumInvalidRedirectException              on error
-     * @throws NumNotImplementedException               on error
      * @throws NumInvalidDNSQueryException              on error
      * @throws NumMaximumRedirectsExceededException     on error
      * @throws NumNoRecordAvailableException            on error
@@ -312,7 +304,6 @@ public final class NumAPIImpl implements NumAPI {
     private String numLookup(final NumAPIContext ctx, final NumAPICallbacks handler, final int timeoutMillis) throws
                                                                                                               NumBadRecordException,
                                                                                                               NumInvalidRedirectException,
-                                                                                                              NumNotImplementedException,
                                                                                                               NumInvalidDNSQueryException,
                                                                                                               NumMaximumRedirectsExceededException,
                                                                                                               NumNoRecordAvailableException,
@@ -393,9 +384,7 @@ public final class NumAPIImpl implements NumAPI {
                 }
             } catch (final NumLookupRedirect numLookupRedirect) {
                 context.setLocation(INDEPENDENT);
-                context.handleQueryRedirect(numLookupRedirect.getRedirect(), context);
-            } catch (final NumQueryRedirect numQueryRedirect) {
-                context.handleQueryRedirect(numQueryRedirect.getRedirect(), context);
+                context.handleQueryRedirect(numLookupRedirect.getRedirect());
             }
         } while (true);
     }
@@ -411,7 +400,7 @@ public final class NumAPIImpl implements NumAPI {
             log.info("Handling a Zone Distribution Record for {}", context.getRecordLocation());
             try {
                 context.getModuleDNSQueries()
-                        .setEmailRecordDistributionLevels(appContext, n);
+                        .setEmailRecordDistributionLevels(n);
             } catch (final NumInvalidParameterException e) {
                 log.error("Invalid parameter.", e);
             }
@@ -474,7 +463,6 @@ public final class NumAPIImpl implements NumAPI {
      * @throws NumNoRecordAvailableException            on error
      * @throws NumInvalidPopulatorResponseCodeException on error
      * @throws NumBadRecordException                    on error
-     * @throws NumNotImplementedException               on error
      * @throws NumInvalidDNSQueryException              on error
      * @throws RrSetIncompleteException                 on error
      * @throws RrSetHeaderFormatException               on error
@@ -485,7 +473,6 @@ public final class NumAPIImpl implements NumAPI {
                                                                                                                                 NumNoRecordAvailableException,
                                                                                                                                 NumInvalidPopulatorResponseCodeException,
                                                                                                                                 NumBadRecordException,
-                                                                                                                                NumNotImplementedException,
                                                                                                                                 NumInvalidDNSQueryException,
                                                                                                                                 RrSetHeaderFormatException,
                                                                                                                                 RrSetIncompleteException,
@@ -565,7 +552,6 @@ public final class NumAPIImpl implements NumAPI {
      * @throws NumNoRecordAvailableException            on error
      * @throws NumInvalidPopulatorResponseCodeException on error
      * @throws NumInvalidDNSQueryException              on error
-     * @throws NumNotImplementedException               on error
      * @throws RrSetIncompleteException                 on error
      * @throws RrSetHeaderFormatException               on error
      * @throws RrSetNoHeadersException                  on error
@@ -574,7 +560,6 @@ public final class NumAPIImpl implements NumAPI {
                                                                                                                                                        NumNoRecordAvailableException,
                                                                                                                                                        NumInvalidPopulatorResponseCodeException,
                                                                                                                                                        NumInvalidDNSQueryException,
-                                                                                                                                                       NumNotImplementedException,
                                                                                                                                                        RrSetHeaderFormatException,
                                                                                                                                                        RrSetIncompleteException,
                                                                                                                                                        RrSetNoHeadersException {
@@ -657,12 +642,10 @@ public final class NumAPIImpl implements NumAPI {
      * @param numRecord    The NUM record from DNS
      * @return The JSON String result of the fully expanded NUM record.
      * @throws NumBadRecordException on error
-     * @throws NumQueryRedirect      on error
      * @throws NumLookupRedirect     on error
      */
     private String getInterpretedNumRecordAsJson(final int moduleNumber, final NumAPIContext context, final String numRecord) throws
                                                                                                                               NumBadRecordException,
-                                                                                                                              NumQueryRedirect,
                                                                                                                               NumLookupRedirect {
         log.info("getInterpretedNumRecordAsJson({}, {})", moduleNumber, numRecord);
         final StringBuilder numRecordBuffer = new StringBuilder();
@@ -698,11 +681,9 @@ public final class NumAPIImpl implements NumAPI {
      * @return the interpreted NUM record as a JSON string.
      * @throws NumLookupRedirect     on error
      * @throws NumBadRecordException on error
-     * @throws NumQueryRedirect      on error
      */
     private String interpretNumRecord(final String numRecord, final NumAPIContextBase context) throws NumLookupRedirect,
-                                                                                                      NumBadRecordException,
-                                                                                                      NumQueryRedirect {
+                                                                                                      NumBadRecordException {
         log.info("interpretNumRecord({}, context)", numRecord);
         String json = null;
         if (numRecord != null && numRecord.trim()

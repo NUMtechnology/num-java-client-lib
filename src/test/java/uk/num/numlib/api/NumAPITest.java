@@ -22,7 +22,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidDNSHostException;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.exc.NumInvalidRedirectException;
 import uk.num.numlib.internal.dns.DummyDNSServices;
 import uk.num.numlib.internal.util.PopulatorRetryConfig;
 
@@ -102,201 +101,6 @@ public class NumAPITest {
     }
 
     @Test
-    public void test_12_root_query_redirect_success() throws Throwable {
-        final String numId = "redirectme1.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test
-    public void test_13_root_query_redirect_success() throws Throwable {
-        final String numId = "redirectme2.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_14_root_query_relative_redirect_fail() throws Throwable {
-        final String numId = "redirectme3.com:1";
-        log.info("Trying: " + numId);
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-
-    }
-
-    @Test
-    public void test_15_root_query_redirect_to_self_fail() {
-        final String numId = "redirectme4.com:1";
-        log.info("Trying: " + numId);
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (Exception e) {
-            Assert.assertEquals("Incorrect exception:", "uk.num.numlib.exc.NumInvalidRedirectException: Cannot redirect back to the same location.", e.getMessage());
-        }
-
-    }
-
-    @Test
-    public void test_16_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@email.redirect1.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_17_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@email.redirect2.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_18_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@email.redirect3.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_19_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@email.redirect4.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_20_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user.name@email.redirect5.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_21_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@email.redirect6.com:1";
-        log.info("Trying: " + numId);
-        runQuery(numId);
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_22_email_branch_query_redirect_too_far_fail() throws Throwable {
-        final String numId = "user@email.redirect7.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_23_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://url.redirect1.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-
-    }
-
-    @Test
-    public void test_24_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://url.redirect2.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-        } catch (ExecutionException e) {
-            Assert.fail("Unexpected exception.");
-        }
-    }
-
-    @Test
-    public void test_25_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://url.redirect3.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test
-    public void test_26_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://url.redirect4.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_27_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://url.redirect5.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_28_url_branch_query_redirect_to_self_fail() {
-        final String numId = "http://url.redirect6.com:1/sales/";
-        log.info("Trying: " + numId);
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (Exception e) {
-            Assert.assertEquals("Incorrect exception:", "uk.num.numlib.exc.NumInvalidRedirectException: Cannot redirect back to the same location.", e.getMessage());
-        }
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_29_url_branch_query_redirect_too_far_fail() throws Throwable {
-        final String numId = "http://url.redirect7.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
     public void test_30_lookup_root_redirect_success() throws Throwable {
         final String numId = "lookup.root.redirect1.com:1";
         log.info("Trying: " + numId);
@@ -315,199 +119,6 @@ public class NumAPITest {
             Assert.assertEquals("Incorrect exception:", "uk.num.numlib.exc.NumMaximumRedirectsExceededException", e.getMessage());
         }
 
-    }
-
-    @Test
-    public void test_32_root_query_redirect_success() throws Throwable {
-        final String numId = "hosted.redirectme1.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test
-    public void test_33_root_query_redirect_success() throws Throwable {
-        final String numId = "hosted.redirectme2.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_34_root_query_relative_redirect_fail() throws Throwable {
-        final String numId = "hosted.redirectme3.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_35_root_query_redirect_to_self_fail() {
-        final String numId = "hosted.redirectme4.com:1";
-        log.info("Trying: " + numId);
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (Exception e) {
-            Assert.assertEquals("Incorrect exception:", "uk.num.numlib.exc.NumInvalidRedirectException: Cannot redirect back to the same location.", e.getMessage());
-        }
-
-    }
-
-    @Test
-    public void test_36_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@hosted.email.redirect1.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_37_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@hosted.email.redirect2.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-        } catch (final ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_38_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@hosted.email.redirect3.com:1";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_39_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@hosted.email.redirect4.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-        } catch (final ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_40_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user.name@hosted.email.redirect5.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-        } catch (final ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_41_email_branch_query_redirect_success() throws Throwable {
-        final String numId = "user@hosted.email.redirect6.com:1";
-        log.info("Trying: " + numId);
-        runQuery(numId);
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_42_email_branch_query_redirect_too_far_fail() throws Throwable {
-        final String numId = "user@hosted.email.redirect7.com:1";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-        } catch (final ExecutionException e) {
-            throw e.getCause();
-        }
-    }
-
-    @Test
-    public void test_43_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://hosted.url.redirect1.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-    }
-
-    @Test
-    public void test_44_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://hosted.url.redirect2.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-        } catch (ExecutionException e) {
-            Assert.fail("Unexpected exception.");
-        }
-    }
-
-    @Test
-    public void test_45_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://hosted.url.redirect3.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-
-    }
-
-    @Test
-    public void test_46_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://hosted.url.redirect4.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        runQuery(numId);
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_47_url_branch_query_redirect_success() throws Throwable {
-        final String numId = "http://hosted.url.redirect5.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-
-    }
-
-    @Test
-    public void test_48_url_branch_query_redirect_to_self_fail() {
-        final String numId = "http://hosted.url.redirect6.com:1/sales/";
-        log.info("Trying: " + numId);
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (Exception e) {
-            Assert.assertEquals("Incorrect exception:", "uk.num.numlib.exc.NumInvalidRedirectException: Cannot redirect back to the same location.", e.getMessage());
-        }
-
-    }
-
-    @Test(expected = NumInvalidRedirectException.class)
-    public void test_49_url_branch_query_redirect_too_far_fail() throws Throwable {
-        final String numId = "http://hosted.url.redirect7.com:1/sales/";
-        log.info("Trying: " + numId);
-
-        try {
-            runQuery(numId);
-            Assert.fail("Expected an exception.");
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
     }
 
     @Test
@@ -669,6 +280,30 @@ public class NumAPITest {
 
     }
 
+    @Test
+    public void test_99_absolute_independent_redirect_success() throws Throwable {
+        final String numId = "absolute.redirect1.com:1";
+        log.info("Trying: " + numId);
+
+        runQuery(numId);
+    }
+
+    @Test
+    public void test_100_absolute_hosted_redirect_success() throws Throwable {
+        final String numId = "absolute.hosted.redirect1.com:1";
+        log.info("Trying: " + numId);
+
+        runQuery(numId);
+    }
+
+    @Test
+    public void test_100_absolute_hosted_email_redirect_success() throws Throwable {
+        final String numId = "jane.doe@janedoe.com:1";
+        log.info("Trying: " + numId);
+
+        runQuery(numId);
+    }
+
     private void runQuery(final String numId) throws InterruptedException,
                                                      ExecutionException, TimeoutException,
                                                      NumInvalidDNSHostException,
@@ -725,4 +360,5 @@ public class NumAPITest {
         // Cancel any outstanding DNS requests
         numAPI.shutdown();
     }
+
 }

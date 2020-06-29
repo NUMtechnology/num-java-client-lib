@@ -55,11 +55,9 @@ public final class ModlServices {
      * @param numRecord The NUM record string.
      * @return The interpreted result as a JSON string.
      * @throws NumBadRecordException on error
-     * @throws NumQueryRedirect      on error
      * @throws NumLookupRedirect     on error
      */
-    public String interpretNumRecord(final String numRecord) throws NumBadRecordException, NumQueryRedirect,
-                                                                    NumLookupRedirect {
+    public String interpretNumRecord(final String numRecord) throws NumBadRecordException, NumLookupRedirect {
         assert numRecord != null && numRecord.trim()
                 .length() > 0;
         log.trace("Interpreting NUM record: {}", numRecord);
@@ -83,10 +81,9 @@ public final class ModlServices {
      * Look for a redirect instruction in the interpreted NUM record.
      *
      * @param modlObject the interpreted NUM record
-     * @throws NumQueryRedirect  on error
      * @throws NumLookupRedirect on error
      */
-    private void checkForRedirection(final Modl modlObject) throws NumQueryRedirect, NumLookupRedirect {
+    private void checkForRedirection(final Modl modlObject) throws NumLookupRedirect {
         if (modlObject.getStructures() != null) {
             for (final Structure structure : modlObject.getStructures()) {
                 findRedirect(structure);
@@ -98,25 +95,16 @@ public final class ModlServices {
      * Look for a redirect instruction in the interpreted NUM record, recursively.
      *
      * @param structure the ModlValue to check.
-     * @throws NumQueryRedirect  on error
      * @throws NumLookupRedirect on error
      */
-    private void findRedirect(final Object structure) throws NumQueryRedirect, NumLookupRedirect {
+    private void findRedirect(final Object structure) throws NumLookupRedirect {
 
         // If its a Pair then check whether the key indicates a redirect.
         if (structure instanceof Pair) {
             final Pair pair = (Pair) structure;
 
-            // Check for q_
-            if ("q_".equals(pair.getKey())) {
-                final Object value = pair.getValue();
-                if (value instanceof StringPrimitive) {
-                    final StringPrimitive str = (StringPrimitive) value;
-                    throw new NumQueryRedirect(str.getValue());
-                }
-            }
-            // Check for l_
-            if ("l_".equals(pair.getKey())) {
+            // Check for @R
+            if ("@R".equals(pair.getKey())) {
                 final Object value = pair.getValue();
                 if (value instanceof StringPrimitive) {
                     final StringPrimitive str = (StringPrimitive) value;

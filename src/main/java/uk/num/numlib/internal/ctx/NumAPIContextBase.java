@@ -19,15 +19,17 @@ package uk.num.numlib.internal.ctx;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import uk.num.net.NumProtocolSupport;
 import uk.num.numlib.api.NumAPICallbacks;
 import uk.num.numlib.api.NumAPIContext;
 import uk.num.numlib.api.UserVariable;
-import uk.num.numlib.exc.NumInvalidDNSQueryException;
-import uk.num.numlib.exc.NumInvalidRedirectException;
-import uk.num.numlib.exc.NumMaximumRedirectsExceededException;
-import uk.num.numlib.exc.RelativePathException;
+import uk.num.numlib.exc.*;
 import uk.num.numlib.internal.module.ModuleDNSQueries;
 import uk.num.numlib.internal.util.UrlRelativePathResolver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * A base class implementation of NumAPIContext.
@@ -102,30 +104,48 @@ public class NumAPIContextBase implements NumAPIContext {
      * Update the relevant query for the supplied redirect
      *
      * @param redirect the supplied redirect
-     * @param context  the NumAPIContextBase
      * @throws NumMaximumRedirectsExceededException on Error
      * @throws NumInvalidDNSQueryException          on Error
      * @throws NumInvalidRedirectException          on Error
      */
-    public void handleQueryRedirect(final String redirect, final NumAPIContextBase context) throws
-                                                                                            NumMaximumRedirectsExceededException,
-                                                                                            NumInvalidDNSQueryException,
-                                                                                            NumInvalidRedirectException {
+    public void handleQueryRedirect(final String redirect) throws
+                                                           NumMaximumRedirectsExceededException,
+                                                           NumInvalidDNSQueryException,
+                                                           NumInvalidRedirectException {
         log.info("Query Redirected to: {}", redirect);
-        int redirectCount = context.incrementRedirectCount();
+        int redirectCount = incrementRedirectCount();
         if (redirectCount >= MAX_NUM_REDIRECTS) {
             log.error("Maximum Redirects Exceeded. (max={})", MAX_NUM_REDIRECTS);
             throw new NumMaximumRedirectsExceededException();
         }
 
-        switch (location) {
-            case INDEPENDENT:
-                handleIndependentQueryRedirect(redirect);
-            case HOSTED:
-                handleHostedQueryRedirect(redirect);
-            default:
-                break;
+        if (redirect.matches("^.*:[0-9]+/?.*$")) {
+            try {
+                handleNumUriRedirect(NumProtocolSupport.toUrl(redirect));
+            } catch (final MalformedURLException | NumInvalidParameterException e) {
+                throw new NumInvalidRedirectException(e);
+            }
+        } else {
+            switch (location) {
+                case INDEPENDENT:
+                    handleIndependentQueryRedirect(redirect);
+                case HOSTED:
+                    handleHostedQueryRedirect(redirect);
+                default:
+                    break;
+            }
         }
+    }
+
+    private void handleNumUriRedirect(final URL numUri) throws NumInvalidParameterException {
+        final int moduleNumber = Math.max(numUri.getPort(), 0);
+        final String userInfo = numUri.getUserInfo();
+        final String host = numUri.getHost();
+        final String path = numUri.getPath();
+        final String numId = (StringUtils.isEmpty(userInfo)) ? host + path : userInfo + "@" + host + path;
+        moduleDNSQueries.setModuleId(moduleNumber);
+        moduleDNSQueries.setNumId(numId);
+        moduleDNSQueries.initialise();
     }
 
     /**

@@ -18,13 +18,13 @@ package uk.num.numlib.internal.module;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import uk.num.numlib.exc.NumInvalidDNSQueryException;
 import uk.num.numlib.exc.NumInvalidParameterException;
 import uk.num.numlib.exc.NumInvalidRedirectException;
-import uk.num.numlib.internal.ctx.AppContext;
 import uk.num.numlib.util.*;
 
 /**
@@ -39,13 +39,15 @@ public final class ModuleDNSQueries {
      * The module ID, e.g. "1"
      */
     @Getter
-    private final int moduleId;
+    @Setter
+    private int moduleId;
 
     /**
      * The NUM ID to be queried.
      */
     @NonNull
-    private final String numId;
+    @Setter
+    private String numId;
 
     /**
      * The independent record query
@@ -134,12 +136,11 @@ public final class ModuleDNSQueries {
     /**
      * A Zone Distribution Record has been found so we need to update the email lookups accordingly.
      *
-     * @param appContext the AppContext
-     * @param levels     the number of levels to use for zone distribution
+     * @param levels the number of levels to use for zone distribution
      * @throws NumInvalidParameterException on error
      */
-    public void setEmailRecordDistributionLevels(final AppContext appContext, final int levels) throws
-                                                                                                NumInvalidParameterException {
+    public void setEmailRecordDistributionLevels(final int levels) throws
+                                                                   NumInvalidParameterException {
         if (numId.contains("@")) {
             // This only applies to email NUM IDs
             final EmailLookupGenerator generator = new EmailLookupGenerator(numId);

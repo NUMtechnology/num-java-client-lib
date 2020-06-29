@@ -61,22 +61,11 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("pop.1._numexample.com.populator.num.net", new String[]{"error_(code=100;description=Server Failure.)"});
         dns.put("1._pop-numexample.com.populator.num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
 
-        dns.put("1._num.redirectme1.com", new String[]{"_n=1;o(n=NUM Example Co;q_=redirected;m[t=Customer Service:441270123456;fb=example])"});
-        dns.put("1._num.redirectme2.com", new String[]{"_n=1;o(n=NUM Example Co;q_=/redirected;m[t=Customer Service:441270123456;fb=example])"});
-        dns.put("1._num.redirectme3.com", new String[]{"_n=1;o(n=NUM Example Co;q_=../redirected;m[t=Customer Service:441270123456;fb=example])"});
-        dns.put("1._num.redirectme4.com", new String[]{"_n=1;o(n=NUM Example Co;q_=/;m[t=Customer Service:441270123456;fb=example])"});
         dns.put("redirected.1._num.redirectme1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
         dns.put("redirected.1._num.redirectme2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
 
-        dns.put("1._user.e._num.email.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=redirected;"});
-        dns.put("1._user.e._num.email.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/;"});
-        dns.put("1._user.e._" + HashUtils.domainAndHash("email.redirect3.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/redirected;"});
         dns.put("redirected.1._user.e._" + HashUtils.domainAndHash("email.redirect3.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
-        dns.put("1._user.e._num.email.redirect4.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../redirected;"});
-        dns.put("1._user.name.e._num.email.redirect5.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../redirected;"});
-        dns.put("1._user.e._num.email.redirect6.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/user;"});
         dns.put("user.1._user.e._" + HashUtils.domainAndHash("email.redirect6.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
-        dns.put("1._user.e._num.email.redirect7.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../redirected;"});
 
         dns.put("redirected.1._user.e._num.email.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("1._num.email.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
@@ -84,45 +73,25 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("redirected.1._num.email.redirect4.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("redirected.1._num.email.redirect5.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
 
-        dns.put("sales.1._num.url.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=redirected;"});
-        dns.put("sales.1._num.url.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/;"});
-        dns.put("sales.1._num.url.redirect3.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/redirected;"});
-        dns.put("sales.1._num.url.redirect4.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../redirected;"});
-        dns.put("sales.1._num.url.redirect5.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../redirected;"});
-        dns.put("sales.1._num.url.redirect6.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/sales;"});
-        dns.put("sales.1._num.url.redirect7.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../../../redirected;"});
-
         dns.put("redirected.sales.1._num.url.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("1._num.url.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("redirected.1._num.url.redirect3.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("redirected.sales.1._num.url.redirect4.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("redirected.sales.1._num.url.redirect5.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
 
-        dns.put("1._num.lookup.root.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=redirected;"});
-        dns.put("1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=redirected1;"});
+        dns.put("1._num.lookup.root.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=redirected;"});
+        dns.put("1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=redirected1;"});
 
         dns.put("redirected.1._num.lookup.root.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
-        dns.put("redirected1.1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=redirected2"});
-        dns.put("redirected2.redirected1.1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=redirected3"});
+        dns.put("redirected1.1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=redirected2"});
+        dns.put("redirected2.redirected1.1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=redirected3"});
         dns.put("redirected3.redirected2.redirected1.1._num.lookup.root.redirect2.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
-
-        dns.put("1._" + HashUtils.domainAndHash("hosted.redirectme1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=redirected;"});
-        dns.put("1._" + HashUtils.domainAndHash("hosted.redirectme2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/redirected;"});
-        dns.put("1._" + HashUtils.domainAndHash("hosted.redirectme3.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../redirected;"});
-        dns.put("1._" + HashUtils.domainAndHash("hosted.redirectme4.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/;"});
 
         dns.put("redirected.1._" + HashUtils.domainAndHash("hosted.redirectme1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("redirected.1._" + HashUtils.domainAndHash("hosted.redirectme2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
 
 
-        dns.put("1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=redirected;"});
-        dns.put("1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/;"});
-        dns.put("1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect3.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/redirected;"});
-        dns.put("1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect4.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../redirected;"});
-        dns.put("1._user.name.e._" + HashUtils.domainAndHash("hosted.email.redirect5.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../redirected;"});
-        dns.put("1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect6.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/user;"});
         dns.put("user.1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect6.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
-        dns.put("1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect7.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../redirected;"});
 
         dns.put("redirected.1._user.e._" + HashUtils.domainAndHash("hosted.email.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("1._" + HashUtils.domainAndHash("hosted.email.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
@@ -130,14 +99,6 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("redirected.1._" + HashUtils.domainAndHash("hosted.email.redirect4.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("redirected.1._" + HashUtils.domainAndHash("hosted.email.redirect5.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
 
-
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=redirected;"});
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/;"});
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect3.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/redirected;"});
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect4.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../redirected;"});
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect5.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../redirected;"});
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect6.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=/sales;"});
-        dns.put("sales.1._" + HashUtils.domainAndHash("hosted.url.redirect7.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);q_=../../../../redirected;"});
 
         dns.put("redirected.sales.1._" + HashUtils.domainAndHash("hosted.url.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
         dns.put("1._" + HashUtils.domainAndHash("hosted.url.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
@@ -147,13 +108,13 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("redirected.1._num.url.redirect4.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
 
 
-        dns.put("1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=redirected;"});
-        dns.put("1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=redirected1;"});
+        dns.put("1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=redirected;"});
+        dns.put("1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=redirected1;"});
 
         dns.put("redirected.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect1.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
-        dns.put("redirected1.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=/redirected2;"});
-        dns.put("redirected2.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=/redirected3;"});
-        dns.put("redirected3.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);l_=/redirected4;"});
+        dns.put("redirected1.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=/redirected2;"});
+        dns.put("redirected2.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=/redirected3;"});
+        dns.put("redirected3.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=/redirected4;"});
 
 
         dns.put("1._populator.response.1.com.populator.num.net", new String[]{"status_=(code=1;description=Check the populated zone.)"});
@@ -192,6 +153,17 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
 
         // Example taken from https://app.clubhouse.io/num/story/2314/num-records-being-incorrectly-interpreted-as-rrsets
         dns.put("1._" + HashUtils.domainAndHash("yingdegroup.co.uk") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co;s=YIng De .;c[yt=channel/UC_2AkX5oawMWJ-iX16-9Wgw;li=in;tw=yingdegroup;t=HO:441612661093;t=|:441612093815;t=441612093816;u=yingdegroup.co.uk;u=%T.c%:%U.c%yingdegroup.co.uk]);facebook=View Facebook Profile object_display_name"});
+
+
+        dns.put("1._num.absolute.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=`basic.record.numexample.com:1/redirected1`;"});
+        dns.put("redirected1.1._num.basic.record.numexample.com", new String[]{"_n=1;o(n=NUM Example Co Absolute Redirect ;c[t=441270123456;tw=numexampletweets]);"});
+
+        dns.put("1._num.absolute.hosted.redirect1.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=`basic.hosted.record.numexample.com:1/redirected1`;"});
+        dns.put("redirected1.1._" + HashUtils.domainAndHash("basic.hosted.record.numexample.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co Absolute Redirect Hosted;c[t=441270123456;tw=numexampletweets]);"});
+
+        dns.put("1._jane.doe.e._num.janedoe.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=`email.hosted.record.numexample.com:1/redirected1`"});
+        dns.put("redirected1.1._" + HashUtils.domainAndHash("email.hosted.record.numexample.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co Absolute Email Redirect Hosted;c[t=441270123456;tw=numexampletweets]);"});
+
     }
 
     /**

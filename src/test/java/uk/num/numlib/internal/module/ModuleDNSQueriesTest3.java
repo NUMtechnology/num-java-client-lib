@@ -20,17 +20,14 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.num.numlib.exc.NumInvalidParameterException;
-import uk.num.numlib.internal.ctx.AppContext;
 
 @Log4j2
 public class ModuleDNSQueriesTest3 {
 
-    private static final AppContext appContext = new AppContext();
-
     @Test
     public void testEmailDistribution_1() throws NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "john.smith@numexample.com");
-        queries.setEmailRecordDistributionLevels(appContext, 1);
+        queries.setEmailRecordDistributionLevels(1);
         Assert.assertEquals("1._john.smith.3.e._num.numexample.com.", queries.getIndependentRecordLocation());
         Assert.assertEquals("1._john.smith.3.e._numexample.com.c.7.m.num.net.", queries.getHostedRecordLocation());
     }
@@ -38,7 +35,7 @@ public class ModuleDNSQueriesTest3 {
     @Test
     public void testEmailDistribution_2() throws NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "john.smith@numexample.com");
-        queries.setEmailRecordDistributionLevels(appContext, 2);
+        queries.setEmailRecordDistributionLevels(2);
         Assert.assertEquals("1._john.smith.6.3.e._num.numexample.com.", queries.getIndependentRecordLocation());
         Assert.assertEquals("1._john.smith.6.3.e._numexample.com.c.7.m.num.net.", queries.getHostedRecordLocation());
     }
@@ -46,7 +43,7 @@ public class ModuleDNSQueriesTest3 {
     @Test
     public void testEmailDistribution_3() throws NumInvalidParameterException {
         final ModuleDNSQueries queries = new ModuleDNSQueries(1, "john.smith@numexample.com");
-        queries.setEmailRecordDistributionLevels(appContext, 3);
+        queries.setEmailRecordDistributionLevels(3);
         Assert.assertEquals("1._john.smith.d.6.3.e._num.numexample.com.", queries.getIndependentRecordLocation());
         Assert.assertEquals("1._john.smith.d.6.3.e._numexample.com.c.7.m.num.net.", queries.getHostedRecordLocation());
     }
