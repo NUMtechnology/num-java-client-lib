@@ -113,7 +113,7 @@ When using the `NUMURLConnection` object there are two additional results availa
 
 ```java
         final boolean signed = connection.isDnsSecSigned();
-        NumAPICallbacks.Location location = connection.getLocation(); // INDEPENDENT or HOSTED
+        final NumAPICallbacks.Location location = connection.getLocation(); // INDEPENDENT or HOSTED
 
 ``` 
 ## Logging
