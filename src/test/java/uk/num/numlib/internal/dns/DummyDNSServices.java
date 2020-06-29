@@ -147,6 +147,7 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("1._num.multi.com", new String[]{
                 "2|e Co;c[t=441270123456",
                 "1/4|_n=1;o(n=NUM Exampl",
+                "should ignore this part",
                 "3|;tw=numexampletweets])",
                 "4|" // Make sure we can handle empty parts
         });
@@ -163,6 +164,8 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
 
         dns.put("1._jane.doe.e._num.janedoe.com", new String[]{"_n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=`email.hosted.record.numexample.com:1/redirected1`"});
         dns.put("redirected1.1._" + HashUtils.domainAndHash("email.hosted.record.numexample.com") + ".num.net", new String[]{"_n=1;o(n=NUM Example Co Absolute Email Redirect Hosted;c[t=441270123456;tw=numexampletweets]);"});
+
+        dns.put("0._" + HashUtils.domainAndHash("test1.module0.com") + ".num.net", new String[]{"_n=1;@context=`https://json-ld.org/contexts/person.jsonld`;@id=`http://dbpedia.org/resource/John_Lennon`;name=John Lennon;born=1940-10-09;spouse=`http://dbpedia.org/resource/Cynthia_Lennon`;"});
 
     }
 
