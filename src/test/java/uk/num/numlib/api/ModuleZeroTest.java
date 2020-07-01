@@ -45,7 +45,7 @@ public class ModuleZeroTest {
 
 
     @Test
-    public void test_1_module0_success() throws Throwable {
+    public void test_1_module_0_success() throws Throwable {
         final String numId = "test1.module0.com";
         log.info("Trying: " + numId);
 
@@ -57,6 +57,14 @@ public class ModuleZeroTest {
                 "  \"born\" : \"1940-10-09\",\n" +
                 "  \"spouse\" : \"http://dbpedia.org/resource/Cynthia_Lennon\"\n" +
                 "}", result);
+    }
+
+    @Test
+    public void test_1_module_0_no_record() throws Throwable {
+        final String numId = "test1.missing.module0.com";
+        log.info("Trying: " + numId);
+
+        final String result = runQuery(numId);
     }
 
     private String runQuery(final String numId) throws InterruptedException,
