@@ -34,7 +34,7 @@ compileTestJava.options.encoding = "UTF-8"
 mainClassName = "uk.num.numlib.api.NumApiImpl"
 
 group = "uk.num"
-version = "0.9.9"
+version = "0.9.10"
 
 def isSnapshot = version.endsWith("SNAPSHOT")
 
@@ -67,7 +67,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     // https://mvnrepository.com/artifact/dnsjava/dnsjava
-    compile group: 'dnsjava', name: 'dnsjava', version: '2.1.8'
+    compile group: 'dnsjava', name: 'dnsjava', version: '3.2.1'
 
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
