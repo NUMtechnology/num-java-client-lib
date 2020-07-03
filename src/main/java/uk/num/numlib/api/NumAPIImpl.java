@@ -355,14 +355,20 @@ public final class NumAPIImpl implements NumAPI {
                     log.info("Lookup returned no result.");
                     switch (context.getLocation()) {
                         case INDEPENDENT:
-                            log.info("Trying the HOSTED location.");
-                            context.setLocation(HOSTED);
+                            if (context.getModuleDNSQueries()
+                                    .getModuleId() != 0) {
+                                log.info("Trying the HOSTED location.");
+                                context.setLocation(HOSTED);
+                            } else {
+                                log.info("Module 0 skipping the HOSTED location.");
+                                context.setLocation(STOP);
+                                return null;
+                            }
                             break;
                         case HOSTED:
                             // Only if configured, is a root quiery, and isn't module 0
                             if ((context.isPopulatorQueryRequired() && context.getModuleDNSQueries()
-                                    .isRootQuery()) && context.getModuleDNSQueries()
-                                    .getModuleId() != 0) {
+                                    .isRootQuery())) {
                                 log.info("Trying the POPULATOR location.");
                                 context.setLocation(POPULATOR);
                             } else {
