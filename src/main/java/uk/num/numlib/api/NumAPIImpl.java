@@ -81,6 +81,8 @@ public final class NumAPIImpl implements NumAPI {
      */
     private DNSServices dnsServices;
 
+    private String modulesLocation = "http://modules.num.uk/";
+
     /**
      * Default constructor to initialise the default DNS services and MODL services.
      */
@@ -671,7 +673,8 @@ public final class NumAPIImpl implements NumAPI {
             }
         }
         if (moduleNumber > 0) {
-            numRecordBuffer.append("*load=\"http://modules.num.uk/");
+            numRecordBuffer.append("*load=\"");
+            numRecordBuffer.append(modulesLocation);
             numRecordBuffer.append(moduleNumber);
             numRecordBuffer.append("/rcf.txt!\";");
         }
@@ -783,6 +786,10 @@ public final class NumAPIImpl implements NumAPI {
             }
         }
         log.info("Shutdown complete.");
+    }
+
+    public void setModulesLocation(final String modulesLocation) {
+        this.modulesLocation = modulesLocation;
     }
 
 }

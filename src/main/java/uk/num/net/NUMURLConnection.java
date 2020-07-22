@@ -41,6 +41,8 @@ public final class NUMURLConnection extends URLConnection {
 
     public static final String HIDE_PARAMS = "NUM_HIDE_PARAMS";
 
+    public static final String MODULES_LOCATION = "MODULES_LOCATION";
+
     @Getter
     @Setter
     private static DNSServices dnsServices = null;
@@ -769,6 +771,11 @@ public final class NUMURLConnection extends URLConnection {
                 ctx = numAPI.begin(url, 1000);
                 final boolean hideParams = !("false".equalsIgnoreCase(getRequestProperty(HIDE_PARAMS)));
                 final boolean populatorQueryRequired = "true".equalsIgnoreCase(getRequestProperty(USE_POPULATOR));
+
+                final String modulesLocation = getRequestProperty(MODULES_LOCATION);
+                if (modulesLocation != null) {
+                    numAPI.setModulesLocation(modulesLocation);
+                }
                 ctx.setPopulatorQueryRequired(populatorQueryRequired);
 
                 //
