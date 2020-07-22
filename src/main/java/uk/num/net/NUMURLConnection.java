@@ -49,6 +49,7 @@ public final class NUMURLConnection extends URLConnection {
 
     private NumAPIImpl numAPI = null;
 
+    @Getter
     private NumAPIContext ctx = null;
 
     @Getter
