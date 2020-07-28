@@ -46,20 +46,20 @@ public class URLAPITests {
             "    \"contacts\" : [ {\n" +
             "      \"telephone\" : {\n" +
             "        \"value\" : \"441270123456\",\n" +
-            "        \"object_type\" : \"media\",\n" +
+            "        \"object_type\" : \"method\",\n" +
             "        \"object_display_name\" : \"Telephone\",\n" +
             "        \"description_default\" : \"Call\",\n" +
             "        \"prefix\" : \"tel://\",\n" +
-            "        \"media_type\" : \"core\"\n" +
+            "        \"method_type\" : \"core\"\n" +
             "      }\n" +
             "    }, {\n" +
             "      \"twitter\" : {\n" +
             "        \"value\" : \"numexampletweets\",\n" +
-            "        \"object_type\" : \"media\",\n" +
+            "        \"object_type\" : \"method\",\n" +
             "        \"object_display_name\" : \"Twitter\",\n" +
             "        \"description_default\" : \"View Twitter profile\",\n" +
             "        \"prefix\" : \"https://www.twitter.com/\",\n" +
-            "        \"media_type\" : \"3p\",\n" +
+            "        \"method_type\" : \"3p\",\n" +
             "        \"value_prefix\" : \"@\",\n" +
             "        \"controller\" : \"twitter.com\"\n" +
             "      }\n" +
@@ -77,20 +77,20 @@ public class URLAPITests {
             "    \"contacts\" : [ {\n" +
             "      \"telephone\" : {\n" +
             "        \"value\" : \"441270123456\",\n" +
-            "        \"object_type\" : \"media\",\n" +
+            "        \"object_type\" : \"method\",\n" +
             "        \"object_display_name\" : \"Telephone\",\n" +
             "        \"description_default\" : \"Call\",\n" +
             "        \"prefix\" : \"tel://\",\n" +
-            "        \"media_type\" : \"core\"\n" +
+            "        \"method_type\" : \"core\"\n" +
             "      }\n" +
             "    }, {\n" +
             "      \"twitter\" : {\n" +
             "        \"value\" : \"numexampletweets\",\n" +
-            "        \"object_type\" : \"media\",\n" +
+            "        \"object_type\" : \"method\",\n" +
             "        \"object_display_name\" : \"Twitter\",\n" +
             "        \"description_default\" : \"View Twitter profile\",\n" +
             "        \"prefix\" : \"https://www.twitter.com/\",\n" +
-            "        \"media_type\" : \"3p\",\n" +
+            "        \"method_type\" : \"3p\",\n" +
             "        \"value_prefix\" : \"@\",\n" +
             "        \"controller\" : \"twitter.com\"\n" +
             "      }\n" +
