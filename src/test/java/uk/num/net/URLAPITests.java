@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 public class URLAPITests {
 
     private static final String EXPECTED_SUCCESS_MODULE_0 = "{\n" +
+            "  \"@n\" : 1,\n" +
             "  \"o\" : {\n" +
             "    \"n\" : \"NUM Example Co\",\n" +
             "    \"c\" : [ {\n" +
@@ -41,6 +42,7 @@ public class URLAPITests {
             "}";
 
     private static final String EXPECTED_SUCCESS = "{\n" +
+            "  \"@n\" : 1,\n" +
             "  \"organisation\" : {\n" +
             "    \"name\" : \"NUM Example Co\",\n" +
             "    \"contacts\" : [ {\n" +
@@ -72,6 +74,7 @@ public class URLAPITests {
 
     private static final String EXPECTED_SUCCESS_SHOW_PARAMS = "{\n" +
             "  \"C\" : \"gb\",\n" +
+            "  \"@n\" : 1,\n" +
             "  \"organisation\" : {\n" +
             "    \"name\" : \"NUM Example Co\",\n" +
             "    \"contacts\" : [ {\n" +

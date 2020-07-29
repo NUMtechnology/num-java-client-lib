@@ -60,7 +60,7 @@ import static uk.num.numlib.api.NumAPICallbacks.Location.*;
 @Log4j2
 public final class NumAPIImpl implements NumAPI {
 
-    public static final String MATCH_NUM_RECORDS = "(_n=[0-9]+;.*)|(^\\d+\\|.*)|(\\d+/\\d+\\|_n=\\d+;.*)";
+    public static final String MATCH_NUM_RECORDS = "(@n=[0-9]+;.*)|(^\\d+\\|.*)|(\\d+/\\d+\\|@n=\\d+;.*)";
 
     private final ModuleFactory moduleFactory = new ModuleFactory();
 

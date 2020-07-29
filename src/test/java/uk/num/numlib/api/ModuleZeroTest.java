@@ -34,6 +34,15 @@ import java.util.concurrent.TimeoutException;
 @Log4j2
 public class ModuleZeroTest {
 
+    public static final String EXPECTED = "{\n" +
+            "  \"@n\" : 1,\n" +
+            "  \"@context\" : \"https://json-ld.org/contexts/person.jsonld\",\n" +
+            "  \"@id\" : \"http://dbpedia.org/resource/John_Lennon\",\n" +
+            "  \"name\" : \"John Lennon\",\n" +
+            "  \"born\" : \"1940-10-09\",\n" +
+            "  \"spouse\" : \"http://dbpedia.org/resource/Cynthia_Lennon\"\n" +
+            "}";
+
     /**
      * Reduce the retry delays during unit tests
      */
@@ -50,13 +59,7 @@ public class ModuleZeroTest {
         log.info("Trying: " + numId);
 
         final String result = runQuery(numId);
-        Assert.assertEquals("{\n" +
-                "  \"@context\" : \"https://json-ld.org/contexts/person.jsonld\",\n" +
-                "  \"@id\" : \"http://dbpedia.org/resource/John_Lennon\",\n" +
-                "  \"name\" : \"John Lennon\",\n" +
-                "  \"born\" : \"1940-10-09\",\n" +
-                "  \"spouse\" : \"http://dbpedia.org/resource/Cynthia_Lennon\"\n" +
-                "}", result);
+        Assert.assertEquals(EXPECTED, result);
     }
 
     @Test
