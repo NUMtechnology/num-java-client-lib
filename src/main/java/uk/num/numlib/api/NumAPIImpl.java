@@ -81,7 +81,7 @@ public final class NumAPIImpl implements NumAPI {
      */
     private DNSServices dnsServices;
 
-    private String modulesLocation = "http://modules.num.uk/";
+    private String modulesLocation = "https://modules.numprotocol.com/";
 
     /**
      * Default constructor to initialise the default DNS services and MODL services.

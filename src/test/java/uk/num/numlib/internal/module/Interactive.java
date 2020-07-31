@@ -19,8 +19,8 @@ package uk.num.numlib.internal.module;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
 
 /**
  * Command line utility to convert numIds to NUM queries
@@ -28,35 +28,55 @@ import java.io.InputStreamReader;
 @Log4j2
 public class Interactive {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
+        boolean shouldRun;
         do {
-            try {
-                System.out.print("Enter a NUM ID ('q' to quit): ");
-
-                final String s = getLine();
-                checkExit(s);
-                System.out.println("Input = " + s);
-                final ModuleDNSQueries m = new ModuleDNSQueries(1, s);
-                m.initialise();
-
-                System.out.println(m.getIndependentRecordLocation());
-                System.out.println(m.getHostedRecordLocation());
-                System.out.println(m.getPopulatorLocation());
-            } catch (final Exception e) {
-                // Ignore - its logged internally
-            }
-        } while (true);
+            System.out.print("Enter a NUM ID ('q' to quit):> ");
+            shouldRun = getAndProcessUserInput();
+        } while (shouldRun);
     }
 
-    private static void checkExit(final String s) {
-        if (s.equalsIgnoreCase("q")) {
-            System.exit(0);
+    private static boolean getAndProcessUserInput() {
+        return getLine().map(Interactive::showLine)
+                .map(Interactive::getDnsQueries)
+                .map(Interactive::showQueries)
+                .orElse(false);
+    }
+
+    private static ModuleDNSQueries getDnsQueries(final String s) {
+        try {
+            final ModuleDNSQueries m = new ModuleDNSQueries(1, s);
+            m.initialise();
+            return m;
+        } catch (final Throwable e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
-    private static String getLine() throws IOException {
-        final BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
-        return buffer.readLine();
+    private static Optional<String> getLine() {
+        try {
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
+            final String line = buffer.readLine();
+            if (!line.equalsIgnoreCase("q")) {
+                return Optional.of(line);
+            }
+        } catch (final Throwable e) {
+            System.err.println(e.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    private static String showLine(final String s) {
+        System.out.println("Input = " + s);
+        return s;
+    }
+
+    private static boolean showQueries(final ModuleDNSQueries m) {
+        System.out.println(m.getIndependentRecordLocation());
+        System.out.println(m.getHostedRecordLocation());
+        System.out.println(m.getPopulatorLocation());
+        return true;
     }
 
 }

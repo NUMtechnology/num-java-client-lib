@@ -29,7 +29,7 @@ public class MultipleResolversTest {
         //
         final NumAPI numAPI = new NumAPIImpl(new String[]{"0", "1.1.1.1"});
         //
-        // Create a module context. The NumAPI will retrieve the module config from modules.num.uk
+        // Create a module context. The NumAPI will retrieve the module config from modules.numprotocol.com
         // Domain name can be a simple domain name, URL, email address, or sub-domain
         //
         final NumAPIContext ctx = numAPI.begin("numexample.com", 1000);

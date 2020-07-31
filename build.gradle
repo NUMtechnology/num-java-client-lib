@@ -28,13 +28,17 @@ apply plugin: 'antlr'
 apply plugin: 'maven-publish'
 apply plugin: 'application'
 
-sourceCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 mainClassName = "uk.num.numlib.api.NumApiImpl"
 
 group = "uk.num"
-version = "0.10.0"
+version = "0.11.0"
 
 def isSnapshot = version.endsWith("SNAPSHOT")
 
