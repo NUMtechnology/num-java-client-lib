@@ -27,6 +27,8 @@ import uk.num.numlib.api.UserVariable;
 import uk.num.numlib.exc.*;
 import uk.num.numlib.internal.module.ModuleDNSQueries;
 import uk.num.numlib.internal.util.UrlRelativePathResolver;
+import uk.num.validators.NumUriValidator;
+import uk.num.validators.ValidationResult;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -123,7 +125,8 @@ public class NumAPIContextBase implements NumAPIContext {
             throw new NumMaximumRedirectsExceededException();
         }
 
-        if (redirect.matches("^.*:[0-9]+/?.*$")) {
+        final ValidationResult validationResult = NumUriValidator.validate(redirect);
+        if (validationResult.isValid()) {
             try {
                 handleNumUriRedirect(NumProtocolSupport.toUrl(redirect));
             } catch (final MalformedURLException | NumInvalidParameterException e) {
