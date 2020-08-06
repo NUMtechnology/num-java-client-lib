@@ -501,7 +501,7 @@ public final class NumAPIImpl implements NumAPI {
         while (numRecord == null) {
             numRecord = getNumRecordNoCache(timeoutMillis, recordLocation, context);
             if (numRecord == null) {
-                // This is unrecoverable, we should get status_ or error_ object.
+                // This is unrecoverable, we should get @status or @error object.
                 break;
             }
 
@@ -511,16 +511,16 @@ public final class NumAPIImpl implements NumAPI {
             if (response.isValid()) {
                 throw new NumInvalidPopulatorResponseCodeException("Bad response received from the populator service.");
             }
-            // Handle the status_ response codes
-            if (response.getStatus_() != null) {
+            // Handle the @status response codes
+            if (response.getStatus() != null) {
                 numRecord = handlePopulatorStatusCodes(timeoutMillis, context, response, handler);
             }
-            // Handle the error_ response codes
-            if (response.getError_() != null) {
-                if (response.getError_()
+            // Handle the @error response codes
+            if (response.getError() != null) {
+                if (response.getError()
                         .getCode() == 100) {// Enter the populated zone retry loop
-                    log.error("NUM Populator error: {}, {}", response.getError_()
-                            .getCode(), response.getError_()
+                    log.error("NUM Populator error: {}, {}", response.getError()
+                            .getCode(), response.getError()
                             .getDescription());
                     try {
                         int i = 0;
@@ -531,7 +531,7 @@ public final class NumAPIImpl implements NumAPI {
                             numRecord = getNumRecord(timeoutMillis, context);
 
                             final PopulatorResponse retryResponse = modlServices.interpretPopulatorResponse(numRecord);
-                            if (retryResponse.getStatus_() != null) {
+                            if (retryResponse.getStatus() != null) {
                                 return handlePopulatorStatusCodes(timeoutMillis, context, retryResponse, handler);
                             }
                             i++;
@@ -542,10 +542,10 @@ public final class NumAPIImpl implements NumAPI {
                     log.error("Cannot retrieve NUM record from any location.");
                     throw new NumNoRecordAvailableException("Cannot retrieve NUM record from any location.");
                 } else {
-                    log.error("NUM Populator error: {}, {}", response.getError_()
-                            .getCode(), response.getError_()
+                    log.error("NUM Populator error: {}, {}", response.getError()
+                            .getCode(), response.getError()
                             .getDescription());
-                    throw new NumPopulatorErrorException(response.getError_()
+                    throw new NumPopulatorErrorException(response.getError()
                             .getDescription());
                 }
             }
@@ -577,7 +577,7 @@ public final class NumAPIImpl implements NumAPI {
                                                                                                                                                        RrSetNoHeadersException {
         log.info("handlePopulatorStatusCodes()");
         String numRecord = null;
-        switch (response.getStatus_()
+        switch (response.getStatus()
                 .getCode()) {
             case 1:
                 log.info("Populator Status code: 1");
@@ -594,7 +594,7 @@ public final class NumAPIImpl implements NumAPI {
                         TimeUnit.MILLISECONDS.sleep(PopulatorRetryConfig.RETRY_DELAYS[i]);
                         log.info("Retrying...");
                         numRecord = getNumRecord(timeoutMillis, context);
-                        if (numRecord != null && !numRecord.contains("status_") && !numRecord.contains("error_")) {
+                        if (numRecord != null && !numRecord.contains("@status") && !numRecord.contains("@error")) {
                             try {
                                 final String interpretNumRecord = interpretNumRecord(numRecord, context);
                                 handler.setResult(interpretNumRecord);
@@ -605,7 +605,7 @@ public final class NumAPIImpl implements NumAPI {
                         }
                         i++;
                     }
-                    if (numRecord != null && (numRecord.contains("status_") || !numRecord.contains("error_"))) {
+                    if (numRecord != null && (numRecord.contains("@status") || !numRecord.contains("@error"))) {
                         log.error("Cannot retrieve NUM record from any location.");
                         throw new NumNoRecordAvailableException("Cannot retrieve NUM record from any location.");
                     }
@@ -638,9 +638,9 @@ public final class NumAPIImpl implements NumAPI {
                 break;
             default:
                 context.setLocation(null);
-                log.error("Invalid response code from DNS populator service: {}", response.getStatus_()
+                log.error("Invalid response code from DNS populator service: {}", response.getStatus()
                         .getCode());
-                throw new NumInvalidPopulatorResponseCodeException("Invalid response code from DNS populator service: " + response.getStatus_()
+                throw new NumInvalidPopulatorResponseCodeException("Invalid response code from DNS populator service: " + response.getStatus()
                         .getCode());
         }
         return numRecord;

@@ -17,6 +17,7 @@
 package uk.num.numlib.internal.modl;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,15 +30,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class PopulatorResponse {
+
     public static final int VALID_TXT_RECORD_CODE = 999;
+
     /**
      * Error object
      */
-    private PopulatorResponseRecord error_;
+    @JsonProperty("@error")
+    private PopulatorResponseRecord error;
+
     /**
      * Status object
      */
-    private PopulatorResponseRecord status_;
+    @JsonProperty("@status")
+    private PopulatorResponseRecord status;
 
     /**
      * The NUM record returned by the DNS responder if it has one less than 2 minutes old.
@@ -46,19 +52,20 @@ public final class PopulatorResponse {
 
 
     public boolean isValid() {
-        if (status_ == null && error_ == null) {
+        if (status == null && error == null) {
             return true;
         }
-        if (status_ != null) {
-            final int code = status_.getCode();
+        if (status != null) {
+            final int code = status.getCode();
             if (code < 1 || (code > 3 && code != VALID_TXT_RECORD_CODE)) {
                 return true;
             }
         }
-        if (error_ != null) {
-            final int code = error_.getCode();
+        if (error != null) {
+            final int code = error.getCode();
             return code < 100 || code > 104;
         }
         return false;
     }
+
 }

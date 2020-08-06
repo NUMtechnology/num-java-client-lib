@@ -55,10 +55,10 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("1._independent.e._num.numexample.com", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
         dns.put("path.1._num.independent.numexample.com", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
         dns.put("path.1._" + HashUtils.domainAndHash("hosted.numexample.com") + ".num.net", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
-        dns.put("path.1._pop.numexample.com.populator.num.net", new String[]{"status_(code=1;description=Check the populated zone.)"});
+        dns.put("path.1._pop.numexample.com.populator.num.net", new String[]{"@status(code=1;description=Check the populated zone.)"});
         dns.put("1._" + HashUtils.domainAndHash("hosted-numexample.com") + ".num.net", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
         dns.put("1._hosted.e._" + HashUtils.domainAndHash("numexample.com") + ".num.net", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
-        dns.put("pop.1._numexample.com.populator.num.net", new String[]{"error_(code=100;description=Server Failure.)"});
+        dns.put("pop.1._numexample.com.populator.num.net", new String[]{"@error(code=100;description=Server Failure.)"});
         dns.put("1._pop-numexample.com.populator.num.net", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
 
         dns.put("redirected.1._num.redirectme1.com", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])"});
@@ -117,12 +117,12 @@ public class DummyDNSServices extends DNSServicesDefaultImpl {
         dns.put("redirected3.1._" + HashUtils.domainAndHash("lookup.root.hosted.redirect2.com") + ".num.net", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);@R=/redirected4;"});
 
 
-        dns.put("1._populator.response.1.com.populator.num.net", new String[]{"status_=(code=1;description=Check the populated zone.)"});
-        dns.put("1._populator.response.2.com.populator.num.net", new String[]{"status_=(code=2;description=Check the independent zone.)"});
-        dns.put("1._populator.response.3.com.populator.num.net", new String[]{"status_=(code=3;description=Check the hosted zone.)"});
-        dns.put("1._populator.response.4.com.populator.num.net", new String[]{"status_=(code=4;description=Invalid code.)"});
-        dns.put("1._populator.response.100.com.populator.num.net", new String[]{"error_=(code=100;description=Server Failure.)"});
-        dns.put("1._populator.response.101.com.populator.num.net", new String[]{"error_=(code=101;description=Records for this domain can't be populated.)"});
+        dns.put("1._populator.response.1.com.populator.num.net", new String[]{"@status=(code=1;description=Check the populated zone.)"});
+        dns.put("1._populator.response.2.com.populator.num.net", new String[]{"@status=(code=2;description=Check the independent zone.)"});
+        dns.put("1._populator.response.3.com.populator.num.net", new String[]{"@status=(code=3;description=Check the hosted zone.)"});
+        dns.put("1._populator.response.4.com.populator.num.net", new String[]{"@status=(code=4;description=Invalid code.)"});
+        dns.put("1._populator.response.100.com.populator.num.net", new String[]{"@error=(code=100;description=Server Failure.)"});
+        dns.put("1._populator.response.101.com.populator.num.net", new String[]{"@error=(code=101;description=Records for this domain can't be populated.)"});
         dns.put("1._populator.response.txt.com.populator.num.net", new String[]{"@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets]);"});
 
         dns.put("1._john.smith.e._num.dist1.email.com", new String[]{"@n=1;zd=1"}); // Can't handle wildcards in DummyDNS, so hard-coding the lookup
