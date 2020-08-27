@@ -63,7 +63,7 @@ public final class ModlServices {
         log.trace("Interpreting NUM record: {}", numRecord);
 
         try {
-            final TransformationContext ctx = TransformationContext.emptyCtx();
+            final TransformationContext ctx = TransformationContext.baseCtx(null);
             final Tuple2<TransformationContext, Modl> interpreted = interpreter.apply(ctx, numRecord);
 
             checkForRedirection(interpreted._2);
