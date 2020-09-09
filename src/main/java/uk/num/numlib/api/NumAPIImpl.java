@@ -271,7 +271,7 @@ public final class NumAPIImpl implements NumAPI {
         final Future<String> future = executor.submit(() -> {
             final String result = numLookup(ctx, handler, timeoutMillis);
             if (result == null) {
-                log.error("Unable to retrieve a NUM record.");
+                log.info("Unable to retrieve a NUM record.");
                 handler.setLocation(null);
                 ctx.setLocation(null);
                 return null;
