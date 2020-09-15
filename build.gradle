@@ -38,7 +38,7 @@ compileTestJava.options.encoding = "UTF-8"
 mainClassName = "uk.num.numlib.api.NumApiImpl"
 
 group = "uk.num"
-version = "0.12.4"
+version = "0.12.5"
 
 def isSnapshot = version.endsWith("SNAPSHOT")
 
@@ -61,7 +61,7 @@ dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
 
-    compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.15'
+    compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.16'
     compile group: 'uk.num', name: 'num-java-client-lib-base', version: '0.1.1'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
