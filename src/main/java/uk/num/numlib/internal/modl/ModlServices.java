@@ -52,18 +52,20 @@ public final class ModlServices {
     /**
      * Interpret a NUM record MODL string to a JSON String.
      *
-     * @param numRecord The NUM record string.
+     * @param numRecord      The NUM record string.
+     * @param timeoutSeconds long
      * @return The interpreted result as a JSON string.
      * @throws NumBadRecordException on error
      * @throws NumLookupRedirect     on error
      */
-    public String interpretNumRecord(final String numRecord) throws NumBadRecordException, NumLookupRedirect {
+    public String interpretNumRecord(final String numRecord, final long timeoutSeconds) throws NumBadRecordException,
+                                                                                               NumLookupRedirect {
         assert numRecord != null && numRecord.trim()
                 .length() > 0;
         log.trace("Interpreting NUM record: {}", numRecord);
 
         try {
-            final TransformationContext ctx = TransformationContext.baseCtx(null);
+            final TransformationContext ctx = TransformationContext.baseCtx(null, timeoutSeconds);
             final Tuple2<TransformationContext, Modl> interpreted = interpreter.apply(ctx, numRecord);
 
             checkForRedirection(interpreted._2);
@@ -143,7 +145,7 @@ public final class ModlServices {
         log.trace("Interpreting populator response record: {}", numRecord);
 
         try {
-            final String json = interpreter.interpretToPrettyJsonString(numRecord);
+            final String json = interpreter.interpretToPrettyJsonString(numRecord, 2);
             log.trace("Interpreted populator response: {}", json);
             final PopulatorResponse response = objectMapper.readValue(json, PopulatorResponse.class);
 

@@ -382,7 +382,7 @@ public final class NumAPIImpl implements NumAPI {
                         case POPULATOR:
                             log.info("Trying the POPULATOR.");
                             final String fromPopulator = getNumRecordFromPopulator(timeoutMillis, context, handler);
-                            String json = interpretNumRecord(fromPopulator, context);
+                            String json = interpretNumRecord(fromPopulator, context, timeoutMillis);
                             handler.setResult(json);
                             return handler.getResult();
                         case STOP:
@@ -390,7 +390,7 @@ public final class NumAPIImpl implements NumAPI {
                             return null;
                     }
                 } else {
-                    final String json = interpretNumRecord(numRecord, context);
+                    final String json = interpretNumRecord(numRecord, context, timeoutMillis);
                     handler.setResult(json);
                     return handler.getResult();
                 }
@@ -596,7 +596,7 @@ public final class NumAPIImpl implements NumAPI {
                         numRecord = getNumRecord(timeoutMillis, context);
                         if (numRecord != null && !numRecord.contains("@status") && !numRecord.contains("@error")) {
                             try {
-                                final String interpretNumRecord = interpretNumRecord(numRecord, context);
+                                final String interpretNumRecord = interpretNumRecord(numRecord, context, timeoutMillis);
                                 handler.setResult(interpretNumRecord);
                             } catch (final Throwable e) {
                                 // Log the error but continue anyway
@@ -656,9 +656,9 @@ public final class NumAPIImpl implements NumAPI {
      * @throws NumBadRecordException on error
      * @throws NumLookupRedirect     on error
      */
-    private String getInterpretedNumRecordAsJson(final int moduleNumber, final NumAPIContext context, final String numRecord) throws
-                                                                                                                              NumBadRecordException,
-                                                                                                                              NumLookupRedirect {
+    private String getInterpretedNumRecordAsJson(final int moduleNumber, final NumAPIContext context, final String numRecord, final int timeoutMillis) throws
+                                                                                                                                                       NumBadRecordException,
+                                                                                                                                                       NumLookupRedirect {
         log.info("getInterpretedNumRecordAsJson({}, {})", moduleNumber, numRecord);
         final StringBuilder numRecordBuffer = new StringBuilder();
 
@@ -683,7 +683,7 @@ public final class NumAPIImpl implements NumAPI {
         numRecordBuffer.append(legacyEscapeReplacer.apply(numRecord));
 
         log.info("Interpret NUM record: {}", numRecordBuffer.toString());
-        return modlServices.interpretNumRecord(numRecordBuffer.toString());
+        return modlServices.interpretNumRecord(numRecordBuffer.toString(), timeoutMillis);
     }
 
     /**
@@ -695,15 +695,16 @@ public final class NumAPIImpl implements NumAPI {
      * @throws NumLookupRedirect     on error
      * @throws NumBadRecordException on error
      */
-    private String interpretNumRecord(final String numRecord, final NumAPIContextBase context) throws NumLookupRedirect,
-                                                                                                      NumBadRecordException {
+    private String interpretNumRecord(final String numRecord, final NumAPIContextBase context, final int timeoutMillis) throws
+                                                                                                                        NumLookupRedirect,
+                                                                                                                        NumBadRecordException {
         log.info("interpretNumRecord({}, context)", numRecord);
         String json = null;
         if (numRecord != null && numRecord.trim()
                 .length() > 0) {
             // Build a MODL object using the required user variables, the RCF, and the NUM record from DNS.
             json = getInterpretedNumRecordAsJson(context.getModuleDNSQueries()
-                    .getModuleId(), context, numRecord);
+                    .getModuleId(), context, numRecord, timeoutMillis);
         }
         return json;
     }
