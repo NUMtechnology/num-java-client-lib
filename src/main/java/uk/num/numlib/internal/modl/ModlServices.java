@@ -73,7 +73,9 @@ public final class ModlServices {
             final JsonNode jsonNode = new JacksonJsonNodeTransform(ctx).apply(interpreted._2);
             return new ObjectMapper().writerWithDefaultPrettyPrinter()
                     .writeValueAsString(jsonNode);
-        } catch (Exception e) {
+        } catch (final NumLookupRedirect e) {
+            throw e;
+        } catch (final Exception e) {
             log.error("Exception during interpretNumRecord().", e);
             throw new NumBadRecordException("Error interpreting NUM record.", e);
         }

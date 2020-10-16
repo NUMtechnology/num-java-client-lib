@@ -598,7 +598,7 @@ public final class NumAPIImpl implements NumAPI {
                             try {
                                 final String interpretNumRecord = interpretNumRecord(numRecord, context, timeoutMillis);
                                 handler.setResult(interpretNumRecord);
-                            } catch (final Throwable e) {
+                            } catch (final Exception e) {
                                 // Log the error but continue anyway
                                 log.error("Error in response from the populator.", e);
                             }

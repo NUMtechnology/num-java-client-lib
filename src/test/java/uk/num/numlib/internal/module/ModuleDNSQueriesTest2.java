@@ -122,7 +122,7 @@ public class ModuleDNSQueriesTest2 {
             } else {
                 message = "Expected: " + testData.expectedResult + ", but found: " + actual;
             }
-        } catch (Throwable e) {
+        } catch (Exception e) {
             if (testData.expectedResult == null) {
                 pass = true;
             } else {

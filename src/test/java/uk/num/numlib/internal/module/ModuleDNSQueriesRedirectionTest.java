@@ -154,7 +154,7 @@ public class ModuleDNSQueriesRedirectionTest {
                     message = "Expected: " + testData.expectedResult + ", but found: " + actual;
                 }
             }
-        } catch (Throwable e) {
+        } catch (Exception e) {
             if (testData.expectedResult.equals("error")) {
                 pass = true;
             } else {

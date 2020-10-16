@@ -21,6 +21,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public final class NumLookupRedirect extends Throwable {
+public final class NumLookupRedirect extends Exception {
+
     private final String redirect;
+
 }

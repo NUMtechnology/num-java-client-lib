@@ -48,7 +48,7 @@ public class Interactive {
             final ModuleDNSQueries m = new ModuleDNSQueries(1, s);
             m.initialise();
             return m;
-        } catch (final Throwable e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -61,7 +61,7 @@ public class Interactive {
             if (!line.equalsIgnoreCase("q")) {
                 return Optional.of(line);
             }
-        } catch (final Throwable e) {
+        } catch (final Exception e) {
             System.err.println(e.getMessage());
         }
         return Optional.empty();

@@ -38,7 +38,7 @@ compileTestJava.options.encoding = "UTF-8"
 mainClassName = "uk.num.numlib.api.NumApiImpl"
 
 group = "uk.num"
-version = "0.12.7"
+version = "0.12.8"
 
 def isSnapshot = version.endsWith("SNAPSHOT")
 
@@ -52,7 +52,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.20'
+    compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.21'
     compile group: 'uk.num', name: 'num-java-client-lib-base', version: '0.1.1'
 
     // Use JUnit test framework
