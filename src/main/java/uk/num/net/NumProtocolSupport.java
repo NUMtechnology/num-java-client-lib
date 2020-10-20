@@ -36,7 +36,7 @@ public final class NumProtocolSupport {
         final NumStreamHandlerFactory factory = new NumStreamHandlerFactory();
         try {
             URL.setURLStreamHandlerFactory(factory);
-        } catch (final Exception e) {
+        } catch (final Throwable e) {
             System.out.println("There is an existing protocol handler registered - checking for embedded Tomcat...");
             if (hasEmbeddedTomcat()) {
                 try {
@@ -47,7 +47,7 @@ public final class NumProtocolSupport {
                     final Method addUserFactory = aClass.getMethod("addUserFactory", URLStreamHandlerFactory.class);
                     addUserFactory.invoke(instance, factory);
                     System.out.println("Added the NUM protocol handler with the TomcatURLStreamHandlerFactory.");
-                } catch (final Exception ex) {
+                } catch (final Throwable ex) {
                     System.err.println("There is an existing protocol handler registered - cannot register the NUM protocol handler with the TomcatURLStreamHandlerFactory.");
                     System.err.println("Error: " + ex.getMessage());
                 }
@@ -61,7 +61,7 @@ public final class NumProtocolSupport {
         try {
             Class.forName("org.apache.catalina.webresources.TomcatURLStreamHandlerFactory");
             return true;
-        } catch (final Exception e) {
+        } catch (final Throwable e) {
             return false;
         }
     }
