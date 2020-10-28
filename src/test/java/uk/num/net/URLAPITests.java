@@ -104,6 +104,8 @@ public class URLAPITests {
             "  }\n" +
             "}";
 
+    private static final String EXPECTED_SUCCESS_AS_MODL = "@n=1;o(n=NUM Example Co;c[t=441270123456;tw=numexampletweets])";
+
     @BeforeClass
     public static void beforeClass() {
         NumProtocolSupport.init();
@@ -145,6 +147,18 @@ public class URLAPITests {
         connection.setRequestProperty(NUMURLConnection.HIDE_PARAMS, "false");
         final String json = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
         Assert.assertEquals(EXPECTED_SUCCESS_SHOW_PARAMS, json);
+
+        Assert.assertFalse(connection.isDnsSecSigned());
+        Assert.assertEquals(NumAPICallbacks.Location.INDEPENDENT, connection.getLocation());
+    }
+
+    @Test
+    public void testLoadViaUriSuccessAsModl() throws IOException {
+        final URL url = NumProtocolSupport.toUrl("num://numexample.com:1/?C=gb&_L=en");
+        final NUMURLConnection connection = new NUMURLConnection(url);
+        connection.setRequestProperty(NUMURLConnection.RAW_RESULT, "true");
+        final String json = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
+        Assert.assertEquals(EXPECTED_SUCCESS_AS_MODL, json);
 
         Assert.assertFalse(connection.isDnsSecSigned());
         Assert.assertEquals(NumAPICallbacks.Location.INDEPENDENT, connection.getLocation());

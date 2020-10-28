@@ -256,6 +256,21 @@ public final class NumAPIImpl implements NumAPI {
      */
     @Override
     public Future<String> retrieveNumRecord(final NumAPIContext ctx, final NumAPICallbacks handler, final int timeoutMillis) {
+        return retrieveNumRecord(ctx, handler, timeoutMillis, true);
+    }
+
+    /**
+     * This method uses the module context and the supplied Required User Variable values to obtain a fully expanded
+     * JSON object from DNS. The supplied handler will be notified when the results are available or an error occurs.
+     *
+     * @param ctx           The context object returned by the begin() method.
+     * @param handler       a handler object to receive the JSON results or processing errors.
+     * @param timeoutMillis the maximum duration of each DNS request, the total wait time could be up to 4 times this value.
+     * @param interpret     true if the result should be JSON, false for MODL
+     * @return A Future object
+     */
+    @Override
+    public Future<String> retrieveNumRecord(final NumAPIContext ctx, final NumAPICallbacks handler, final int timeoutMillis, final boolean interpret) {
         log.info("retrieveNumRecord()");
         assert ctx != null;
         assert handler != null;
@@ -269,7 +284,7 @@ public final class NumAPIImpl implements NumAPI {
         // This submits a Callable object, so exceptions should be reported to the user when they call the get() method on the Future object.
         log.info("Submitting background query.");
         final Future<String> future = executor.submit(() -> {
-            final String result = numLookup(ctx, handler, timeoutMillis);
+            final String result = numLookup(ctx, handler, timeoutMillis, interpret);
             if (result == null) {
                 log.info("Unable to retrieve a NUM record.");
                 handler.setLocation(null);
@@ -293,6 +308,7 @@ public final class NumAPIImpl implements NumAPI {
      * @param ctx           the NumAPIContext
      * @param handler       the NumAPICallbacks
      * @param timeoutMillis the timeoutMillis
+     * @param interpret     true if the result should be JSON, false for MODL
      * @return a NUM record String
      * @throws NumBadRecordException                    on error
      * @throws NumInvalidRedirectException              on error
@@ -305,17 +321,17 @@ public final class NumAPIImpl implements NumAPI {
      * @throws RrSetHeaderFormatException               on error
      * @throws RrSetNoHeadersException                  on error
      */
-    private String numLookup(final NumAPIContext ctx, final NumAPICallbacks handler, final int timeoutMillis) throws
-                                                                                                              NumBadRecordException,
-                                                                                                              NumInvalidRedirectException,
-                                                                                                              NumInvalidDNSQueryException,
-                                                                                                              NumMaximumRedirectsExceededException,
-                                                                                                              NumNoRecordAvailableException,
-                                                                                                              NumPopulatorErrorException,
-                                                                                                              NumInvalidPopulatorResponseCodeException,
-                                                                                                              RrSetHeaderFormatException,
-                                                                                                              RrSetIncompleteException,
-                                                                                                              RrSetNoHeadersException {
+    private String numLookup(final NumAPIContext ctx, final NumAPICallbacks handler, final int timeoutMillis, final boolean interpret) throws
+                                                                                                                                       NumBadRecordException,
+                                                                                                                                       NumInvalidRedirectException,
+                                                                                                                                       NumInvalidDNSQueryException,
+                                                                                                                                       NumMaximumRedirectsExceededException,
+                                                                                                                                       NumNoRecordAvailableException,
+                                                                                                                                       NumPopulatorErrorException,
+                                                                                                                                       NumInvalidPopulatorResponseCodeException,
+                                                                                                                                       RrSetHeaderFormatException,
+                                                                                                                                       RrSetIncompleteException,
+                                                                                                                                       RrSetNoHeadersException {
         final NumAPIContextBase context = (NumAPIContextBase) ctx;
         context.setLocation(INDEPENDENT);
         log.info("Trying the INDEPENDENT location.");
@@ -382,16 +398,22 @@ public final class NumAPIImpl implements NumAPI {
                         case POPULATOR:
                             log.info("Trying the POPULATOR.");
                             final String fromPopulator = getNumRecordFromPopulator(timeoutMillis, context, handler);
-                            String json = interpretNumRecord(fromPopulator, context, timeoutMillis);
-                            handler.setResult(json);
+                            if (interpret) {
+                                handler.setResult(interpretNumRecord(fromPopulator, context, timeoutMillis));
+                            } else {
+                                handler.setResult(fromPopulator);
+                            }
                             return handler.getResult();
                         case STOP:
                         default:
                             return null;
                     }
                 } else {
-                    final String json = interpretNumRecord(numRecord, context, timeoutMillis);
-                    handler.setResult(json);
+                    if (interpret) {
+                        handler.setResult(interpretNumRecord(numRecord, context, timeoutMillis));
+                    } else {
+                        handler.setResult(numRecord);
+                    }
                     return handler.getResult();
                 }
             } catch (final NumLookupRedirect numLookupRedirect) {

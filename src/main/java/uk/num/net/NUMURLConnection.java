@@ -43,6 +43,8 @@ public final class NUMURLConnection extends URLConnection {
 
     public static final String MODULES_LOCATION = "MODULES_LOCATION";
 
+    public static final String RAW_RESULT = "INTERPRET_TO_JSON";
+
     @Getter
     @Setter
     private static DNSServices dnsServices = null;
@@ -449,11 +451,12 @@ public final class NUMURLConnection extends URLConnection {
     @Override
     public InputStream getInputStream() throws IOException {
         try {
+            final boolean interpret = getRequestProperty(RAW_RESULT) == null;
             if (!connected) {
                 connect();
             }
             final NumAPICallbacksDefaultHandler handler = new NumAPICallbacksDefaultHandler();
-            final Future<String> future = numAPI.retrieveNumRecord(ctx, handler, getReadTimeout());
+            final Future<String> future = numAPI.retrieveNumRecord(ctx, handler, getReadTimeout(), interpret);
             final String json = future.get(getReadTimeout(), TimeUnit.MILLISECONDS);
             numAPI.shutdown();
             connected = false;
