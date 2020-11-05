@@ -151,7 +151,7 @@ public class NumAPITest {
 
     @Test(expected = NumInvalidParameterException.class)
     public void test_73_no_dns_hosts_1() throws Throwable {
-        new NumAPIImpl(null);
+        new NumAPIImpl((String[]) null);
         Assert.fail("Expected a NumInvalidParameterException");
     }
 

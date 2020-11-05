@@ -97,6 +97,20 @@ public final class NumAPIImpl implements NumAPI {
     /**
      * Alternative constructor used to override the default DNS hosts. Unit tests rely on this constructor.
      *
+     * @param resolver The NumDohResolver, e.g. `new NumDohResolver("https://dns.google/dns-query")`.
+     */
+    public NumAPIImpl(final NumDohResolver resolver) {
+        this();
+        dnsServices = new DNSServicesDefaultImpl();
+
+        log.info("enter - NumAPI(resolver)");
+        Lookup.setDefaultResolver(resolver.resolver);
+        log.info("NumAPI object created.");
+    }
+
+    /**
+     * Alternative constructor used to override the default DNS hosts. Unit tests rely on this constructor.
+     *
      * @param dnsHost     The DNS host to override the defaults configured for the local machine.
      * @param dnsServices used to inject dummy DNS services for testing.
      * @throws NumInvalidDNSHostException on error
