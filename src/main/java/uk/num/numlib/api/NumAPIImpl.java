@@ -95,7 +95,7 @@ public final class NumAPIImpl implements NumAPI {
     }
 
     /**
-     * Alternative constructor used to override the default DNS hosts. Unit tests rely on this constructor.
+     * Alternative constructor used to provide a NumDohResolver.
      *
      * @param resolver The NumDohResolver, e.g. `new NumDohResolver("https://dns.google/dns-query")`.
      */
