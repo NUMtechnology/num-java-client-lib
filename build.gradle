@@ -38,7 +38,7 @@ compileTestJava.options.encoding = "UTF-8"
 mainClassName = "uk.num.numlib.api.NumApiImpl"
 
 group = "uk.num"
-version = "0.12.10"
+version = "0.12.11"
 
 def isSnapshot = version.endsWith("SNAPSHOT")
 
