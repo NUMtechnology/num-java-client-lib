@@ -13,3 +13,4 @@ out/
 /bin/
 /.classpath
 /.project
+.nyc_output
