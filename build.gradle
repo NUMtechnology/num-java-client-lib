@@ -27,6 +27,8 @@ apply plugin: 'java-library'
 apply plugin: 'antlr'
 apply plugin: 'maven-publish'
 apply plugin: 'application'
+// plugin for generating test coverage report
+apply plugin: 'jacoco'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -221,3 +223,11 @@ def customisePom(pom) {
         }
     }
 }
+
+// ====== JACOCO TEST COVERAGE ======
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+test.finalizedBy jacocoTestReport 
